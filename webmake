@@ -90,7 +90,7 @@ if (defined $opt_C) {
   $_ = $opt_R;
   if (-f $_) { $_ = dirname ($_); }
   chdir ($_) or die "cannot cd to \"$_\".\n";
-  if ($opt_R =~ /\.wmk$/i && !defined $opt_f) { $opt_f = $opt_R; }
+  if ($opt_R =~ /\.wmk$/i && !defined $opt_f) { $opt_f = basename ($opt_R); }
 }
 
 if ($opt_D && !$opt_L) { $opt_L = 1; }

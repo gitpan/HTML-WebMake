@@ -62,3 +62,25 @@ sitemapping, navigational aids, and (of course) embedded perl code. ;)
     by referring to it's name.  This is a form of "Xanadu-style transclusion"
     [xanadu].
 
+  - **Edit content in your web browser:** WebMake now includes webmake.cgi,
+    which provides a CGI front-end to editing and managing a WebMake site.
+
+  - **Site replication:** with webmake.cgi's CVS integration, multiple copies
+    of the same site can be replicated, and changes made on any of the sites
+    will be automatically replicated to all the others.
+
+  - **Version control:** changes made to sites using webmake.cgi will be kept
+    under CVS version control, so older versions of the site can be ''rolled
+    back'' if necessary.
+
+But enough of the bulleted lists.  Here's where you should start:
+
+  - First of all, read <a href=$(making)>WebMake Operation</a> for an overview
+    of how WebMake operates.
+
+  - Next, read <a href=$(firsttime)>How To Migrate to WebMake</a> for a guide
+    to bringing an existing, simple web site into WebMake.
+
+  - After that, you just need to read the rest of the manual, which is mostly
+    reference text.  Good luck!
+

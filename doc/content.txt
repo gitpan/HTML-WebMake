@@ -2,7 +2,7 @@
 <wmmeta name="Section" value="02-tags_attrs" />
 <wmmeta name="Score" value="30" />
 <wmmeta name="Abstract">
-one chunk of content
+one chunk of textual content
 </wmmeta>
 
 The &lt;content&gt; tag has one required attribute: its name, which is used to

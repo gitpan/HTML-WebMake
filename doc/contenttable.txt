@@ -1,6 +1,6 @@
 <wmmeta name="Title" value="The &lt;contenttable&gt; Tag" />
 <wmmeta name="Section" value="02-tags_attrs" />
-<wmmeta name="Score" value="35" />
+<wmmeta name="Score" value="37" />
 <wmmeta name="Abstract">
 Define several small content items quickly, using a table
 </wmmeta>

@@ -120,25 +120,36 @@ sub strip_tags ($$$$$@) {
 }
 
 sub strip_first_tag ($$$$$@) {
-  my ($self, $fileref, $tag, $taghandler, $tagfn, @reqd_attributes) = @_;
+  my ($self, $textref, $tag, $taghandler, $tagfn, @reqd_attributes) = @_;
   $self->{strip_tags_reqd_attrs} = \@reqd_attributes;
   $self->{strip_tags_handler_obj} = $taghandler;
   $self->{strip_tags_handler_method} = $tagfn;
   $self->{last_tag_text} = undef;
+  $self->{last_tag_regexp} = undef;
 
-  $$fileref =~ s{^\s*<${tag}\b([^>]*?)/>}{
-    $self->_found_tag ($tag, $1, '');
-  }gies && return;
+  $$textref =~ s{^\s*<${tag}\b([^>]*?)/>}{
+    $self->_found_tag ($tag, $1, '', 1);
+  }gies and return;
 
-  $$fileref =~ s{^\s*<${tag}\b([^>]*?)>(.*?)<\/\s*${tag}\s*>}{
-    $self->_found_tag ($tag, $1, $2);
+  $$textref =~ s{^\s*<${tag}\b([^>]*?)>(.*?)<\/\s*${tag}\s*>}{
+    $self->_found_tag ($tag, $1, $2, 0);
   }gies;
 }
 
 sub _found_tag ($$$$) {
-  my ($self, $tag, $origtxt, $text) = @_;
+  my ($self, $tag, $origtxt, $text, $isempty) = @_;
 
   $self->{last_tag_text} = '<'.$tag.$origtxt.'> ... </'.$tag.'>';
+
+  if ($self->{generate_tag_regexps}) {
+    if ($isempty) {
+      $self->{last_tag_regexp} = qr/ \Q<${tag}${origtxt}\/>\E /isx;
+
+    } else {
+      $self->{last_tag_regexp} = qr/ \Q<${tag}${origtxt}>\E
+				    .*? <\/\s*\Q${tag}\E\s*> /isx;
+    }
+  }
 
   my $attrs = $self->parse_xml_tag_attributes ($tag, $origtxt,
   	$self->{filename}, @{$self->{strip_tags_reqd_attrs}});

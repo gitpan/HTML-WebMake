@@ -1,18 +1,14 @@
 
-package WebMakeCGI::Dir;
+package HTML::WebMake::CGI::Dir;
 
-use Carp;
 use strict;
-use CGI qw/:standard/;
-use CGI::Carp 'fatalsToBrowser';
-use WebMakeCGI::Lib;
+use HTML::WebMake::CGI::CGIBase;
 
 use vars	qw{
-  	@ISA $VERSION $HTML
+  	@ISA $HTML
 };
 
-@ISA = qw();
-$VERSION = "0.1";
+@ISA = qw(HTML::WebMake::CGI::CGIBase);
 
 ###########################################################################
 
@@ -28,25 +24,17 @@ $HTML = q{
 __ERRORS__
 
 __FORM__
-
-</body></html>
 };
 
 ###########################################################################
 
-$CGI::POST_MAX = 1024*1024*2;
-$CGI::DISABLE_UPLOADS = 1;
-
 sub new {
   my $class = shift;
   $class = ref($class) || $class;
+  my $self = $class->SUPER::new (@_);
+  $self->{html} = $HTML;
 
-  my $self = {
-    'q'			=> shift,
-    'msgs'		=> ''
-  };
-
-  $self->{file_base} = "/home/jm/ftp/wmtest";
+  $self->{no_filename_needed} = 1;
 
   bless ($self, $class);
   $self;
@@ -54,38 +42,13 @@ sub new {
 
 ###########################################################################
 
-sub mksafe { return WebMakeCGI::Lib::mksafe (@_); }
-sub mksafepath { return WebMakeCGI::Lib::mksafepath (@_); }
-
-sub warn {
-  my ($self, $err) = @_;
-  
-  warn "WebMakeCGI: $err\n";
-  $self->{msgs} .= "<font color=\"#ff0000\">Warning: $err</font><br /><hr />\n";
-}
-
-sub run {
+sub subrun {
   my $self = shift;
   my $q = $self->{q};
 
-  print "Content-Type: text/html\r\n\r\n";
-  $self->{msgs} = '';
-
-  # my $dir = $q->path_info();
-  my $dir = &mksafepath($q->param('dir'));
+  my $dir = HTML::WebMake::CGI::Lib::mksafepath ($q->param('dir'));
   $self->{dir} = $dir;
-
-  my $step = $q->param('step');
-  my $form;
-  if (!defined $step || $step eq 'list') {
-    $form = $self->write_list_page ();
-  }
-  $form ||= '';
-
-  my $txt = $HTML;
-  $txt =~ s/__ERRORS__/$self->{msgs}/gs;
-  $txt =~ s/__FORM__/${form}/gs;
-  print $txt;
+  $self->write_list_page ();
 }
 
 sub write_list_page
@@ -102,7 +65,6 @@ sub write_list_page
   }
 
   $form .= "
-    <hr />
     <p>Files in <strong>$self->{dir}</strong>:</p>
     <ul>
   ";
@@ -114,7 +76,7 @@ sub write_list_page
   closedir DIR;
 
   foreach my $file (@files) {
-    my $partpath = &mksafepath ($self->{dir}."/".$file);
+    my $partpath = $self->makepath ($self->{dir}, $file);
     my $path = $self->{file_base}."/".$partpath;
 
     if ($file eq '.') { next; }
@@ -123,26 +85,51 @@ sub write_list_page
     if (-d $path) {
       $form .= qq{
 	<li>Dir: <strong>$file</strong>
-	<a href="webmake.cgi?dir=$partpath">[Go]</a>
+	<a href="__REINVOKE__dir=${partpath}__">[Go]</a>
 	</li>
-      };
+      };#"
 
     } else {
-      $form .= qq{
-	<li>File: <strong>$file</strong>
-	<a href="webmake.cgi?edit=$partpath">[Edit]</a>
-	</li>
-      };
+      $form .= qq{ <li>File: };
+
+      if ($path =~ /${HTML::WebMake::CGI::RWMetaTable::METATABLEFNAME}$/) {
+	$form .= qq{
+	  <em>$file</em> (used by WebMake for metadata storage)
+	  <a href="__REINVOKE__edit=1\&f=${partpath}__">[Edit XML As Text]</a>
+	};#"
+
+      } elsif ($path =~ /\.wmk$/i) {
+	$form .= qq{
+	  <strong>$file</strong>
+	  <a href="__REINVOKE__site=1\&wmkf=${partpath}__">[Edit WebMake file]</a>
+	};#"
+
+      } else {
+	$form .= qq{
+	  <strong>$file</strong>
+	  <a href="__REINVOKE__edit=1\&f=${partpath}__">[Edit]</a>
+	};#"
+      }
+
+      # if (!$self->{cvs}->file_in_cvs ($path)) {
+      # provide a way to add it? TODO
+      # }
+
+      $form .= qq{ <a href="__REINVOKE__del=1\&f=${partpath}__">[Delete]</a> };
+      #"
+      $form .= qq{ </li> };
     }
   }
 
   $form .= q( </ul> <hr /> );
 
-  $form .= $q->startform(-action => 'webmake.cgi',
-  				-method => 'GET')
+  $form .= $q->startform(-method => 'GET')
 	  . $q->p ("Create New File:  "
-	    . $q->textfield (-name => 'edit',
-		    -default => '')." "
+            . $q->hidden (-name=>'edit', -value=>'1')
+            . $q->hidden (-name=>'dirprefix', -value=>$self->{dir})
+	    . $q->textfield (-name => 'f', -default => '')
+	    . $self->std_cgi_hidden_items ($q)
+	    ." "
 	    . $q->submit (-name=>'Create', -value=>'Create')
 	  )
 	  . $q->endform();

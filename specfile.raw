@@ -6,7 +6,7 @@
 %define ver      __VERSION__
 %define rel      1
 %define prefix   /usr
-%define siteperldir %{prefix}/lib/perl5/site_perl/5.005
+%define siteperldir %{prefix}/lib/perl5/site_perl/5.6.0
 
 Name: WebMake
 Summary: a simple web site management system.
@@ -22,7 +22,7 @@ BuildRoot: /tmp/webmake-%{ver}-root
 Packager: Justin Mason <jm@jmason.org>
 BuildArchitectures: noarch
 
-Requires: perl >= 5.003
+Requires: perl >= 5.6
 Prefix: /usr
 
 %description
@@ -37,7 +37,7 @@ It allows the separation of responsibilities between the content editors, the
 HTML page designers, and the site architect; only the site architect needs to
 edit the WebMake file itself, or know perl or WebMake code.
 
-WebMake requires Perl 5.
+WebMake requires Perl 5.  This RPM requires Perl 5.6.
 
 %prep
 %setup -n HTML-WebMake-%{ver}
@@ -62,11 +62,14 @@ make PREFIX=$RPM_BUILD_ROOT/usr install
 %defattr(-,root,root)
 
 %{prefix}/bin/webmake
-%{prefix}/man/man1/webmake.1.gz
+%{prefix}/bin/webmake_cvs_import
+%{prefix}/share/man/man1/webmake.1.gz
 
 %{siteperldir}/HTML/WebMake/*
 
 %doc	README Changes TODO LICENSE MANIFEST MANIFEST.SKIP
 %doc	doc/*
 %doc	webmake.vim
+%doc	webmake.cgi
+%doc	wmblog
 

@@ -11,7 +11,12 @@ use HTML::WebMake::Main;
 
 use vars	qw{
   	@ISA
+	$TARGETS
+	$METAS
 };
+
+$TARGETS = 1;
+$METAS = 2;
 
 ###########################################################################
 
@@ -96,15 +101,32 @@ sub parse_metatable_xml {
   my $src = $attrs->{src}; $src ||= '(.wmk file)';
   $util->set_filename ($src);
 
-  $self->parse_xml_block ($text, \&search_for_targets);
+  # Right, this is nasty. Perl coredumps here regularly... :( Basically it
+  # looks like the nested XML parsing calls tickle a bug in 5.6.0, resulting in
+  # a coredump inside malloc() on RedHat 7.1 at least.
+  #
+  # The workaround that _seems_ to work is to move the parsing of the textblock
+  # inside the <target> tags out of that parser loop, by storing them in a hash
+  # until the <target> tags are all parsed, then parsing them afterwards.
+  # gross and not as efficient, but it works.
+
+  $self->{targetblocks} = { };
+  $self->parse_xml_block ($text, $TARGETS);
+  # $text = '';
+
+  foreach my $contname (keys %{$self->{targetblocks}}) {
+    my $contobj = $self->{main}->{contents}->{$contname};
+    $text = $self->{targetblocks}->{$contname};
+    $self->{tagging_content} = $contobj;
+    $self->parse_xml_block ($text, $METAS);
+  }
+
+  delete $self->{targetblocks};
+  $text = '';
+  undef;
 }
 
 # -------------------------------------------------------------------------
-
-sub search_for_targets {
-  my ($self, $util, $textref) = @_;
-  $util->strip_first_tag ($textref, "target", $self, \&tag_target, qw(id));
-}
 
 sub tag_target {
   my ($self, $tag, $attrs, $text) = @_;
@@ -117,19 +139,11 @@ sub tag_target {
     return '';
   }
 
-  $self->{tagging_content} = $contobj;
-
-  $self->parse_xml_block ($text, \&search_for_metas);
-
+  $self->{targetblocks}->{$contname} = $text;
   '';
 }
 
 # -------------------------------------------------------------------------
-
-sub search_for_metas {
-  my ($self, $util, $textref) = @_;
-  $util->strip_first_tag ($textref, "meta", $self, \&tag_meta, qw(name));
-}
 
 sub tag_meta {
   my ($self, $tag, $attrs, $text) = @_;
@@ -142,29 +156,28 @@ sub tag_meta {
 # -------------------------------------------------------------------------
 
 sub parse_xml_block {
-  my ($self, $block, $sub) = @_;
-  local ($_) = $block;
-
+  my ($self, $block, $subtags) = @_;
   my $util = $self->{main}->{util};
-  my $prevpass;
-  for (my $evalpass = 0; 1; $evalpass++) {
-    last if (defined $prevpass && $_ eq $prevpass);
-    $prevpass = $_;
 
-    s/^\s+//gs;
-    last if ($_ !~ /^</);
+  $block =~ s/^\s+//gs;
 
-    1 while s/<\{!--.*?--\}>//gs;       # WebMake comments.
-    1 while s/^<!--.*?-->//gs;          # XML-style comments.
+  1 while $block =~ s/<\{!--.*?--\}>//gs;       # WebMake comments.
+  1 while $block =~ s/^<!--.*?-->//gs;          # XML-style comments.
 
-    &$sub ($self, $util, \$_);
+  if ($subtags eq $TARGETS) {
+    $block = $util->strip_tags ($block, "target", $self, \&tag_target, qw(id));
+  } elsif ($subtags eq $METAS) {
+    $block = $util->strip_tags ($block, "meta", $self, \&tag_meta, qw(name));
+  } else {
+    die "oops!";
   }
 
-  if (/\S/) {
-    /^(.*?>.{40,40})/s; $_ = $1; $_ =~ s/\s+/ /gs;
+  if ($block =~ /\S/) {
+    $block =~ /^(.*?>.{40,40})/s; $block = $1; $block =~ s/\s+/ /gs;
     $self->{main}->fail ("metatable file contains unparseable data at:\n".
-              "\t$_ ...\"\n");
+              "\t$block ...\"\n");
   }
+
   1;
 }
 

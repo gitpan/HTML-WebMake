@@ -1,3 +1,327 @@
+2001-06-21 22:56  jmason
+
+	* lib/HTML/WebMake/CGI/Edit.pm: ui for edit changed slightly
+
+2001-06-21 22:44  jmason
+
+	* lib/HTML/WebMake/CGI/Edit.pm: ui for edit changed slightly
+
+2001-06-21 22:42  jmason
+
+	* lib/HTML/WebMake/CGI/CGIBase.pm: added support for ; as CGI param
+	separator
+
+2001-06-21 22:41  jmason
+
+	* lib/HTML/WebMake/CGI/Edit.pm: redoing edit interface
+
+2001-06-21 22:37  jmason
+
+	* lib/HTML/WebMake/CGI/: CGIBase.pm, Del.pm, Edit.pm, Site.pm:
+	added CVS check to code
+
+2001-06-20 00:18  jmason
+
+	* t/data/meta12bug/: webmakefile.wmk, src/intro.txt,
+	src/navigation.tpl, src/normalpage.tpl, src/timetable.txt,
+	src/links/dav.txt, src/links/dsssl.txt, src/links/frame.txt,
+	src/links/intro.txt, src/links/latex.txt, src/links/linkpage.tpl,
+	src/links/literatur.txt, src/links/pdf.txt,
+	src/links/postscript.txt, src/links/sgml.txt,
+	src/links/typographie.txt, src/links/wacms.txt, src/links/xml.txt,
+	src/links/xsl.txt, src/links/xslt.txt: added test site from Joern
+	Clausen
+
+2001-06-20 00:14  jmason
+
+	* doc/: cms.txt, making.txt, metadata.txt: more doco rewriting
+
+2001-06-20 00:03  jmason
+
+	* doc/: blurb.txt, cms.txt, contributors.txt, firsttime.txt,
+	invoking.txt, making.txt, using.txt, webmake.html: updated doco
+	with more introductory stuff
+
+2001-06-19 14:07  jmason
+
+	* TODO: added alt tags to doco imgs
+
+2001-06-19 14:03  jmason
+
+	* doc/: documentation.wmk, webmake.html: added alt tags to doco
+	imgs
+
+2001-06-19 13:58  jmason
+
+	* wmblog, lib/HTML/WebMake/CGI/Site.pm: not sure what changes
+	happened
+
+2001-06-16 23:23  jmason
+
+	* doc/: datasources.txt, datasources.txt: documented namesubst a
+	bit better
+
+2001-06-16 23:19  jmason
+
+	* doc/: datasources.txt, webmake.html, cms.txt, datasources.txt:
+	documented namesubst a bit better
+
+2001-06-12 00:37  jmason
+
+	* lib/HTML/WebMake/: Main.pm, MediaContent.pm, NormalContent.pm:
+	fixed serious metadata bug reported by Joern Clausen
+
+2001-06-12 00:00  jmason
+
+	* MANIFEST, lib/HTML/WebMake/Main.pm,
+	lib/HTML/WebMake/DataSources/DirOfFiles.pm, t/contentsfind2.t,
+	t/data/contentsfind2.wmk: added test and fixed bug reported by
+	Joern Clausen
+
+2001-06-11 23:56  jmason
+
+	* doc/: datasources.txt, globs.txt: updated doc to note the ...
+	thing more clearly
+
+2001-06-11 13:45  jmason
+
+	* Changes, Makefile.PL, specfile.raw, build/update_devel,
+	build/update_stable: updated build scripts
+
+2001-06-10 23:02  jmason
+
+	* lib/HTML/WebMake/CGI/: Edit.pm, Site.pm: added 'Display File'
+	button
+
+2001-06-10 22:58  jmason
+
+	* lib/HTML/WebMake/CGI/Site.pm: added dumping
+
+2001-06-10 22:51  jmason
+
+	* lib/HTML/WebMake/CGI/: Edit.pm, Edit.pm, Site.pm: added dumping
+
+2001-06-10 22:46  jmason
+
+	* lib/HTML/WebMake/CGI/: Edit.pm, Edit.pm: added dumping
+
+2001-06-10 22:41  jmason
+
+	* lib/HTML/WebMake/CGI/: CGIBase.pm, Edit.pm, CGIBase.pm, Edit.pm:
+	added dumping
+
+2001-06-10 22:16  jmason
+
+	* lib/HTML/WebMake/CGI/Site.pm: fixed a missing tag
+
+2001-06-10 22:16  jmason
+
+	* lib/HTML/WebMake/CGI/: CVS.pm, CVS.pm, CVS.pm: fixed some
+	highlighting of CVS messages
+
+2001-06-10 22:09  jmason
+
+	* lib/HTML/WebMake.pm: bumped version to 2.1
+
+2001-06-10 22:09  jmason
+
+	* lib/HTML/WebMake/CGI/Site.pm: removed debug calls
+
+2001-06-10 22:07  jmason
+
+	* lib/HTML/WebMake/CGI/Site.pm: fixed bug with fileless saves
+
+2001-06-10 22:03  jmason
+
+	* lib/HTML/WebMake/CGI/: Edit.pm, Site.pm, Site.pm, Site.pm: some
+	sanity changes
+
+2001-06-10 22:00  jmason
+
+	* lib/HTML/WebMake/CGI/Edit.pm: some sanity changes
+
+2001-06-10 21:56  jmason
+
+	* lib/HTML/WebMake/CGI/: CGIBase.pm, Del.pm, Edit.pm, Lib.pm,
+	Site.pm, Edit.pm: some sanity changes
+
+2001-06-10 21:45  jmason
+
+	* doc/cvshowto.txt: update cvshowto, added test bit
+
+2001-06-10 21:27  jmason
+
+	* webmake.cgi: removed wmssh
+
+2001-06-10 21:22  jmason
+
+	* webmake.cgi, doc/cvshowto.txt: updated cvshowto
+
+2001-06-10 14:38  jmason
+
+	* webmake.cgi, lib/HTML/WebMake/Main.pm, webmake.cgi: added
+	__HOST__ support to script
+
+2001-06-10 14:20  jmason
+
+	* doc/: documentation.css, webmake.html: updated stylesheet
+
+2001-06-07 13:03  jmason
+
+	* Changes, webmake_cvs_import, wmblog, build/mkrpm,
+	build/nightly_cron, build/update_devel, build/update_stable,
+	doc/cvshowto.txt, doc/webmake.html,
+	lib/HTML/WebMake/CGI/CGIBase.pm: release of 2.0
+
+2001-06-04 19:54  jmason
+
+	* webmake_cvs_import: added warning about I items
+
+2001-06-03 20:54  jmason
+
+	* MANIFEST, webmake_cvs_import, doc/cgi.txt, doc/cgiinstall.txt,
+	doc/cgistart.txt, doc/cvshowto.txt, doc/documentation.wmk,
+	doc/sections.tsv, doc/shots/built_site.png,
+	doc/shots/choose_site.png, doc/shots/cvs_commit.png,
+	doc/shots/cvs_commit_msg.png, doc/shots/cvs_update.png,
+	doc/shots/delete_file.png, doc/shots/edit_dir.png,
+	doc/shots/edit_item_page.png, doc/shots/edit_page.png,
+	doc/shots/edit_site.png, doc/shots/login.png, lib/HTML/WebMake.pm,
+	lib/HTML/WebMake/WmkFile.pm, lib/HTML/WebMake/CGI/CGIBase.pm,
+	lib/HTML/WebMake/CGI/Edit.pm, lib/HTML/WebMake/CGI/Site.pm: lotsa
+	doco
+
+2001-06-03 03:25  jmason
+
+	* doc/cvshowto.txt: updated doco
+
+2001-06-02 18:51  jmason
+
+	* MANIFEST, doc/cvshowto.txt: more CGI
+
+2001-06-02 18:46  jmason
+
+	* webmake.cgi, webmake_cvs_import, doc/blurb.txt, doc/cgi.txt,
+	doc/cvshowto.txt, lib/HTML/WebMake/CGI/CGIBase.pm,
+	lib/HTML/WebMake/CGI/FindWmkf.pm, lib/HTML/WebMake/CGI/Site.pm:
+	more CGI
+
+2001-06-02 18:16  jmason
+
+	* webmake.cgi, lib/HTML/WebMake/Main.pm,
+	lib/HTML/WebMake/CGI/CGIBase.pm, lib/HTML/WebMake/CGI/CVS.pm,
+	lib/HTML/WebMake/CGI/Del.pm, lib/HTML/WebMake/CGI/Dir.pm,
+	lib/HTML/WebMake/CGI/Edit.pm, lib/HTML/WebMake/CGI/Lib.pm,
+	lib/HTML/WebMake/CGI/Site.pm: CGI support works nicely
+
+2001-06-01 00:03  jmason
+
+	* webmake.cgi, lib/HTML/WebMake/CGI/CGIBase.pm,
+	lib/HTML/WebMake/CGI/Del.pm, lib/HTML/WebMake/CGI/Dir.pm,
+	lib/HTML/WebMake/CGI/Edit.pm, lib/HTML/WebMake/CGI/Lib.pm,
+	lib/HTML/WebMake/CGI/RWMetaTable.pm, lib/HTML/WebMake/CGI/Site.pm,
+	lib/HTML/WebMake/CGI/CVS.pm: added CVS support
+
+2001-05-28 23:19  jmason
+
+	* MANIFEST, webmake.cgi, doc/cgi.txt, doc/cms.txt,
+	doc/invoking.txt, doc/metatable.txt, doc/webmake.html,
+	lib/HTML/WebMake/CGI/CGIBase.pm: more work on CGI interface
+
+2001-05-28 23:01  jmason
+
+	* MANIFEST.SKIP, webmake.cgi, doc/.cvsignore,
+	lib/HTML/WebMake/Main.pm, lib/HTML/WebMake/CGI/CGIBase.pm,
+	lib/HTML/WebMake/CGI/Edit.pm, lib/HTML/WebMake/CGI/Site.pm,
+	lib/HTML/WebMake/DataSources/SVFile.pm, t/.cvsignore: CGI stuff now
+	works, at a basic level
+
+2001-05-21 23:40  jmason
+
+	* webmake.cgi, lib/HTML/WebMake/Main.pm, lib/HTML/WebMake/Util.pm,
+	lib/HTML/WebMake/WmkFile.pm, lib/HTML/WebMake/CGI/CGIBase.pm,
+	lib/HTML/WebMake/CGI/Del.pm, lib/HTML/WebMake/CGI/Dir.pm,
+	lib/HTML/WebMake/CGI/Edit.pm, MANIFEST, wmblog,
+	lib/HTML/WebMake/CGI/Site.pm: more work on CGI interface
+
+2001-05-19 20:42  jmason
+
+	* lib/HTML/WebMake/CGI/: CGIBase.pm, Edit.pm: added new CGI stuff,
+	docoed wmblog
+
+2001-05-19 20:10  jmason
+
+	* MANIFEST, webmake.cgi, wmblog, lib/HTML/WebMake/CGI/CGIBase.pm,
+	lib/HTML/WebMake/CGI/Del.pm, lib/HTML/WebMake/CGI/Dir.pm,
+	lib/HTML/WebMake/CGI/Edit.pm, lib/HTML/WebMake/CGI/Lib.pm,
+	lib/HTML/WebMake/CGI/RWMetaTable.pm, t/clean.t, t/data/clean.wmk:
+	added new CGI stuff, docoed wmblog
+
+2001-05-19 13:43  jmason
+
+	* webmake.cgi, lib/HTML/WebMake/MetaTable.pm,
+	lib/HTML/WebMake/CGI/Dir.pm, lib/HTML/WebMake/CGI/Edit.pm,
+	lib/HTML/WebMake/CGI/Lib.pm, lib/HTML/WebMake/CGI/RWMetaTable.pm:
+	changes to better support read-write metatables in CGI
+
+2001-05-16 18:23  jmason
+
+	* Changes, MANIFEST, doc/metadata.txt: doc fixes
+
+2001-05-16 15:24  jmason
+
+	* Changes, doc/cms.txt, lib/HTML/WebMake.pm: changed cms doc
+
+2001-05-15 12:34  jmason
+
+	* wmblog: changed wmblog to support BlogStart-BlogEnd without an
+	attached mail
+
+2001-05-15 12:31  jmason
+
+	* wmblog: oops, wrong path in wmblog
+
+2001-05-15 12:29  jmason
+
+	* wmblog: augmented debug for wmblog
+
+2001-05-12 18:08  jmason
+
+	* MANIFEST, doc/template.txt, doc/templates.txt, t/etmore.t,
+	t/ettextmarkup.t, t/perllib.t, t/use.t: added template tags; added
+	indent support to the HTML cleaner; fixed POD output to be valid
+	XML
+
+2001-05-12 17:50  jmason
+
+	* MANIFEST, webmake, webmake.vim, doc/breadcrumbs.txt,
+	doc/cleaner.txt, doc/content.txt, doc/contenttable.txt,
+	doc/datasources.txt, doc/documentation.css, doc/ettext.txt,
+	doc/navlinks.txt, doc/webmake.html,
+	lib/HTML/WebMake/FormatConvert.pm, lib/HTML/WebMake/HTMLCleaner.pm,
+	lib/HTML/WebMake/Main.pm, lib/HTML/WebMake/MetaTable.pm,
+	lib/HTML/WebMake/WmkFile.pm, t/navlinks_with_pod.t, t/pod.t,
+	t/data/pod.wmk, t/data/sitetree.wmk: added template tags; added
+	indent support to the HTML cleaner; fixed POD output to be valid
+	XML
+
+2001-05-10 21:56  jmason
+
+	* t/: navlinks_with_pod.t, pod.t: some perl 5.6 bugs fixed
+
+2001-05-10 21:11  jmason
+
+	* MANIFEST: removed 2 deleted files from manifest
+
+2001-05-10 16:57  jmason
+
+	* TODO, wmblog, doc/datasources.txt: updated path in wmblog
+
+2001-05-08 13:10  jmason
+
+	* Changes, lib/HTML/WebMake/SiteCache.pm: do not enforce DB_File
+	use, allow AnyDBM_File to figure it out
+
 2001-05-01 13:32  jmason
 
 	* wmblog: added -m to blog script
@@ -88,10 +412,9 @@
 	lib/HTML/WebMake/SubstCtx.pm, lib/HTML/WebMake/UserTags.pm,
 	lib/HTML/WebMake/Util.pm, lib/HTML/WebMake/WMLinkGlossary.pm,
 	lib/HTML/WebMake/WmkFile.pm, lib/HTML/WebMake/PerlLib/navtree.wmk,
-	lib/WebMakeCGI/Dir.pm, lib/WebMakeCGI/Edit.pm, t/metatablexml.t,
-	t/data/metatablexml.wmk: major, major speedups for partial site
-	rebuilds. metatable tag now supports XML input, and loading from an
-	external location using the src attribute
+	t/metatablexml.t, t/data/metatablexml.wmk: major, major speedups
+	for partial site rebuilds. metatable tag now supports XML input,
+	and loading from an external location using the src attribute
 
 2001-04-23 13:57  jmason
 
@@ -136,8 +459,7 @@
 
 2001-04-13 10:46  jmason
 
-	* webmake.cgi, lib/WebMakeCGI/Dir.pm, lib/WebMakeCGI/Edit.pm,
-	lib/WebMakeCGI/Lib.pm: cgi work
+	* webmake.cgi: cgi work
 
 2001-04-06 12:11  jmason
 
@@ -146,8 +468,8 @@
 2001-04-06 12:08  jmason
 
 	* webmake.cgi, lib/HTML/WebMake/MetadataContent.pm,
-	lib/HTML/WebMake/NormalContent.pm, lib/WebMakeCGI/Dir.pm,
-	lib/WebMakeCGI/Lib.pm: WebMakeCGI, new content subclasses added
+	lib/HTML/WebMake/NormalContent.pm: WebMakeCGI, new content
+	subclasses added
 
 2001-04-06 12:05  jmason
 
@@ -158,8 +480,8 @@
 	doc/using.txt, doc/webmake_vars.txt, lib/HTML/WebMake/Content.pm,
 	lib/HTML/WebMake/Contents.pm, lib/HTML/WebMake/DataSource.pm,
 	lib/HTML/WebMake/Main.pm, lib/HTML/WebMake/PerlCodeLibrary.pm,
-	lib/HTML/WebMake/SiteMap.pm, lib/WebMakeCGI/Edit.pm, t/WMTest.pm,
-	t/etmore.t, t/ettextlinks.t, t/ettextmarkup.t, t/example_sitemap.t,
+	lib/HTML/WebMake/SiteMap.pm, t/WMTest.pm, t/etmore.t,
+	t/ettextlinks.t, t/ettextmarkup.t, t/example_sitemap.t,
 	t/metacache.t, t/metadefault.t, t/navlinks_warning.t,
 	t/sitemap_with_metatable.t, t/data/metadefault.wmk: metadata now
 	stored separately from normal content, for 22% speedup on
@@ -1565,8 +1887,8 @@
 	lib/HTML/WebMake/Main.pm, lib/HTML/WebMake/Media.pm,
 	lib/HTML/WebMake/Out.pm, lib/HTML/WebMake/PerlCode.pm,
 	lib/HTML/WebMake/Util.pm, lib/HTML/WebMake/WmkFile.pm,
-	build/get_version, build/update_devel, build/update_stable,
-	lib/WebMakeCGI/Edit.pm: Initial revision
+	build/get_version, build/update_devel, build/update_stable: Initial
+	revision
 
 2000-08-22 23:26  jmason
 
@@ -1596,6 +1918,6 @@
 	lib/HTML/WebMake/Main.pm, lib/HTML/WebMake/Media.pm,
 	lib/HTML/WebMake/Out.pm, lib/HTML/WebMake/PerlCode.pm,
 	lib/HTML/WebMake/Util.pm, lib/HTML/WebMake/WmkFile.pm,
-	build/get_version, build/update_devel, build/update_stable,
-	lib/WebMakeCGI/Edit.pm: Initial import.
+	build/get_version, build/update_devel, build/update_stable: Initial
+	import.
 

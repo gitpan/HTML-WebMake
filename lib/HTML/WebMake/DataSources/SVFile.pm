@@ -44,7 +44,7 @@ sub add {
 
   } else {
     if (!open (IN, $self->{src})) {
-      warn "can't open ".$self->as_string()." src file \"$self->{src}\": $!";
+      warn "can't open ".$self->as_string()." src file \"$self->{src}\": $!\n";
       return;
     }
     @s = stat IN;

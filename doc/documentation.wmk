@@ -54,13 +54,13 @@
 <contents src="../lib/HTML/WebMake/PerlLib" name="*.wmk" />
 </metadefault>
 
-<!-- and now define the metadata for those PODs quickly using a metatable -->
-
 </metadefault>
 </attrdefault>
 </attrdefault>
 </attrdefault>
 </attrdefault>
+
+<!-- and now define the metadata for those PODs quickly using a metatable -->
 
 <metatable delimiter="|">
 .|title|abstract
@@ -76,6 +76,35 @@ safe_tag.wmk|safe_tag.wmk|Tag to ''make safe'' WebMake, EtText or HTML data
 download_tag.wmk|download_tag.wmk|Tag for quick download links to files
 csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated values
 </metatable>
+
+<!-- ------------------------------------------------------------------------ -->
+
+<{perl
+  # define a quick tag to mark up screenshots with a nice border.
+  # If I ever get around to make parameterised content references this taglib-style
+  # clunkiness will not be necessary ;)
+
+  define_empty_tag ("shot", \&make_shot, qw(src));
+
+  sub make_shot {
+    my ($tag, $attrs, $text, $self) = @_;
+
+    return qq{
+        <table border="0" cellpadding="0" cellspacing="0" align=center>
+        <tr><td bgcolor="#333333">
+        <table border="0" cellpadding="2" cellspacing="2">
+        <tr><td bgcolor="#ffffff">
+        <table border="0" cellpadding="2" cellspacing="2">
+        <tr><td>
+        <img src="}.$attrs->{src}.qq{" \${IMGSIZE} />
+        </td></tr></table>
+        </td></tr></table>
+        </td></tr></table>
+    };
+  }
+
+  '';
+}>
 
 <!-- ------------------------------------------------------------------------ -->
 
@@ -97,7 +126,7 @@ csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated valu
   <body bgcolor="#ffffff" text="#000000" link="#3300cc" vlink="#660066">
   <font face="lucida,verdana,sans-serif">
 
-  <div align=center> <img src=$(TOP/)images/WebMakeTitle.png ${IMGSIZE}></div>
+  <div align=center> <img src=$(TOP/)images/WebMakeTitle.png ${IMGSIZE} alt="WebMake"></div>
   ${navbar}
 
   <!-- yes, it's that Mozilla black-border code again ;) -->
@@ -135,7 +164,7 @@ csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated valu
   ${navbar}
   <div align=right>
   <a href=http://webmake.taint.org/>
-  <img src=$(TOP/)images/BuiltWithWebMake.png ${IMGSIZE} border=0></a>
+  <img src=$(TOP/)images/BuiltWithWebMake.png ${IMGSIZE} alt="Built With WebMake" border=0></a>
   </div>
   </font></body></html>
 </content>

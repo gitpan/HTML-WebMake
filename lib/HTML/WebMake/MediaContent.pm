@@ -147,7 +147,7 @@ sub add_extra_metas {
   # etc.
   my ($metaname, $val);
   while (($metaname, $val) = each %{$self->{extra_metas}}) {
-    $self->{main}->add_metadata ($from, $metaname, $val, { });
+    $self->{main}->add_metadata ($from, $metaname, $val, { }, 1);
   }
 }
 

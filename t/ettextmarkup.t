@@ -10,10 +10,10 @@ use Test; BEGIN { plan tests => 37 };
   q{<em>This is protected HTML &amp; should be OK.</em><hr /> <hr /> <hr />},
   'protected',
 
-  q{<p> Non-bold again!
-  <em>This is protected HTML &amp; should be OK.</em><hr /> <hr /> <hr />
-  Still part of the Non-bold para, right?
-  </p>},
+  q{ <p> Non-bold again!  <!--etsafe-->
+  <em>This is protected HTML &amp; should be OK.</em><hr />
+  <hr /> <hr /> <!--/etsafe--> Still part of the Non-bold para, right?
+  </p> },
   'etsafe_para_preserve',
 
   q{<p> Test for HR conversion.
@@ -49,13 +49,13 @@ use Test; BEGIN { plan tests => 37 };
   <li> <p> bar </p> </li> <li> <p> baz </p> </li> </ul>},
   'list',
 
-  q{<blockquote> <p> This should be reproduced as a blockquote text segment,
+  q{<blockquote> This should be reproduced as a blockquote text segment,
   because it's indented.
-  </p> </blockquote>},		# fix vim: '
+  </blockquote>},		# fix vim: '
   'block1',
 
-  q{<blockquote> <p> This too.
-  </p> </blockquote>},
+  q{<blockquote> This too.
+  </blockquote>},
   'block2',
 
   q{<h3>A H3 HEADING</h3></a>
@@ -78,14 +78,14 @@ use Test; BEGIN { plan tests => 37 };
   </p>},
   'h22',
 
-  q{<blockquote> <p> &Agrave; &Aring; &Atilde; &Auml; &Ccedil; &ETH; &Eacute;
+  q{<blockquote> &Agrave; &Aring; &Atilde; &Auml; &Ccedil; &ETH; &Eacute;
   &Ecirc; &Egrave; &Euml; &Iacute; &Icirc; &Igrave; &Iuml; &Ntilde;
   &Oacute; &Ocirc; &Ograve; &Oslash; &Otilde;
   &Ouml; &THORN; &Uacute; &Ucirc; &Ugrave; &Uuml; &Yacute; &aacute;
   &acirc; &aelig; &agrave; &aring; &atilde; &auml; &ccedil; &eacute;
   &ecirc; &egrave; &eth; &euml; &ouml; &szlig; &uuml; &yacute; &yuml;
   &copy; &reg; &pound; &yen; &brvbar; &sect;
-  </p> </blockquote>},
+  </blockquote>},
   'highbits',
 
   q{What about <b>this</b> -- <strong>balanced</strong> <i>tag

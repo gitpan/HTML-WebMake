@@ -1,6 +1,6 @@
 <wmmeta name="Title" value="Contributors to WebMake" />
 <wmmeta name="Section" value="01-intro" />
-<wmmeta name="Score" value="60" />
+<wmmeta name="Score" value="90" />
 <wmmeta name="Abstract">
 Contributors to WebMake
 </wmmeta>

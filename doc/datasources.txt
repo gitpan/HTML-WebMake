@@ -1,36 +1,33 @@
-<wmmeta name="Title" value="Data Sources for the &lt;contents&gt; and &lt;media&gt; Tags" />
+<wmmeta name="Title" value="Data Sources" />
 <wmmeta name="Section" value="02-tags_attrs" />
 <wmmeta name="Score" value="60" />
 <wmmeta name="Abstract">
-the protocols supported by &lt;contents&gt; and &lt;media&gt;
+the protocols supported by &lt;contents&gt;, &lt;templates&gt; and &lt;media&gt;
 </wmmeta>
 
-Contents or URLs can be searched for using the "&lt;contents&gt;" [contents]
-or "&lt;media&gt;" [media] tags, which allow you to search a data source
-(directory, delimiter-separated-values file, database etc.) for a pattern.
+Contents or URLs can be searched for using the "&lt;contents&gt;" [contents],
+"&lt;templates&gt;" [templates] or "&lt;media&gt;" [media] tags, which allow
+you to search a data source (directory, delimiter-separated-values file,
+database etc.) for a pattern.
 
 Currently two data source protocols are defined, file: [1] and svfile: [2] .
-More will probably follow, especially if other people contribute them, hint
-hint ;)
 
 	[1]: #file
 	[2]: #svfile
-
-file: [1] is the default protocol, if none is specified.
 
 Attributes Supported By Datasource Tags
 =======================================
 
 	__src__:	All datasources require this attribute, which
 	specifies a protocol and path, in a URL-style syntax:
-
-		**protocol**:**path**
+	**protocol**:**path** . file: [1] is the default protocol, if none is
+	specified.
 
 	__name__:	This attribute is used to specify the pattern of data,
 	under this path, which will be converted into content items. The part
 	of the data's location which matches this name pattern will become the
-	name of the item. Typically, glob patterns, such as ''*.txt'' or
-	''.../*.html'' are used.
+	name of the item. Typically, "WebMake glob patterns" [globs], such as
+	''*.txt'' or ''.../*.html'' are used.
 
 	__prefix__:	The items' names can be further modified by specifying
 	a __prefix__ and/or __suffix__; these strings are prepended or
@@ -38,8 +35,9 @@ Attributes Supported By Datasource Tags
 
 	__suffix__:	See above.
 
-	__namesubst__:	a Perl-formatted s// substitution, which is used
-	to convert source filenames to content names.
+	__namesubst__:	a Perl-formatted s// substitution, which is used to
+	convert source filenames to content names.  See the example under
+	**The File: Protocol**, below.
 
 	__nametr__:	a Perl tr// translation, which is used to convert
 	source filenames to content names.
@@ -70,24 +68,60 @@ The file: Protocol
 The file: protocol loads content from a directory; each file is made into one
 content chunk.  The __src__ attribute indicates the source directory, the
 __name__ attribute indicates the "glob pattern" [globs] that will pick up the
-content items in question.  The filename of the file will be used as the
-content chunk's name.
+content items in question.
 
         &lt;contents src="stories" name="*.txt" /&gt;
 
-Note that the files in question are not actually opened until their content
-chunks are referenced using &wmdollar;{name} or get_content(''name'').
+The filename of the file will be used as the content chunk's name -- unless
+you use the __namesubst__ command; see below for details on this.
+
+Note that, for efficiency, the files in question are not actually opened until
+their content chunks are referenced using &wmdollar;{name} or
+get_content(''name'').
+
+Searching Recursively Through A Directory Tree
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Normally only the top level of files inside the __src__ directory are added to
-the content set. However, if the __name__ pattern starts with **.../**,
-the directory will be searched recursively:
+the content set. However, if the __name__ pattern starts with **.../**, the
+directory will be searched recursively:
 
-        &lt;contents src="stories" name=".../*.txt" /&gt;
+        &lt;contents src="stories" name="<strong>.../</strong>*.txt" /&gt;
 
 The resulting content items will contain the full path from that directory
-down, i.e. the file **stories/dir1/foo/bar.txt** exists, the example
-above would define a content item called
-**&wmdollar;{dir1/foo/bar.txt}**.
+down, i.e. the file **stories/dir1/foo/bar.txt** exists, the example above
+would define a content item called **&wmdollar;{dir1/foo/bar.txt}**.
+
+The namesubst Option
+~~~~~~~~~~~~~~~~~~~~
+
+If you use the __namesubst__ command, the filename will be modified using that
+substitution, to give the content item's name.  So, for example, this contents
+tag:
+
+        &lt;contents src="stories" name="*.txt" namesubst="s/.txt//" /&gt;
+
+will load these example files as follows:
+
+<blockquote>
+<table>
+<tr>
+<th> __Filename__ </th><th> __Content Name__ </th>
+</tr>
+<tr>
+<td> stories/index.txt </td><td> &wmdollar;{index} </td>
+</tr>
+<tr>
+<td> stories/foo.txt </td><td> &wmdollar;{foo} </td>
+</tr>
+<tr>
+<td> stories/directory/bar.txt </td><td> &wmdollar;{directory/bar} </td>
+</tr>
+<tr>
+<td> stories/zz/gum/baz.txt </td><td> &wmdollar;{zz/gum/baz} </td>
+</tr>
+</table>
+</blockquote>
 
 <a name=svfile>
 
@@ -177,5 +211,6 @@ Notes:
 
 
 	[globs]: $(globs)
+	[templates]: $(templates)
 	[contents]: $(contents)
 	[media]: $(media)

@@ -21,6 +21,10 @@ These are more-or-less traditional shell- or MS-DOS-like globs, as follows:
 </table>
 </blockquote>
 
+Note that traditional globs do not include **...**; this is a WebMake
+extension (well, the concept's nicked from <a
+href=http://www.perforce.com/>Perforce</a> ;)
+
 This is the default mode of matching. Example globs are:
 <strong>*.html</strong>, <strong>.../*.txt</strong>.
 

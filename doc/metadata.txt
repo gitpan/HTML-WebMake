@@ -27,6 +27,14 @@ as ''catalog data'', as opposed to ''narrative data'', which is what a normal
 content item is.  (thanks to Vaibhav Arya, vaibhav /at/ mymcomm.com, for that
 analogy.)
 
+To extend this metaphor, you should use metadata for anything that would be
+used to describe your pages in a catalog.  For example, given the page
+title, a quick abstract of the page, and a number to indicate its importance
+relative to other pages, one could easily create a list of pages
+automatically.  In fact, this is how the indexes in the WebMake documentation
+are generated, and it's how sitemaps, breadcrumb trails and site trees are
+implemented.
+
 How to Define Metadata
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -46,7 +54,7 @@ WebMake can load metadata from a number of sources:
 	- **Set as defaults before the content items are defined**: the
 	  "&lt;metadefault&gt;" [metadefault] WebMake tag.
 
-	- **Defined in bulk and added to the content items**: the
+	- **Defined in bulk and ''attached'' to the content items**: the
 	  "&lt;metatable&gt;" [metatable] tag.
 
         Auto: [metadefault]: $(metadefault)

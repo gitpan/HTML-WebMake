@@ -1,6 +1,6 @@
 <wmmeta name="Title" value="Tips On Using WebMake" />
 <wmmeta name="Section" value="01-intro" />
-<wmmeta name="Score" value="50" />
+<wmmeta name="Score" value="80" />
 <wmmeta name="Abstract">
 Some tips on using WebMake
 </wmmeta>

@@ -103,7 +103,7 @@ The same goes for indented paragraphs that start with the string
 <code>1.</code>, followed by whitespace.  However the default list tag in this
 case will be an **&lt;ol&gt;**...**&lt;/ol&gt;** list.  Any positive integer
 followed immediately by a full stop and a space will do the trick.  (BTW: I
-used to use <code>#</code> to do this, but I preferred the WikiIdea [wiki], it
+used to use <code>#</code> to do this, but I preferred the WikiIdea [Wiki], it
 looks better.)
 
 	__(Compatibility note: previous versions of EtText required that the
@@ -123,7 +123,7 @@ WebMake supports this.
 
 Indented paragraphs that start with <code>**term**:</code>
 __tab__ <code>**rest of paragraph**</code> will be converted
-into definition lists (this is another StolenFromWikiIdea [wiki]).  They
+into definition lists (this is another StolenFromWikiIdea [Wiki]).  They
 look like this:
 
 	Foo:	Blah blah blah etc.
@@ -243,8 +243,9 @@ included with Tony Sanders' __Plexus__ web server, back in September 1993.
 Yes, 1993. Setext has been around for a while!
 
 	Auto: [setext]: http://www.bsdi.com/setext/
+	Auto: [Wiki]: http://c2.com/cgi/wiki?WikiWikiWeb
 
-WikiWikiWeb [wiki] is quite a recent, well-established system which uses
+WikiWikiWeb [Wiki] is quite a recent, well-established system which uses
 a similar markup style.
 
 Userland's Frontier [frontier] includes a text-to-markup conversion

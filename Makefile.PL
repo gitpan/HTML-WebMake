@@ -17,7 +17,7 @@ WriteMakefile(
     'NAME'	=> 'HTML::WebMake',
     'VERSION_FROM' => 'lib/HTML/WebMake.pm', # finds $VERSION
 
-    'EXE_FILES'	=> ['webmake'],
+    'EXE_FILES'	=> ['webmake', 'webmake_cvs_import'],
 
     'PMLIBDIRS' => [ 'lib' ],
 

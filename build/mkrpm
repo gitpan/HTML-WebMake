@@ -1,6 +1,6 @@
 #!/bin/sh
 
-WEBDIR=/home/jm/public_html_wm
+WEBDIR=/home/jm/webmake.taint.org
 
 VERS=`./build/get_version` ; export VERS
 # ./build/update_devel

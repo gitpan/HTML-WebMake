@@ -184,15 +184,24 @@ sub create_extra_metas_if_needed {
 sub load_metadata {
   my ($self, $name, $key) = @_;
 
+  # a different method is used to load metadata from the current content
+  # item, so this should not happen:
+  if ($key =~ /^this\./i) {
+    warn "oops! wasn't expecting a this. metaref in load_metadata: $key";
+  }
+
   if (defined $self->{extra_metas}->{$key}) {
     $self->add_extra_metas ($name);
     return;		# we don't need to parse the text for this metadatum
   }
 
   if (!defined ($self->{parsed_metadata_tags})) {
-    dbg ("loading content \"$name\" for meta tag \$\[$key\]");
+    dbg ("loading content \"$name\" for meta ref \$\[$key\]");
     $self->load_text_if_needed();
+
+    $self->{set_thisdot_metadata_items} = 0;
     $self->parse_metadata_tags ($name, $self->{text});
+
     $self->add_extra_metas ($name);
     $self->infer_implicit_metas();
 
@@ -223,13 +232,16 @@ sub parse_metadata_tags {
 sub tag_wmmeta {
   my ($self, $tag, $attrs, $text) = @_;
 
+  my $name = lc $attrs->{name};
+
   # use a "value" attr if available; otherwise use the text
   # inside the tag.
-  my $name = lc $attrs->{name};
   my $val = $attrs->{value};
-  $val ||= $text;
+  if (!defined $val) { $val = $text; }
 
-  $self->{main}->add_metadata ($self->{meta_from}, $name, $val, $attrs);
+  $self->{main}->add_metadata ($self->{meta_from}, $name, $val, $attrs,
+    		$self->{set_thisdot_metadata_items});
+
   "";
 }
 
@@ -307,7 +319,8 @@ sub add_inferred_metadata {
   $val =~ s/\s+$//;
 
   dbg ("inferring $name metadata from text: \"$val\"");
-  $self->{main}->add_metadata ($self->{name}, $name, $val, $attrs);
+  $self->{main}->add_metadata ($self->{name}, $name, $val, $attrs,
+    		$self->{set_thisdot_metadata_items});
 }
 
 # -------------------------------------------------------------------------
@@ -318,7 +331,8 @@ sub add_extra_metas {
   # etc.
   my ($metaname, $val);
   while (($metaname, $val) = each %{$self->{extra_metas}}) {
-    $self->{main}->add_metadata ($from, $metaname, $val, { });
+    $self->{main}->add_metadata ($from, $metaname, $val, { },
+    		$self->{set_thisdot_metadata_items});
   }
 }
 
@@ -361,6 +375,10 @@ sub get_text_as {
     carp ($self->as_string().": no format defined");
     return "";
   }
+
+  # ensure if we parse any metadata, it's loaded as "this.foo"
+  # as well as "name.foo"
+  $self->{set_thisdot_metadata_items} = 1;
 
   $self->load_text_if_needed();
 
@@ -467,8 +485,12 @@ sub get_normal_content_text {
   my ($self) = @_;
 
   $self->add_navigation_metadata();
-  $self->parse_metadata_tags ($self->{name}, $self->{text});
-  $self->add_extra_metas ($self->{name});
+  my $name = $self->{name};
+
+  dbg ("parsing metadata in \"$name\"");
+  $self->parse_metadata_tags ($name, $self->{text});
+
+  $self->add_extra_metas ($name);
   $self->infer_implicit_metas();
 
   # if this content item is mapped, set a var called "__MainContentName"
@@ -476,7 +498,7 @@ sub get_normal_content_text {
   # while drawing the breadcrumb trail.
   if (!$self->{no_map} && !$self->is_generated_content())
   {
-    $self->{main}->set_unmapped_content ("__MainContentName", $self->{name});
+    $self->{main}->set_unmapped_content ("__MainContentName", $name);
   }
 
   $self->touch_last_used();

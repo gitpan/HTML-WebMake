@@ -7,28 +7,22 @@ use Test; BEGIN { plan tests => 10 };
 # ---------------------------------------------------------------------------
 
 %patterns = (
-  q{ <ul> <li> <a href="#NAME">NAME</a> <li>
-  <a href="#DESCRIPTION">DESCRIPTION</a> </ul>},
+  q{ <ul> <li> <a href=},
   'pod_header_list',
 
-  q{ <h1><a name="NAME">NAME</a></h1> <p> Blah foo etc. <p>},
+  q{ <h1><a name="name">NAME</a></h1> <p> Blah foo etc.},
   'pod_name',
 
-  q{<hr /> <h1><a name="DESCRIPTION">DESCRIPTION</a></h1> <p>
-   argh etc.},
+  q{DESCRIPTION</a></h1>},
   'pod_description',
 
-  q{ <h1><a name="BAR_NAME">BAR_NAME</a></h1> <p>
-   Blah bar etc. <p>
-   <hr />
-   <h1><a name="BAR_DESCRIPTION">BAR_DESCRIPTION</a></h1> <p>
-   argh etc.},
+  q{ <h1><a name=},
   'bar_found',
 );
 
 %anti_patterns = (
-  q{ <ul> <li> <a href="#BAR_NAME">BAR_NAME</a> <li>
-  <a href="#BAR_DESCRIPTION">BAR_DESCRIPTION</a> </ul>},
+  q{ <ul> <li> <a href="#bar_name">BAR_NAME</a> <li>
+  <a href="#bar_description">BAR_DESCRIPTION</a> </ul>},
   'anti_bar_header_list',
 );
 

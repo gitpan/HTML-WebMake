@@ -4,5 +4,6 @@ cd /home/jm/ftp/webmake
 
 (
   ./build/update_devel 
+  cd $HOME/webmake.taint.org ; cvs commit -m "nightly site update"
   $HOME/lib/html_webmake_put.rsync
 ) > cron.log 2>&1

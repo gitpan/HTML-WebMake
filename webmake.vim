@@ -44,7 +44,7 @@ syn keyword htmlTagName contained content contents media out for
 syn keyword htmlTagName contained webmake include wmmeta sitemap
 syn keyword htmlTagName contained metatable navlinks metadefault
 syn keyword htmlTagName contained breadcrumbs attrdefault sitetree
-syn keyword htmlTagName contained use contenttable
+syn keyword htmlTagName contained use contenttable template templates
 
 " and EtText extensions
 syn keyword htmlTagName contained etright etleft safe csvtable

@@ -17,7 +17,7 @@
 
 <{!-- ------------------------------------------------------------------- --}>
 
-<content name=header map=false>
+<template name=header >
   <html><head>
     <title>$[this.title]</title>
     <meta name="Abstract" value="$[this.abstract]" />
@@ -30,24 +30,24 @@
   <a href=$(mainindex)>Index</a> | 
   <a href=$(map)>Site Map</a>
   <hr />
-</content>
+</template>
 
-<content name=footer map=false>
+<template name=footer >
   <hr /><p>
   <em>Sorry about the crappy formatting BTW, this is just a demo. ;)</em>
   </p>
   </body>
   </html>
-</content>
+</template>
 
 <{!-- ------------------------------------------------------------------- --}>
 
-<content name=index_list_item map=false>
+<template name=index_list_item >
   <li>
     <a href=$(${item})>$[${item}.txt.title]</a><br />
     <p>$[${item}.txt.abstract]</p>
   </li>
-</content>
+</template>
 
 <content name=index_chunk isroot=true>
   <wmmeta name=title value="WebMake Sample: a news site" />
@@ -69,30 +69,30 @@
 
 <{!-- ------------------------------------------------------------------- --}>
 
-<content name=treeopen map=false>
+<template name=treeopen >
   <li>
     <strong>-</strong> <a href=$(url)>${title}</a>: $[${name}.abstract]<br>
     <ul>${list}</ul>
   </li>
-</content>
+</template>
 
-<content name=treeclosed map=false>
+<template name=treeclosed >
   <li>
     <strong>+</strong> <a href=$(url)>${title}</a>: $[${name}.abstract]<br>
   </li>
-</content>
+</template>
 
-<content name=treenotthispage map=false>
+<template name=treenotthispage >
   <li>
     <strong>.</strong> <a href=$(url)>${title}</a>: $[${name}.abstract]<br>
   </li>
-</content>
+</template>
 
-<content name=treethispage map=false>
+<template name=treethispage >
   <li>
     <strong>&gt;</strong> <a href=$(url)>${title}</a>: $[${name}.abstract]<br>
   </li>
-</content>
+</template>
 
 <sitemap name=mainsitemap node=sitemapnode leaf=sitemapleaf>
 <wmmeta name=title value="WebMake Sample: site map" />
@@ -105,7 +105,7 @@
 
 <{!-- ------------------------------------------------------------------- --}>
 
-<content name=sitemapnode map=false>
+<template name=sitemapnode >
   <li>
     <p>
       <a href=$(url)>${title}</a>: $[${name}.abstract]<br>
@@ -114,9 +114,9 @@
       <ul> ${list} </ul>
     </p>
   </li>
-</content>
+</template>
 
-<content name=sitemapleaf map=false>
+<template name=sitemapleaf >
   <li>
     <p>
       <a href=$(url)>${title}</a>: $[${name}.abstract]<br>
@@ -124,7 +124,7 @@
       <{!-- no sub-items here --}>
     </p>
   </li>
-</content>
+</template>
 
 <out name=map file=log/sitetree_map.html>
   ${header}${mainsitemap}${footer}

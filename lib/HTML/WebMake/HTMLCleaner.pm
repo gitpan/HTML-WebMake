@@ -19,6 +19,7 @@ use vars	qw{
 
 @ALLFEATURES =		qw{
     pack nocomments addimgsizes addxmlslashes fixcolors cleanattrs
+    indent
 };
 
 $KEEP_FORMAT_TAGS =	qr{(?:xmp|listing|pre|plaintext)};
@@ -86,12 +87,20 @@ sub clear_features {
 ###########################################################################
 
 sub clean {
-  my ($self, $txt) = @_;
+  my ($self, $txt, $fname) = @_;
 
   $self->{out} = [ ];
   $self->{in_pre} = 0;
 
+  $self->{indent_level} = 0;
+  $self->{indent_str} = '';
+  $self->{indent_depth} = 2;
+
   $self->parse ($$txt); $self->eof();
+
+  if ($self->{indent_level} > 0) {
+    warn "HTML cleaner: unbalanced tags found in $fname\n";
+  }
 
   join ('', @{$self->{out}});
 }
@@ -106,13 +115,18 @@ sub start {
   }
   
   if (!$self->{cleanattrs}) {
-    push (@{$self->{out}}, $origtext);
+    $self->add_text ($origtext);
   } else {
     $self->clean_attrs_at_start ($tagname, $attr, $attrseq, $origtext);
   }
 
   if ($tagname !~ /^${INLINE_TAGS}$/) {
-    push (@{$self->{out}}, "\n");
+    $self->add_text ("\n");
+    if (!$self->{in_pre} && $tagname !~ /^${EMPTY_ELEMENT_TAGS}$/) {
+      $self->open_indent();
+    } else {
+      $self->add_current_indent();
+    }
   }
   $self->{last_was_noninline_close_tag} = 0;
 }
@@ -141,6 +155,7 @@ sub clean_attrs_at_start {
     } elsif (!defined $BOOL_ATTR_VALUE && $val eq $name) {
       $attrs .= " ".$name;
     } elsif ($val =~ /\"/) {
+      $attr->{$name} =~ s/\'/&#039;/g;
       $attrs .= " ".$name ."=\'".$attr->{$name}."\'";
     } else {
       $attrs .= " ".$name ."=\"".$attr->{$name}."\"";
@@ -156,14 +171,18 @@ sub clean_attrs_at_start {
     $tagend = ">";
   }
 
+  if ($self->{last_was_noninline_close_tag}) {
+    $self->add_current_indent();
+  }
+
   if ($tagname eq 'img' && $self->{addimgsizes} &&
 	      $attrs !~ /(height|width)/i &&
 	      $imgsrc !~ /^(?:[a-z0-9A-Z]+:|\/)/)
   {
-    push (@{$self->{out}}, $self->{main}->fileless_subst
-		    ("(html-cleaner)", "<$tagname".$attrs.' ${IMGSIZE}>'));
+    $self->add_text ($self->{main}->fileless_subst
+	("(html-cleaner)", "<$tagname".$attrs.' ${IMGSIZE}>'));
   } else {
-    push (@{$self->{out}}, "<".$tagname, $attrs, $tagend);
+    $self->add_text ("<".$tagname, $attrs, $tagend);
   }
 }
 
@@ -177,21 +196,15 @@ sub end {
 
   if ($tagname !~ /^${INLINE_TAGS}$/) {
     if (!$self->{last_was_noninline_close_tag} && !$exiting_pre) {
-      push (@{$self->{out}}, "\n");
+      $self->add_text ("\n");
     }
-    if (!$self->{cleanattrs}) {
-      push (@{$self->{out}}, $origtext);
-    } else {
-      push (@{$self->{out}}, "</$tagname>\n");
-    }
+    $self->close_indent();
+
+    $self->add_text ("</$tagname>\n");
     $self->{last_was_noninline_close_tag} = 1;
 
   } else {
-    if (!$self->{cleanattrs}) {
-      push (@{$self->{out}}, $origtext);
-    } else {
-      push (@{$self->{out}}, "</$tagname>");
-    }
+    $self->add_text ("</$tagname>");
     $self->{last_was_noninline_close_tag} = 0;
   }
 }
@@ -201,17 +214,26 @@ sub end {
 sub text {
   my($self, $origtext, $is_cdata) = @_;
 
-  $self->pack_text (\$origtext);
-  $self->{last_was_noninline_close_tag} = 0;
+  if ($self->{in_pre} > 0) {
+    $self->{last_was_noninline_close_tag} = 0;
+    $self->add_text ($origtext);
+    return;
 
-  # to preserve whitespace:
-  # push (@{$self->{out}}, $origtext);
+  } elsif ($origtext =~ /^\s*$/s) {
+    return;
+  }
+
+  $self->{last_was_noninline_close_tag} = 0;
+  $self->pack_text (\$origtext);
+
+  # to preserve all whitespace:
+  # $self->add_text ($origtext);
 
   # or, to tidy up whitespace:
-  if ($origtext =~ /\S/ || $self->{in_pre} > 0) {
-    push (@{$self->{out}}, $origtext);
+  if ($origtext =~ /\S/) {
+    $self->add_text ($origtext);
   } else {
-    push (@{$self->{out}}, ' ');
+    $self->add_text (' ');
   }
 }
 
@@ -219,7 +241,8 @@ sub text {
 
 sub process {
   my ($self, $origtext) = @_;
-  push (@{$self->{out}}, "<?$origtext>\n");
+  $self->add_text ("<?$origtext>\n");
+  $self->add_current_indent();
 }
 
 # --------------------------------------------------------------------------
@@ -228,7 +251,8 @@ sub comment {
   my ($self, $origtext) = @_;
   if (!$self->{nocomments}) {
     $self->pack_text (\$origtext);
-    push (@{$self->{out}}, "<!--$origtext-->\n");
+    $self->add_text ("<!--$origtext-->\n");
+    $self->add_current_indent();
   }
 }
 
@@ -236,7 +260,8 @@ sub comment {
 
 sub declaration {
   my ($self, $origtext) = @_;
-  push (@{$self->{out}}, "<!$origtext>\n");
+  $self->add_text ("<!$origtext>\n");
+  $self->add_current_indent();
 }
 
 ###########################################################################
@@ -248,7 +273,60 @@ sub pack_text {
     $$txt =~ s/[ \t]+/ /gm;
     $$txt =~ s/^ / /gm;
     $$txt =~ s/ $/ /gm;
+
+    my $indent = $self->get_current_indent();
+    $$txt =~ s/\n/\n${indent}/gs;
   }
+}
+
+###########################################################################
+
+sub add_text {
+  my $self = shift;
+  push (@{$self->{out}}, @_);
+  # $self->{last_was_indent} = 0;
+}
+
+sub open_indent {
+  my ($self) = @_;
+
+  if (!$self->{indent}) { return; }
+
+  $self->{indent_level} += $self->{indent_depth};
+  $self->{indent_str} = (' ' x $self->{indent_level});
+
+  # return if ($self->{last_was_indent});
+  push (@{$self->{out}}, $self->{indent_str});
+  # $self->{last_was_indent} = 1;
+}
+
+sub close_indent {
+  my ($self) = @_;
+
+  if (!$self->{indent}) { return; }
+
+  $self->{indent_level} -= $self->{indent_depth};
+  if ($self->{indent_level} < 0) { $self->{indent_level} = 0; }
+  $self->{indent_str} = (' ' x $self->{indent_level});
+
+  # return if ($self->{last_was_indent});
+  push (@{$self->{out}}, $self->{indent_str});
+  # $self->{last_was_indent} = 1;
+}
+
+sub add_current_indent {
+  my ($self) = @_;
+
+  if (!$self->{indent}) { return; }
+
+  # return if ($self->{last_was_indent});
+  push (@{$self->{out}}, $self->{indent_str});
+  # $self->{last_was_indent} = 1;
+}
+
+sub get_current_indent {
+  my ($self) = @_;
+  $self->{indent_str};
 }
 
 ###########################################################################

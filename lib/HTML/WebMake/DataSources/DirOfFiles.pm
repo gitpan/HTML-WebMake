@@ -43,6 +43,8 @@ sub add {
   my $patt = $self->{main}->{util}->glob_to_re ($self->{name});
   my @matched;
 
+  $self->{src} =~ s,/+$,,;
+
   if ($use_find) {
     $self->{found} = [ ];
 
@@ -80,7 +82,7 @@ sub add {
     $fname =~ s,^\.[\\\/],,;	# fix ./foo => foo
     my $mtime = $self->{main}->cached_get_modtime ($fname);
     if (!defined $mtime || $mtime == 0) {
-      carp "cannot stat file $fname";
+      warn "cannot stat file $fname\n";
       next;
     }
 

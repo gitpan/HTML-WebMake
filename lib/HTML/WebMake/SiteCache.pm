@@ -55,7 +55,6 @@ sub tie {
 
   # use AnyDBM_File, but use the more efficient DB_File where supported
   my $dbtype = 'AnyDBM_File';
-  if ($^O !~ /win|mac|os2/i) { $dbtype = 'DB_File'; }
 
   my %db;
   for ($try = 0; $try < 4; $try++)

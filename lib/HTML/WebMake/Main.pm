@@ -75,7 +75,7 @@ use HTML::WebMake::WMLinkGlossary;
 
 use vars	qw{
   	@ISA $VERSION
-	$VERBOSE $DEBUG $DEFAULT_CLEAN_FEATURES
+	$VERBOSE $DEBUG $DEFAULT_CLEAN_FEATURES $HTML_LOGGING
 };
 
 @ISA = qw();
@@ -85,7 +85,8 @@ sub Version { $VERSION; }
 
 ###########################################################################
 
-$DEFAULT_CLEAN_FEATURES = "all";
+$DEFAULT_CLEAN_FEATURES = "pack addimgsizes cleanattrs indent ".
+				"addxmlslashes fixcolors";
 
 ###########################################################################
 
@@ -181,14 +182,6 @@ sub new {
 
   $self->{failures}	= 0;
 
-  if ($^O !~ /(win|os2|mac)/i) {
-    # which genius decided the mere sniff of getpwuid() should cause
-    # a crash on win32? Cheers mate.
-    eval ' $self->{current_user} = getpwuid ($>); ';
-  } else {
-    $self->{current_user} = "unknown";
-  }
-
   $self->{cache}	= undef;
   $self->{cachefname}	= undef;
   $self->{tmpdir}	= undef;
@@ -211,6 +204,24 @@ sub new {
 
   $DEBUG = $self->{debug};
   $VERBOSE = $self->{verbose};
+  $HTML_LOGGING = $self->{html_logging};
+
+  $self->{perl_lib_dir} = $self->find_perl_lib_dir();
+  $self->init_for_making();
+
+  $self;
+}
+
+sub init_for_making {
+  my ($self) = @_;
+
+  if ($^O !~ /(win|os2|mac)/i) {
+    # which genius decided the mere sniff of getpwuid() should cause
+    # a crash on win32? Cheers mate.
+    eval ' $self->{current_user} = getpwuid ($>); ';
+  } else {
+    $self->{current_user} = "unknown";
+  }
 
   $self->{format_conv} = new HTML::WebMake::FormatConvert ($self);
   $self->{metadata} = new HTML::WebMake::Metadata ($self);
@@ -230,10 +241,6 @@ sub new {
 
   $self->{now} = time();
   $self->{current_tick} = 0;
-
-  $self->{perl_lib_dir} = $self->find_perl_lib_dir();
-
-  $self;
 }
 
 # -------------------------------------------------------------------------
@@ -248,7 +255,10 @@ sub sed_fname {
   #    %l = perl lib dir for plugins
   #    %u = username
   #
-  $fname =~ s/\~/${ENV{'HOME'}}/g;
+  my $home = $ENV{'HOME'};
+  $home ||= '/';
+
+  $fname =~ s/\~/${home}/g;
   $fname =~ s/%u/$self->{current_user}/g;
 
   $fname =~ s{%f}{
@@ -363,6 +373,7 @@ sub getglossary {
 
 sub setcachefile {
   my ($self, $fname) = @_;
+  $self->{cachedir} = $fname;
   $self->{cachefname} = $fname."/cache.db";
 }
 
@@ -392,7 +403,7 @@ Read and parse the given WebMake file.
 =cut
 
 sub readfile {
-  my ($self, $fname) = @_;
+  my ($self, $fname, $opts) = @_;
   local ($_);
 
   $self->{current_webmake_fname} = $fname;
@@ -403,10 +414,52 @@ sub readfile {
   $self->set_file_modtime ($fname, $s[9]);
   close IN;
 
-  my $wmkf = new HTML::WebMake::WmkFile($self, $fname);
+  my $wmkf = new HTML::WebMake::WmkFile ($self, $fname);
+
+  if (defined $opts && $opts->{parse_for_cgi}) {
+    $wmkf->{parse_for_cgi} = 1;
+  }
+
   $wmkf->parse ($_);
   $self->{files}->{$fname} = $wmkf;
   1;
+}
+
+# -------------------------------------------------------------------------
+
+=item $f->readstring ($string)
+
+Read and parse the given WebMake configuration (as a string).
+
+=cut
+
+sub readstring {
+  my ($self, $str, $opts) = @_;
+  local ($_);
+
+  my $fname = '(readstring)';
+  $self->{current_webmake_fname} = $fname;
+  $self->set_file_modtime ($fname, $self->{now});
+
+  my $wmkf = new HTML::WebMake::WmkFile ($self, $fname);
+  $wmkf->parse ($str);
+  $self->{files}->{$fname} = $wmkf;
+  1;
+}
+
+# -------------------------------------------------------------------------
+
+# Internal API, used by HTML::WebMake::CGI modules.  This parses the
+# .wmk file (quickly) and generates a list of the editable items therein.
+#
+sub cgi_parse_file {
+  my ($self, $fname, $opts) = @_;
+
+  if ($self->readfile ($fname, { 'parse_for_cgi' => 1 })) {
+    return $self->{files}->{$fname}->{cgi};
+  } else {
+    return undef;
+  }
 }
 
 # -------------------------------------------------------------------------
@@ -551,12 +604,16 @@ sub metadata_to_content {
 }
 
 sub add_metadata {
-  my ($self, $from, $key, $val, $attrs) = @_;
+  my ($self, $from, $key, $val, $attrs, $setthisdotmetas) = @_;
 
   my $thiskey = "this.".$key;
   my $fullkey = $from.".".$key;
 
-  dbg2 ("set metadata $key == \"$thiskey\", \"$fullkey\"");
+  if ($setthisdotmetas) {
+    dbg2 ("set metadata $key == \"$thiskey\", \"$fullkey\"");
+  } else {
+    dbg2 ("set metadata $key == \"$fullkey\"");
+  }
 
   my $cont = $self->{contents}->{$from};
   my $wmkf;
@@ -570,8 +627,10 @@ sub add_metadata {
 
   $attrs->{up} = $from;
 
-  $self->_add_metadata_content_item ($thiskey, $wmkf, $attrs, $val);
-  push (@{$self->{this_metas_added}}, $thiskey);
+  if ($setthisdotmetas) {
+    $self->_add_metadata_content_item ($thiskey, $wmkf, $attrs, $val);
+    push (@{$self->{this_metas_added}}, $thiskey);
+  }
 
   $self->_add_metadata_content_item ($fullkey, $wmkf, $attrs, $val);
   $self->getcache()->put_metadata ($fullkey, $val);
@@ -773,7 +832,7 @@ sub subst {
     }
 
     # references to content chunks: ${content}
-    $$str =~ s/\$\{([^\<\{\}]+)\}/ $self->_curly_subst ($from, $1, 1); /ges;
+    $$str =~ s/\$\{([^\<\{\}]+)\}/ $self->_curly_subst ($from, $1, 1) /ges;
     #}
 
     # references to out URLs: $(foo)
@@ -975,8 +1034,9 @@ sub _curly_subst {
 
   # warn "JMD CURLY $key";
 
+  my $str;
   my $current_subst = $self->{current_subst};
-  if ($current_subst->{inf_loop}) { return ""; }
+  if ($current_subst->{inf_loop}) { $str = ""; goto ret; }
 
   my $defval = undef;
   if ($key =~ s/\?([^\?]*)$//) { $defval = $1; }
@@ -1018,29 +1078,31 @@ sub _curly_subst {
     }
 
     my $fmt = $current_subst->{format};
-    my $str = $cont->get_text_as($fmt);
+    $str = $cont->get_text_as($fmt);
     if (!defined $str) {
       $self->fail ("unable to get text in format \"$fmt\" for ".
 		"content \${$key} in \"$from\".");
-      return "";
+      $str = ""; goto ret;
     }
     $self->subst ($key, \$str);
-    return $str;
+    goto ret;
   }
 
   # then, webmake magic vars
-  my $str = $self->get_deferred_builtin_content ($from, $key);
-  if (defined $str) { return $str; }
+  $str = $self->get_deferred_builtin_content ($from, $key);
+  if (defined $str) { goto ret; }
 
   # finally, metadata that hasn't been used yet as a content item
   # (quite expensive to look up)
   my $meta = $self->subst_metadata ($from, $key, $defval);
-  if (defined $meta) { return $meta; }
+  if (defined $meta) { $str = $meta; goto ret; }
 
   # agh, I give up
-  if (defined $defval) { return $defval; }
+  if (defined $defval) { $str = $defval; goto ret; }
   vrb ("no value defined for content \${$key} in \"$from\".");
-  return "";
+
+ret:
+  $str;
 }
 
 # -------------------------------------------------------------------------
@@ -1147,7 +1209,7 @@ failed_to_find:
   if (defined $defval) { return $defval; }
 
   if (!$self->{current_subst}->{quiet}) {
-    vrb ("no value defined for metadata \$[$key] in \"$from\".");
+    vrb ("no value defined for metadata or content \$[$key] in \"$from\".");
   }
   return "";
 
@@ -1202,7 +1264,35 @@ sub get_deferred_builtin_content {
   if ($key eq "WebMake.PerlLib") {
     return $self->{perl_lib_dir};
   }
+  if ($key eq "WebMake.SourceFiles") {
+    return join (' ', $self->source_file_list());
+  }
+  if ($key eq "WebMake.GeneratedFiles") {
+    return join (' ', $self->generated_file_list());
+  }
   undef;
+}
+
+# -------------------------------------------------------------------------
+
+sub source_file_list {
+  my ($self) = @_;
+
+  my %uniq = ();
+  foreach my $deppair (@{$self->{content_deps_required}}) {
+    # $deppair looks like: [ $fname, $self->{cont_dependencies} ]
+    my $dephash = $deppair->[1];
+    foreach my $infile (keys %{$dephash}) {
+      $uniq{$infile} = 1;
+    }
+  }
+
+  return sort keys %uniq;
+}
+
+sub generated_file_list {
+  my ($self) = @_;
+  return sort keys %{$self->{outs}};
 }
 
 # -------------------------------------------------------------------------
@@ -1615,7 +1705,7 @@ sub make {
     my $bak = $to.".bak";
 
     next if (defined $done{$from});
-    dbg ("Renaming in new file: $from -> $to");
+    dbg ("Renaming new file: $from -> $to");
 
     unlink ($bak);
     if (-f $to && !rename ($to, $bak)) {
@@ -1705,7 +1795,7 @@ sub make_file_finish ($$$) {
   # clean HTML output.
   if ($out->get_format() =~ /^text\/html$/i) {
     my $cleanparams = !defined($out->{clean}) ? $DEFAULT_CLEAN_FEATURES : $out->{clean};
-    $txt = $self->clean_html (\$txt, $cleanparams);
+    $txt = $self->clean_html (\$txt, $fname, $cleanparams);
 
     # always trim the very first and last bits of whitespace in the
     # file anyway, for HTML output. Leave in 1 \n at EOF to look nice.
@@ -1900,7 +1990,7 @@ sub check_content_dep ($$$$) {
 # -------------------------------------------------------------------------
 
 sub clean_html {
-  my ($self, $txtptr, $features) = @_;
+  my ($self, $txtptr, $fname, $features) = @_;
 
   if ($features !~ /\S/) { return $$txtptr; }
 
@@ -1919,7 +2009,7 @@ sub clean_html {
   if ($self->{htmlcleaner}->{loadfailed}) { return $$txtptr; }
 
   $self->{htmlcleaner}->select_features ($features);
-  $self->{htmlcleaner}->clean ($txtptr);
+  $self->{htmlcleaner}->clean ($txtptr, $fname);
 }
 
 # -------------------------------------------------------------------------
@@ -1943,21 +2033,40 @@ sub finish {
 
 # -------------------------------------------------------------------------
 
+sub quicktxt2html {
+  my $txt = join ('',@_);
+
+  if ($HTML_LOGGING) {
+    $txt =~ s/&/&amp;/gs;
+    $txt =~ s/</&lt;/gs;
+    $txt =~ s/>/&gt;/gs;
+    $txt =~ s/\n/<br \/>\n/gs;
+  }
+
+  return $txt;
+}
+
 sub dbg {
-  ($DEBUG > 0) and print STDOUT "debug: ".join ('', @_)."\n";
+  if ($DEBUG > 0) {
+    print STDOUT "debug: ".quicktxt2html(@_, "\n");
+  }
 }
 
 sub dbg2 {
-  ($DEBUG > 1) and print STDOUT "debug: ".join ('', @_)."\n";
+  if ($DEBUG > 1) {
+    print STDOUT "debug: ".quicktxt2html(@_, "\n");
+  }
 }
 
 sub vrb {
-  $VERBOSE and print STDOUT "webmake: ".join ('', @_)."\n";
+  if ($VERBOSE) {
+    print STDOUT "webmake: ".quicktxt2html(@_, "\n");
+  }
 }
 
 sub fail {
   my $self = shift;
-  warn "webmake: error: ".join ('', @_)."\n";
+  warn "webmake: error: ".quicktxt2html(@_, "\n");
   $self->{failures}++;
 }
 

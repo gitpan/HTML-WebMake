@@ -5,15 +5,8 @@ body {
   font-family: verdana,lucida,helvetica,sans-serif;
 }
 
-// OL,UL,P,BODY,TD,TR,TH,FORM {
-  // font-family: verdana,lucida,helvetica,sans-serif;
-  // font-size: medium;
-  // color: #000000;
-}
-
-code, samp, pre
-{
-  font-family: monospace;
+code, samp, pre {
+  font-family: Courier New,courier,fixed-width,monospace;
 }
 
 H1 { font-size: x-large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFCC66; }
@@ -40,5 +33,16 @@ A:active {
   color: #800000;
   text-decoration: underline; 
 }
+
+dt {
+  font-size: medium;
+  font-weight: bold;
+  padding-top: 8px; padding-bottom: 8px;
+}
+
+dd {
+  padding-top: 8px; padding-bottom: 8px;
+}
+
 
 

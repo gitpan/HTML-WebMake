@@ -183,6 +183,7 @@ sub et_to_html {
 
 sub pod_to_html {
   my ($self, $contobj, $txt) = @_;
+  local ($_);
 
   my @args = ();
   if (defined $contobj->{podargs}) {
@@ -194,7 +195,7 @@ sub pod_to_html {
   my $tmpout = $self->{main}->tmpdir().'.tmp.wm_pod_o.'.$$;
 
   open (POD_IN, ">$tmpin") or die "Cannot write to $tmpin";
-  print POD_IN $txt;
+  print POD_IN $txt; undef $txt;
   close POD_IN;
 
   open (POD_OUT, "+>$tmpout") or die "Cannot write to $tmpout";
@@ -203,16 +204,32 @@ sub pod_to_html {
   pod2html ('--infile='.$tmpin, '--outfile='.$tmpout, '--title=x', @args);
 
   seek (POD_OUT, $start, 0);
-  $txt = join ('', <POD_OUT>);
+  $_ = join ('', <POD_OUT>);
   close POD_OUT;
 
   unlink ($tmpin, $tmpout);
+  unlink ("pod2htmd.x~~");	# more pod spoor
+  unlink ("pod2html.x~~");
+
+  # And now, some POD cleaning; the POD HTML isn't great unfortunately.
 
   # strip anything not inside the body from POD output, for
   # our purposes.
-  $txt =~ s/^<HTML>.*?<BODY>//gs;
-  $txt =~ s/<\/BODY>.*?$//gs;
-  $txt;
+  s/^<HTML>.*?<BODY>//gs;
+  s/<\/BODY>.*?$//gs;
+
+  # remove stray <p> start tags with no end tags.
+  s/<p>\s+(<h1>|<hr>)/$1/gis;
+
+  # clean up method lists
+  s/(<dt>.*?)<dd>/$1<\/dt><dd>/gis;
+  s/(<dd>.*?)<dt>/$1<\/dd><dt>/gis;
+  s/(<dd>.*?)<\/dl>/$1<\/dd><\/dl>/gis;
+
+  # remove empty paras
+  s/<p>\s*<\/p>//gis;
+
+  $_;
 }
 
 # -------------------------------------------------------------------------

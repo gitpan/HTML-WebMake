@@ -10,10 +10,18 @@ use strict;
 
 use vars	qw{
   	@ISA
+	$CGI_EDIT_AS_WMKFILE
+	$CGI_EDIT_AS_DIR
+	$CGI_EDIT_AS_TEXT
+	$CGI_NON_EDITABLE
 };
 
 @ISA = qw(HTML::WebMake::File);
 
+$CGI_EDIT_AS_WMKFILE		= 1;
+$CGI_EDIT_AS_DIR		= 2;
+$CGI_EDIT_AS_TEXT		= 3;
+$CGI_NON_EDITABLE		= 4;
 
 ###########################################################################
 
@@ -22,6 +30,11 @@ sub new ($$$) {
   $class = ref($class) || $class;
   my ($main, $filename) = @_;
   my $self = $class->SUPER::new ($main, $filename);
+
+  $self->{cgi} = {
+    'fulltext'		=> undef,
+    'items'		=> [ ],
+  };
 
   bless ($self, $class);
   $self;
@@ -40,6 +53,10 @@ sub parse {
 
   if (!defined $self->{main}) { carp "no main defined in WmkFile::parse"; }
 
+  if ($self->{parse_for_cgi}) {
+    $self->{cgi}->{fulltext} = $_;
+  }
+
   # trim off text before/after <webmake> chunk
   s/^.*?<webmake\b[^>]*?>//gis;
   s/<\/\s*webmake\s*>.*$//gis;
@@ -53,6 +70,13 @@ sub parse {
 
   $util->set_filename ($self->{filename});
 
+  # if we are parsing for the CGI scripts, make sure that the XML
+  # parser also notes regular expressions which match each item, so that the
+  # CGI code can rewrite the file easily later.
+  if ($self->{parse_for_cgi}) {
+    $util->{generate_tag_regexps} = 1;
+  }
+
   my $prevpass;
   my ($lasttag, $lasteval);
   for (my $evalpass = 0; 1; $evalpass++) {
@@ -65,26 +89,36 @@ sub parse {
     1 while s/<\{!--.*?--\}>//gs;	# WebMake comments.
     1 while s/^<!--.*?-->//gs;		# XML-style comments.
 
-
     # Preprocessing.
     $util->strip_first_tag (\$_, "include",
 				  $self, \&tag_include, qw(file));
     $util->strip_first_tag (\$_, "use",
 				  $self, \&tag_use, qw(plugin));
 
-    $self->{main}->eval_code_at_parse (\$_);
+    if (!$self->{parse_for_cgi}) {
+      $self->{main}->eval_code_at_parse (\$_);
+    } else {
+      1 while s/^<{.*?}>//gs;		# trim code, CGI mode doesn't need it
+    }
 
     $self->{main}->getusertags()->subst_wmk_tags
-    					($self->{filename}, \$_);
-
-    my $text = $self->{main}->{last_perl_code_text};
-    if (defined $text) { $lasteval = $text; $lasttag = undef; }
+				      ($self->{filename}, \$_);
+     
+    {
+      # if we got some eval code, store the text for error messages
+      my $text = $self->{main}->{last_perl_code_text};
+      if (defined $text) { $lasteval = $text; $lasttag = undef; }
+    }
 
     # Declarations.
     $util->strip_first_tag (\$_, "content",
 				  $self, \&tag_content, qw(name));
     $util->strip_first_tag (\$_, "contents",
 				  $self, \&tag_contents, qw(src name));
+    $util->strip_first_tag (\$_, "template",
+				  $self, \&tag_template, qw(name));
+    $util->strip_first_tag (\$_, "templates",
+				  $self, \&tag_templates, qw(src name));
     $util->strip_first_tag (\$_, "contenttable",
 				  $self, \&tag_contenttable, qw());
     $util->strip_first_tag (\$_, "media",
@@ -116,10 +150,14 @@ sub parse {
     $util->strip_first_tag (\$_, "option",
 				  $self, \&tag_option, qw(name value));
 
-    $text = $util->{last_tag_text};
+    # if we got some tags, store the text for error messages
+    my $text = $util->{last_tag_text};
     if (defined $text) { $lasttag = $text; $lasteval = undef; }
   }
 
+  # if there's any text left in the file that we couldn't parse,
+  # it's an error, so warn about it.
+  #
   if (/\S/) {
     my $failuretext = $lasttag;
 
@@ -140,14 +178,17 @@ sub parse {
     $lasttag ||= '';
     $self->{main}->fail ("WMK file contains unparseable data at or after:\n".
 	      "\t$lasttag\n\t$_ ...\"\n");
+    return 0;
   }
-  1;
+
+  return 1;
 }
 
 # -------------------------------------------------------------------------
 
 sub subst_attrs {
   my ($self, $tagname, $attrs) = @_;
+  return if ($self->{parse_for_cgi});
 
   if (defined ($attrs->{name})) {
     $tagname .= " \"".$attrs->{name}."\"";	# for errors
@@ -165,9 +206,11 @@ sub subst_attrs {
 sub tag_include {
   my ($self, $tag, $attrs, $text) = @_;
 
+  $self->cgi_add ($tag, $CGI_EDIT_AS_WMKFILE, $attrs->{file}, $attrs) and return '';
   $self->subst_attrs ("<include>", $attrs);
 
   my $file = $attrs->{file};
+
   if (!open (INC, "< $file")) {
     die "Cannot open include file: $file\n";
   }
@@ -246,6 +289,7 @@ sub tag_option {
 sub tag_content {
   my ($self, $tag, $attrs, $text) = @_;
 
+  $self->cgi_add ($tag, $CGI_EDIT_AS_TEXT, $text, $attrs) and return '';
   $self->subst_attrs ("<content>", $attrs);
   my $name = $attrs->{name};
   if (!defined $name) {
@@ -266,7 +310,36 @@ sub tag_content {
 sub tag_contents {
   my ($self, $tag, $attrs, $text) = @_;
 
+  $self->cgi_add_datasource ($tag, $attrs) and return '';
   $self->subst_attrs ("<contents>", $attrs);
+  my $lister = new HTML::WebMake::Contents ($self->{main},
+  			$attrs->{src}, $attrs->{name}, $attrs);
+  $lister->add();
+  "";
+}
+
+sub tag_template {
+  my ($self, $tag, $attrs, $text) = @_;
+
+  $self->cgi_add ($tag, $CGI_EDIT_AS_TEXT, $text, $attrs) and return '';
+  $self->subst_attrs ("<template>", $attrs);
+  my $name = $attrs->{name};
+  if (!defined $name) {
+    carp ("Unnamed template found in ".$self->{filename}.": $text\n");
+    return;
+  }
+  $attrs->{map} = 'false';
+
+  $self->{main}->add_content ($name, $self, $attrs, $text);
+  "";
+}
+
+sub tag_templates {
+  my ($self, $tag, $attrs, $text) = @_;
+
+  $self->cgi_add_datasource ($tag, $attrs) and return '';
+  $self->subst_attrs ("<templates>", $attrs);
+  $attrs->{map} = 'false';
   my $lister = new HTML::WebMake::Contents ($self->{main},
   			$attrs->{src}, $attrs->{name}, $attrs);
   $lister->add();
@@ -276,6 +349,7 @@ sub tag_contents {
 sub tag_media {
   my ($self, $tag, $attrs, $text) = @_;
 
+  $self->cgi_add_datasource ($tag, $attrs) and return '';
   $self->subst_attrs ("<media>", $attrs);
   my $lister = new HTML::WebMake::Media ($self->{main},
   			$attrs->{src}, $attrs->{name}, $attrs);
@@ -286,6 +360,7 @@ sub tag_media {
 sub tag_contenttable {
   my ($self, $tag, $attrs, $text) = @_;
 
+  $self->cgi_add ($tag, $CGI_EDIT_AS_TEXT, $text, $attrs) and return '';
   $self->subst_attrs ("<contenttable>", $attrs);
 
   # we actually use a Contents object, reading from the .wmk file
@@ -308,6 +383,7 @@ sub tag_contenttable {
 sub tag_metadefault {
   my ($self, $tag, $attrs, $text) = @_;
 
+  $self->cgi_add ($tag, $CGI_NON_EDITABLE, undef, $attrs) and return $text;
   $self->subst_attrs ("<metadefault>", $attrs);
   $self->{main}->{metadata}->set_metadefault ($attrs->{name}, $attrs->{value});
 
@@ -318,6 +394,7 @@ sub tag_metadefault {
 sub tag_attrdefault {
   my ($self, $tag, $attrs, $text) = @_;
 
+  $self->cgi_add ($tag, $CGI_NON_EDITABLE, undef, $attrs) and return $text;
   $self->subst_attrs ("<attrdefault>", $attrs);
   $self->{main}->{metadata}->set_attrdefault ($attrs->{name}, $attrs->{value});
 
@@ -328,6 +405,7 @@ sub tag_attrdefault {
 sub tag_metatable {
   my ($self, $tag, $attrs, $text) = @_;
 
+  $self->cgi_add ($tag, $CGI_EDIT_AS_TEXT, $text, $attrs) and return '';
   $self->subst_attrs ("<metatable>", $attrs);
 
   if (defined $attrs->{src}) {
@@ -349,6 +427,7 @@ sub tag_metatable {
 sub tag_sitemap {
   my ($self, $tag, $attrs, $text) = @_;
 
+  $self->cgi_add ($tag, $CGI_EDIT_AS_TEXT, $text, $attrs) and return '';
   $self->subst_attrs ("<sitemap>", $attrs);
   $self->{main}->add_sitemap ($attrs->{name},
   			$attrs->{rootname}, $self, $attrs, $text);
@@ -358,6 +437,7 @@ sub tag_sitemap {
 sub tag_navlinks {
   my ($self, $tag, $attrs, $text) = @_;
 
+  $self->cgi_add ($tag, $CGI_EDIT_AS_TEXT, $text, $attrs) and return '';
   $self->subst_attrs ("<navlinks>", $attrs);
   $self->{main}->add_navlinks ($attrs->{name}, $attrs->{map},
   			$self, $attrs, $text);
@@ -367,6 +447,7 @@ sub tag_navlinks {
 sub tag_breadcrumbs {
   my ($self, $tag, $attrs, $text) = @_;
 
+  $self->cgi_add ($tag, $CGI_EDIT_AS_TEXT, $text, $attrs) and return '';
   $self->subst_attrs ("<breadcrumbs>", $attrs);
   $attrs->{top} ||= $attrs->{level};
   $attrs->{tail} ||= $attrs->{level};
@@ -378,6 +459,7 @@ sub tag_breadcrumbs {
 sub tag_out {
   my ($self, $tag, $attrs, $text) = @_;
 
+  $self->cgi_add ($tag, $CGI_EDIT_AS_TEXT, $text, $attrs) and return '';
   $self->subst_attrs ("<out>", $attrs);
   my $file = $attrs->{file};
   my $name = $attrs->{name}; $name ||= $file;
@@ -390,7 +472,9 @@ sub tag_for ($$$$) {
   my ($self, $tag, $attrs, $text) = @_;
   local ($_);
 
+  $self->cgi_add ($tag, $CGI_NON_EDITABLE, undef, $attrs) and return $text;
   $self->subst_attrs ("<for>", $attrs);
+
   my $name = $attrs->{name};
   my $namesubst = $attrs->{namesubst};
   my $vals = $attrs->{'values'};
@@ -420,6 +504,58 @@ sub tag_for ($$$$) {
 
   dbg2 ("for tag evaluated: \"$ret\"");
   $ret;
+}
+
+###########################################################################
+
+sub cgi_add {
+  my ($self, $tag, $editui, $edituidata, $attrs) = @_;
+
+  return undef unless ($self->{parse_for_cgi});
+
+  my $name = "$tag";
+  if (defined $attrs->{name}) {
+    $name = "$tag name=\"".$attrs->{name}."\"";
+  }
+
+  my $re = $self->{main}->{util}->{last_tag_regexp};
+
+  my $id = $re;
+  $id =~ tr/=/E/;
+  $id =~ s/[\\<>\'\"]//gs;
+  $id =~ s/[^-_A-Za-z0-9]+/_/gs;
+  $id =~ s/^_six-m_//; $id =~ s/_$//;
+
+  my $item = {
+    'tag'		=> $tag,
+    'name'		=> $name,
+    'attrs'		=> $attrs,
+    'id'		=> $id,
+    'editui'		=> $editui,
+    'edituidata'	=> $edituidata,
+    'origtagregexp'	=> $re,
+  };
+
+  push (@{$self->{cgi}->{items}}, $item);
+  return ' ';
+}
+
+sub cgi_add_datasource {
+  my ($self, $tag, $attrs) = @_;
+
+  return undef unless ($self->{parse_for_cgi});
+
+  my $proto = 'file';
+  my $src = $attrs->{src};
+  if ($src =~ s/^([A-Za-z0-9]+)://) {
+    $proto = $1; $proto =~ tr/A-Z/a-z/;
+  }
+
+  if ($proto eq 'file') {
+    $self->cgi_add ($tag, $CGI_EDIT_AS_DIR, $src, $attrs);
+  }
+
+  return ' ';
 }
 
 ###########################################################################

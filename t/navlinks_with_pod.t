@@ -32,17 +32,14 @@ href="../log/navlinks_with_pod_story_3.html">Hot! story 3, etc etc.</a><br />
  href="../log/navlinks_with_pod_map.html">Site Map</a> <hr /> <a
  href="../log/navlinks_with_pod_pod2.html">Previous</a> | <a
  href="../log/navlinks_with_pod.html">Up</a> | <a
- href="../log/navlinks_with_pod_story_ 4.html">Next</a> <hr /> <ul> <li> <a
- href="#NAME">NAME</a> <li> <a href="#DESCRIPTION">DESCRIPTION</a> 
- }, 'pod1',
+ href="../log/navlinks_with_pod_story_ 4.html">Next</a> <hr /> },
+ 'pod1',
 
-q{ <a href="../log/navlinks_with_pod.html">Index</a> | <a
-href="../log/navlinks_with_pod_map.html">Site Map</a> <hr /> <a
-href="../log/navlinks_with_pod_map.html">Previous</a> | <a
-href="../log/navlinks_with_pod.html">Up</a> | <a
-href="../log/navlinks_with_pod_pod1.html">Next</a> <hr /> <p> <h1><a
-name="BAR_NAME">BAR_NAME</a></h1> <p>}, 'pod2',
-
+  q{ <a href="../log/navlinks_with_pod.html">Index</a> | <a
+  href="../log/navlinks_with_pod_map.html">Site Map</a> <hr /> <a
+  href="../log/navlinks_with_pod_map.html">Previous</a> | <a
+  href="../log/navlinks_with_pod.html">Up</a> | <a
+  href="../log/navlinks_with_pod_pod1.html">Next</a> <hr /> }, 'pod2',
 
 
  q{<h1>Navlinks With PODs</h1> <hr /> <a

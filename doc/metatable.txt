@@ -18,6 +18,9 @@ By default, the table is read from between the &lt;metatable&gt; and
 &lt;/metatable&gt; tags.  However, if you set the __src__ attribute,
 the table will be read from the location specified, instead.
 
+Use the __format__ attribute to specify whether the metatable is in
+XML (**xml**) or Delimiter-Separated-Value (**csv**) format.
+
 Delimiter-Separated-Value Format
 --------------------------------
 
