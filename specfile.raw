@@ -62,8 +62,6 @@ make PREFIX=$RPM_BUILD_ROOT/usr install
 %defattr(-,root,root)
 
 %{prefix}/bin/webmake
-%{prefix}/bin/ethtml2text
-%{prefix}/bin/ettext2html
 %{prefix}/man/man1/webmake.1.gz
 
 %{siteperldir}/HTML/WebMake/*

@@ -34,20 +34,20 @@ sub set_converters {
 
 ###########################################################################
 
-require Exporter;
+
 use Carp;
 use strict;
 
 use HTML::WebMake::Main;
 
 use vars	qw{
-  	@ISA @EXPORT 
+  	@ISA 
 	@OPTIMISED_FORMATS $SETUP_FMTS_LOOKUP
 	%FMT_TO_ZNAME %ZNAME_TO_FMT
 };
 
-@ISA = qw(Exporter);
-@EXPORT = qw();
+
+
 
 # these are optimised into integers instead of strings, to save
 # memory

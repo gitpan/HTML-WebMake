@@ -28,10 +28,10 @@ clear_cache_dir();
   q{This is the bar document. The title looks like this: This is bar.},
   'in_content_this_ref_bar',
 
-  q{<h2>This is foo.</h2>},
+  q{<h1>This is foo.</h1>},
   'header_title_foo',
 
-  q{<h2>This is bar.</h2>},
+  q{<h1>This is bar.</h1>},
   'header_title_bar',
 
   q{Title in out item: This is foo.},

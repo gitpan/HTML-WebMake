@@ -7,7 +7,7 @@
  <title>
 WebMake: Documentation: The &lt;contenttable&gt; Tag
 </title>
- <meta name="generator" content="WebMake/1.1" />
+ <meta name="generator" content="WebMake/1.2" />
  <style>
 body {
  background-color: #ffffff; 
@@ -24,9 +24,9 @@ code, samp, pre
 {
  font-family: monospace;
 }
-H1 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; }
+H1 { font-size: x-large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFCC66; }
+H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFDD77; }
+H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; background: #FFEE88; }
 H4 { font-size: small; font-family: Garamond,Book Antiqua,Times,serif; }
 H5 { font-size: x-small; font-family: Garamond,Book Antiqua,Times,serif; }
 H6 { font-size: xx-small; font-family: Garamond,Book Antiqua,Times,serif; }
@@ -57,7 +57,7 @@ A:active {
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">
@@ -96,25 +96,39 @@ Next, list a table of content names and their values, separated by a delimiter
 character, one name-value-pair per line.
 
 </p>
- <p>
+ <blockquote>
+<p>
 <em>Note:</em> if you would prefer to load the content items from a separate
-file, the <a href="contents.html">&lt;contents&gt;</a> tag is better suited.
+ file, the <a href="contents.html">&lt;contents&gt;</a> tag is better suited.
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+</blockquote>
+ <blockquote>
+<p>
+<em>Another note:</em> this is not the way to define data <em>about</em> other content
+ items (in other words, <strong><a href="metadata.html">metadata</a></strong>), such as titles, authorship, or brief
+ descriptions, as WebMake's built-in <a href="metadata.html">metadata</a> support will not be available
+ in that case. Embedding the <a href="metadata.html">metadata</a> into the content item using
+ &lt;wmmeta&gt; tags, or loading them in bulk using &lt;<a href="metatable.html">metatable</a>&gt; tags,
+ should be used instead.
+
+</p>
+</blockquote>
+ <a name="Example"><h2>Example</h2></a> <p>
 <pre>
 
   &lt;contenttable delimiter="|"&gt;
-  index.title|The index
-  similar.title|Similar Projects
-  administrivia.title|Administrivia
-  reviews.title|Reviews
+  person1|Justin
+  person2|Catherine
+  person3|The cat
   &lt;/contenttable&gt;
 </pre>
  
 </p>
  <p>
 
+</p>
+ 
 </p>
 </td>
 </tr>
@@ -131,7 +145,7 @@ file, the <a href="contents.html">&lt;contents&gt;</a> tag is better suited.
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">

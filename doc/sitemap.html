@@ -7,7 +7,7 @@
  <title>
 WebMake: Documentation: The &lt;sitemap&gt; Tag
 </title>
- <meta name="generator" content="WebMake/1.1" />
+ <meta name="generator" content="WebMake/1.2" />
  <style>
 body {
  background-color: #ffffff; 
@@ -24,9 +24,9 @@ code, samp, pre
 {
  font-family: monospace;
 }
-H1 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; }
+H1 { font-size: x-large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFCC66; }
+H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFDD77; }
+H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; background: #FFEE88; }
 H4 { font-size: small; font-family: Garamond,Book Antiqua,Times,serif; }
 H5 { font-size: x-small; font-family: Garamond,Book Antiqua,Times,serif; }
 H6 { font-size: xx-small; font-family: Garamond,Book Antiqua,Times,serif; }
@@ -57,7 +57,7 @@ A:active {
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">
@@ -92,20 +92,20 @@ site map tree.
 
 </p>
  <p>
-While traversing, it also searches for content items with a <a href="wmmeta.html">metadatum</a> called <strong>up</strong>. This is used to tie all the content together into a
+While traversing, it also searches for content items with a <a href="metadata.html">metadatum</a> called <strong>up</strong>. This is used to tie all the content together into a
 tree structure.
 
 </p>
  <blockquote>
 <p>
-<em>Note:</em> content items that do not have an <strong>up</strong> <a href="wmmeta.html">metadatum</a> are considered
+<em>Note:</em> content items that do not have an <strong>up</strong> <a href="metadata.html">metadatum</a> are considered
  children of the root by default. If you do not want to map a piece of
  content, declare it with the attribute <strong>map=false</strong>.
 
 </p>
 </blockquote>
  <p>
-By default, the content items are arranged by their score and title <a href="wmmeta.html">metadata</a>
+By default, the content items are arranged by their score and title <a href="metadata.html">metadata</a>
 at each level. The sort criteria can be overridden by setting the
 <em>sortorder</em> attribute.
 
@@ -114,7 +114,7 @@ at each level. The sort criteria can be overridden by setting the
 <p>
 <em>Note:</em> if you wish to include external HTML pages into the <a href="sitemap.html">sitemap</a>, you
  will need to load them as URL references using the &lt;media&gt; tag and use
- the &lt;<a href="metatable.html">metatable</a>&gt; tag to associate <a href="wmmeta.html">metadata</a> with them.
+ the &lt;metatable&gt; tag to associate <a href="metadata.html">metadata</a> with them.
  <em>t/data/sitemap_with_metatable.wmk</em> in the WebMake test suite demonstrates
  this. This needs more documentation (TODO).
 
@@ -181,7 +181,7 @@ The root content item to start traversing at. The
 <dd>
 <p>
 Whether or not all content items should be mapped.
- Normally dynamic content, such as <a href="wmmeta.html">metadata</a> and perl-code-defined
+ Normally dynamic content, such as <a href="metadata.html">metadata</a> and perl-code-defined
  content items, are not included. (default: false)
 
 </p>
@@ -212,7 +212,7 @@ Perl code to evaluate at each step of the tree.
 </dt>
 <dd>
 <p>
-A <a href="sorting.html">sort string</a> specifying what <a href="wmmeta.html">metadata</a>
+A <a href="sorting.html">sort string</a> specifying what <a href="metadata.html">metadata</a>
  should be used to sort the items in the tree, for example "<em>section
  score title</em>".
 
@@ -229,10 +229,10 @@ The <a href="sitemap.html">sitemap</a> can be declared either as an empty elemen
 end, or with a pair of starting and ending tags and text between. If the
 <a href="sitemap.html">sitemap</a> is declared using the latter style, any text between the tags will be
 prepended to the generated site map. It's typically only useful if you wish
-to set <a href="wmmeta.html">metadata</a> on the map itself.
+to set <a href="metadata.html">metadata</a> on the map itself.
 
 </p>
- <a name="Processing"><h2>Processing</h2></a> <p>
+ <a name="Processing"><h1>Processing</h1></a> <p>
 Here's the key to <a href="sitemap.html">sitemap</a> generation. Once the internal tree structure of the
 site has been determined, WebMake will run through each node from the root
 down up to 20 levels deep, and for each node, evaluate one of the 3 content
@@ -255,7 +255,7 @@ items named in the &lt;<a href="sitemap.html">sitemap</a>&gt; tag's attributes:
  <li>
 <p>
 <em>dynamic</em>: For dynamic content items, defined by perl code
- or <a href="wmmeta.html">metadata</a>.
+ or <a href="metadata.html">metadata</a>.
 
 </p>
 </li>
@@ -285,7 +285,7 @@ the content name
 </dt>
 <dd>
 <p>
-the content's <strong>Title</strong> <a href="wmmeta.html">metadatum</a>, if set
+the content's <strong>Title</strong> <a href="metadata.html">metadatum</a>, if set
 
 </p>
 </dd>
@@ -294,7 +294,7 @@ the content's <strong>Title</strong> <a href="wmmeta.html">metadatum</a>, if set
 </dt>
 <dd>
 <p>
-the content's <strong>Score</strong> <a href="wmmeta.html">metadatum</a>, if set
+the content's <strong>Score</strong> <a href="metadata.html">metadatum</a>, if set
 
 </p>
 </dd>
@@ -341,7 +341,7 @@ the first URL listed in a WebMake &lt;out&gt; tag
 Confused? Don't worry, there's an example below.
 
 </p>
- <a name="Grep"><h2>Grep</h2></a> <p>
+ <a name="Grep"><h1>Grep</h1></a> <p>
 The <em>grep</em> attribute is used to filter which content items are included in
 the site map.
 
@@ -358,7 +358,7 @@ the node is skipped; if the perl code sets the variable <code>$PRUNE</code> to 1
 nodes at this level and below are skipped.
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+ <a name="Example"><h2>Example</h2></a> <p>
 If you're still not sure how it works, take a look at <em>examples/sitemap.wmk</em>
 in the distribution. Here's the important bits from that file.
 
@@ -374,20 +374,25 @@ a template for a leaf. Note the use of <strong>$(url)</strong>,
 
 	&lt;content name=sitemapnode map=false&gt;
 	  &lt;li&gt;
-	    &lt;p&gt;
-	      &lt;a href=$(url)&gt;${title}&lt;/a&gt;: $[${name}.abstract]&lt;br&gt;
-	      &lt;!-- don't forget to list the sub-items --&gt;
-	      &lt;ul&gt; ${list} &lt;/ul&gt;
-	    &lt;/p&gt;
+	    &lt;a href=$(url)&gt;${title}&lt;/a&gt;: $[${name}.abstract]&lt;br&gt;
+	    &lt;!-- don't forget to list the sub-items --&gt;
+	    &lt;ul&gt; ${list} &lt;/ul&gt;
 	  &lt;/li&gt;
 	&lt;/content&gt;
+</pre>
+ 
+</p>
+ <p>
+And the template for the leaf nodes. Note that the <strong>${list}</strong>
+reference is not needed here.
+
+</p>
+ <p>
+<pre>
 
 	&lt;content name=sitemapleaf map=false&gt;
 	  &lt;li&gt;
-	    &lt;p&gt;
-	      &lt;a href=$(url)&gt;${title}&lt;/a&gt;: $[${name}.abstract]&lt;br&gt;
-	      &lt;!-- no sub-items here --&gt;
-	    &lt;/p&gt;
+	    &lt;a href=$(url)&gt;${title}&lt;/a&gt;: $[${name}.abstract]&lt;br&gt;
 	  &lt;/li&gt;
 	  &lt;/li&gt;
 	&lt;/content&gt;
@@ -448,7 +453,7 @@ the navigation links. Take a look <a href="docmap.html">here</a>.
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">

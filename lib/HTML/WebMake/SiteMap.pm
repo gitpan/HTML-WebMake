@@ -2,17 +2,17 @@
 
 package HTML::WebMake::SiteMap;
 
-require Exporter;
+
 use Carp;
 use strict;
 use HTML::WebMake::Main;
 
 use vars	qw{
-  	@ISA @EXPORT $ROOTNAME
+  	@ISA $ROOTNAME
 };
 
-@ISA = qw(Exporter);
-@EXPORT = qw();
+
+
 
 ###########################################################################
 
@@ -37,6 +37,7 @@ sub new {
 }
 
 sub dbg { HTML::WebMake::Main::dbg (@_); }
+sub dbg2 { HTML::WebMake::Main::dbg2 (@_); }
 
 # -------------------------------------------------------------------------
 
@@ -73,7 +74,9 @@ sub create_up_links {
   if ($self->{created_up_links}) { return; }
   $self->{created_up_links} = 1;
 
-  foreach my $contobj (values %{$self->{main}->{contents}}) {
+  foreach my $contobj (values %{$self->{main}->{contents}},
+  			values %{$self->{main}->{metadatas}})
+  {
     if (!defined $contobj) {
       warn "map_site: content object not defined\n";
       next;
@@ -81,7 +84,7 @@ sub create_up_links {
 
     next if ($contobj->{no_map});
     # no magic variables or this.foo metadata please.
-    next if ($contobj->{name} =~ /^(?:WebMake|this)\./);
+    next if ($contobj->{name} =~ /^(?:|WebMake|this)\./);
 
     my $upobj = $contobj->get_up_content();
     if (!defined $upobj) { $upobj = $self->{root_content}; }
@@ -101,7 +104,7 @@ sub map_site {
 
   return "" if ($self->{mapping_now});
 
-  my $contobj = $self->{main}->{contents}->{$contname};
+  my $contobj = $self->{main}->get_content_obj ($contname);
   die "map_site: no content object defined for $contname"
   				if (!defined $contobj);
 
@@ -168,14 +171,14 @@ sub map_level {
   if ($self->{set_navlinks}) {
     my $prev = $context->{prev};
     if (defined $prev) {
-      dbg ("nav links: prev=$prev->{name} <--> next=$node->{name}");
+      dbg2 ("nav links: prev=$prev->{name} <--> next=$node->{name}");
       $prev->set_next ($node);
       $node->set_prev ($prev);
     }
     $context->{prev} = $node;
 
     if (defined $upnode) {
-      dbg ("nav links: up=$upnode->{name}");
+      dbg2 ("nav links: up=$upnode->{name}");
       $node->set_up ($upnode);
     }
 
@@ -227,10 +230,10 @@ sub set_per_node_contents {
   my $score = $node->get_score();
   my $url = $node->get_url(); $url ||= '';
 
-  $self->{main}->add_fileless_content ('title', $title, undef, 0);
-  $self->{main}->add_fileless_content ('score', $score, undef, 0);
-  $self->{main}->add_fileless_content ('name', $node->{name}, undef, 0);
-  $self->{main}->add_fileless_content ('is_node', $haskids, undef, 0);
+  $self->{main}->set_unmapped_content ('title', $title);
+  $self->{main}->set_unmapped_content ('score', $score);
+  $self->{main}->set_unmapped_content ('name', $node->{name});
+  $self->{main}->set_unmapped_content ('is_node', $haskids);
   $self->{main}->add_url ('url', $url);
 }
 
@@ -238,7 +241,7 @@ sub output_node {
   my ($self, $context, $node, $levnum, $leafitems) = @_;
 
   $self->set_per_node_contents ($context, $node, 1);
-  $self->{main}->add_fileless_content ('list', $leafitems, undef, 0);
+  $self->{main}->set_unmapped_content ('list', $leafitems);
   return $self->{main}->curly_subst ("(eval)", $context->{node});
 }
 

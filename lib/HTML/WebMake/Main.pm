@@ -44,7 +44,7 @@ and temporary globals are used only where strictly necessary).
 
 package HTML::WebMake::Main;
 
-require Exporter;
+
 use Carp;
 use File::Basename;
 use File::Path;
@@ -54,9 +54,14 @@ use strict;
 use locale;
 use POSIX qw(strftime);
 
+use HTML::WebMake;
 use HTML::WebMake::Util;
 use HTML::WebMake::File;
 use HTML::WebMake::WmkFile;
+use HTML::WebMake::Content;
+use HTML::WebMake::NormalContent;
+use HTML::WebMake::MetadataContent;
+use HTML::WebMake::MediaContent;
 use HTML::WebMake::Out;
 use HTML::WebMake::SiteCache;
 use HTML::WebMake::SubstCtx;
@@ -69,14 +74,13 @@ use HTML::WebMake::UserTags;
 use HTML::WebMake::WMLinkGlossary;
 
 use vars	qw{
-  	@ISA @EXPORT $VERSION
+  	@ISA $VERSION
 	$VERBOSE $DEBUG $DEFAULT_CLEAN_FEATURES
 };
 
-@ISA = qw(Exporter);
-@EXPORT = qw();
+@ISA = qw();
 
-$VERSION = "1.1";
+$VERSION = $HTML::WebMake::VERSION;
 sub Version { $VERSION; }
 
 ###########################################################################
@@ -159,7 +163,9 @@ sub new {
 
   $self->{contents}	= { };
   $self->{content_order} = [ ];
-  $self->{metas_added}	= [ ];
+
+  $self->{metadatas}	= { };
+  $self->{this_metas_added} = [ ];
 
   $self->{locations}	= { };
   $self->{location_order} = [ ];
@@ -167,6 +173,7 @@ sub new {
   # increase the size of these hashes in anticipation of big filesets
   keys %{$self->{outs}} = 300;
   keys %{$self->{locations}} = 300;
+  keys %{$self->{metadatas}} = 500;
   keys %{$self->{contents}} = 500;
 
   $self->{imgsizes}	= { };
@@ -205,16 +212,19 @@ sub new {
   $DEBUG = $self->{debug};
   $VERBOSE = $self->{verbose};
 
-  $self->{format_conv}= new HTML::WebMake::FormatConvert ($self);
-  $self->{metadata}= new HTML::WebMake::Metadata ($self);
+  $self->{format_conv} = new HTML::WebMake::FormatConvert ($self);
+  $self->{metadata} = new HTML::WebMake::Metadata ($self);
+
+  $self->{ignore_for_dependencies} =
+  			new HTML::WebMake::File ($self, "(dep_ignore)");
+  $self->{meta_ignore_for_dependencies} =
+  			new HTML::WebMake::File ($self, "(meta)");
 
   # define some builtin magic content items now.
-  $self->add_fileless_content ("WebMake.GeneratorString",
-  		"WebMake/$VERSION", undef, 1);
-  $self->add_fileless_content ("WebMake.Version",
-  		$VERSION, undef, 1);
-  $self->add_fileless_content ("WebMake.Who",
-  		$self->{current_user}, undef, 1);
+  $self->set_unmapped_content ("WebMake.GeneratorString",
+  					"WebMake/$VERSION");
+  $self->set_unmapped_content ("WebMake.Version", $VERSION);
+  $self->set_unmapped_content ("WebMake.Who", $self->{current_user});
   # others in get_deferred_builtin_content() method below.
   # these are a little more computationally intensive.
 
@@ -353,7 +363,7 @@ sub getglossary {
 
 sub setcachefile {
   my ($self, $fname) = @_;
-  $self->{cachefname} = $fname;
+  $self->{cachefname} = $fname."/cache.db";
 }
 
 # -------------------------------------------------------------------------
@@ -446,69 +456,77 @@ sub add_out {
 
 # -------------------------------------------------------------------------
 
-sub _add_content ($$$$$$$) {
-  my ($self, $name, $file, $attrs, $text, $datasource, $ismetadata) = @_;
+sub _add_metadata_content_item ($$$$$) {
+  my ($self, $name, $file, $attrs, $text) = @_;
+
+  if (!defined $self->{metadatas}->{$name}) {
+    push (@{$self->{content_order}}, $name);
+  }
+  my $cont = new HTML::WebMake::MetadataContent ($name,
+  			$file, $attrs, $text);
+  $cont->set_declared (scalar @{$self->{content_order}});
+  $self->{metadatas}->{$name} = $cont;
+  $cont;
+}
+
+# -------------------------------------------------------------------------
+
+sub add_new_content_to_map {
+  my ($self, $name, $cont) = @_;
 
   if (!defined $self->{contents}->{$name}) {
     push (@{$self->{content_order}}, $name);
   }
-  my $cont = new HTML::WebMake::Content ($name, $file, $attrs,
-  					$text, $datasource, $ismetadata);
   $cont->set_declared (scalar @{$self->{content_order}});
   $self->{contents}->{$name} = $cont;
-  $cont;
 }
 
 sub add_content ($$$$$) {
   my ($self, $name, $file, $attrs, $text) = @_;
   dbg2 ("adding content \"$name\"");
-  return $self->_add_content ($name, $file, $attrs, $text, undef, 0);
+
+  return new HTML::WebMake::NormalContent ($name,
+  			$file, $attrs, $text, undef);
 }
 
 sub add_content_defer_opening ($$$$$) {
   my ($self, $name, $file, $attrs, $datasource) = @_;
   dbg ("adding content \"$name\" (deferred opening)");
-  return $self->_add_content ($name, $file, $attrs, undef, $datasource, 0);
+
+  return new HTML::WebMake::NormalContent ($name,
+  			$file, $attrs, undef, $datasource);
 }
 
-sub add_fileless_content ($$$$$$) {
-  my ($self, $key, $val, $upname, $ismetadata, $alwaysrebuild) = @_;
-  dbg2 ("set \"$key\"");
+# -------------------------------------------------------------------------
 
-  my $is_mapped;
-  if (defined $upname) {
-    $is_mapped = 'true';
-  } else {
-    # just stick it under the root by default
-    $is_mapped = 'false';
-    $upname = $HTML::WebMake::SiteMap::ROOTNAME;
-  }
+sub set_unmapped_content ($$$) {
+  my ($self, $key, $val) = @_;
+  dbg2 ("set \"$key\" (unmapped)");
 
-  my $wmkf;
-  if ($alwaysrebuild) {
-    $wmkf = new HTML::WebMake::File ($self, "(eval)");
-  } else {
-    $wmkf = new HTML::WebMake::File ($self, "(dep_ignore)");
-  }
-  
-  my $attrs = {
-    'format'		=> 'text/html',
-    'map'		=> $is_mapped,
-    'up'		=> $upname,
-  };
-
-  return $self->_add_content ($key, $wmkf, $attrs, $val, undef, $ismetadata);
+  return new HTML::WebMake::NormalContent ($key,
+  	$self->{ignore_for_dependencies},
+	  {
+	    'format'		=> 'text/html',
+	    'map'		=> 'false',
+	    'up'		=> $HTML::WebMake::SiteMap::ROOTNAME,
+	  },
+	$val, undef);
 }
 
-sub add_media_placeholder_content ($$$) {
-  my ($self, $key, $url) = @_;
+# -------------------------------------------------------------------------
 
-  my $wmkf = new HTML::WebMake::File ($self, "(dep_ignore)");
-  my $attrs = {
-    'format'		=> 'text/html',
-    'map'		=> 1,
-  };
-  return $self->_add_content ($key, $wmkf, $attrs, '', undef, 0);
+sub set_mapped_content ($$$$) {
+  my ($self, $key, $val, $upname) = @_;
+  dbg2 ("set \"$key\" (up = \"$upname\")");
+
+  return new HTML::WebMake::NormalContent ($key,
+  	$self->{ignore_for_dependencies},
+	  {
+	    'format'		=> 'text/html',
+	    'map'		=> 'true',
+	    'up'		=> $upname,
+	  },
+	$val, undef);
 }
 
 # -------------------------------------------------------------------------
@@ -528,8 +546,8 @@ sub metadata_to_content {
     'map'		=> 'false',
     'up'		=> $base,
   };
-  $self->_add_content ($key, $wmkf, $attrs, $val, undef, 1);
-  return $self->_curly_subst ($from, $key);
+  $self->_add_metadata_content_item ($key, $wmkf, $attrs, $val);
+  return $self->_curly_subst ($from, $key, 0);
 }
 
 sub add_metadata {
@@ -544,17 +562,19 @@ sub add_metadata {
   my $wmkf;
   if (!defined $cont) {
     # the metadata was set from an <out> block.
-    $wmkf = new HTML::WebMake::File ($self, "(meta)");
+    $wmkf = $self->{meta_ignore_for_dependencies};
   } else {
     $wmkf = new HTML::WebMake::File ($self,
   				$cont->get_filename());
   }
 
   $attrs->{up} = $from;
-  $self->_add_content ($thiskey, $wmkf, $attrs, $val, undef, 1);
-  $self->_add_content ($fullkey, $wmkf, $attrs, $val, undef, 1);
+
+  $self->_add_metadata_content_item ($thiskey, $wmkf, $attrs, $val);
+  push (@{$self->{this_metas_added}}, $thiskey);
+
+  $self->_add_metadata_content_item ($fullkey, $wmkf, $attrs, $val);
   $self->getcache()->put_metadata ($fullkey, $val);
-  push (@{$self->{metas_added}}, $thiskey);
 }
 
 # -------------------------------------------------------------------------
@@ -563,22 +583,35 @@ sub del_content {
   my ($self, $name) = @_;
   dbg2 ("deleting content \"$name\"");
   delete $self->{contents}->{$name};
+  delete $self->{metadatas}->{$name};
+}
+
+sub get_content_obj {
+  my ($self, $name) = @_;
+
+  my $obj = $self->{contents}->{$name};
+  if (!defined $obj) { $obj = $self->{metadatas}->{$name}; }
+  $obj;
 }
 
 sub get_all_content_names {
   my ($self) = @_;
 
-  # garbage-collect the list in case del_content() has been called
+  # garbage-collect the list in case del_content() has been called.
+  # now seems as good a time as any to do this...
   my @list = ();
   my %already_seen = ();
 
   foreach my $name (@{$self->{content_order}}) {
-    next unless defined $self->{contents}->{$name};
-    next if defined $already_seen{$name};
+    next unless (defined $self->{contents}->{$name} ||
+		defined $self->{metadatas}->{$name});
 
+    next if defined $already_seen{$name};
     $already_seen{$name} = 1;
+
     push (@list, $name);
   }
+
   @{$self->{content_order}} = @list;
   @list;
 }
@@ -772,7 +805,7 @@ sub subst_deferred_refs {
     }
 
     # deferred refs to content chunks: $[content]
-    $$str =~ s/\$\[([^\[\]]+)\]/ $self->_curly_subst ($from, $1); /ges;
+    $$str =~ s/\$\[([^\[\]]+)\]/ $self->_curly_subst ($from, $1, 0); /ges;
 
     # do a subst in case the deferred ref contained normal refs
     $self->subst ($from, $str);
@@ -828,22 +861,39 @@ sub fileless_subst {
 
 sub curly_subst {
   my ($self, $from, $txt) = @_;
-  $self->_subst_open(undef, undef, undef, "text/html", undef);	#{
-  $txt = $self->_curly_subst($from, $txt);
+  $self->_subst_open (undef, undef, undef, "text/html", undef);	#{
+  $txt = $self->_curly_subst ($from, $txt, 1);
   # then do a normal subst to handle <{set}>, metadata, etc.
-  $self->subst($from, \$txt);
+  $self->subst ($from, \$txt);
   $self->strip_metadata ($from, \$txt);
   $self->_subst_close();				#}
   $txt;
 }
 
-sub expand_content_quietly {
+sub curly_meta_subst {
+  my ($self, $from, $txt) = @_;
+  $self->_subst_open (undef, undef, undef, "text/html", undef);	#{
+  $txt = $self->_curly_subst ($from, $txt, 0);
+  $self->_subst_close();				#}
+  $txt;
+}
+
+sub curly_or_meta_subst {
+  my ($self, $from, $txt) = @_;
+  $self->_subst_open (undef, undef, undef, "text/html", undef);	#{
+  $txt = $self->_curly_subst ($from, $txt, 2);
+  # then do a normal subst to handle <{set}>, metadata, etc.
+  $self->subst ($from, \$txt);
+  $self->strip_metadata ($from, \$txt);
+  $self->_subst_close();				#}
+  $txt;
+}
+
+sub quiet_curly_meta_subst {
   my ($self, $from, $txt) = @_;
   $self->_subst_open(undef, undef, undef, "text/html", undef);	#{
   $self->{current_subst}->{quiet} = 1;
-  $txt = $self->_curly_subst($from, $txt);
-  $self->subst($from, \$txt);
-  $self->strip_metadata ($from, \$txt);
+  $txt = $self->_curly_subst($from, $txt, 0);
   $self->{current_subst}->{quiet} = 0;
   $self->_subst_close();				#}
   $txt;
@@ -866,10 +916,10 @@ sub _this_subst {
 
   # see if the current content chunk has this.$key defined
   my $thiskey = $from.$key;
-  my $thiscont = $self->{contents}->{$thiskey};
+  my $thiscont = $self->{metadatas}->{$thiskey};
 
   if (defined $thiscont) {
-    my $meta = $self->_curly_subst ($from, $thiskey);
+    my $meta = $self->_curly_subst ($from, $thiskey, 0);
     $meta;		# it does? use it now
   } else {
     "\$\[this$origkey\]";	# nope, leave it for later
@@ -919,34 +969,44 @@ sub _subst_close {
 # -------------------------------------------------------------------------
 
 sub _curly_subst {
-  my ($self, $from, $key, $is_curly) = @_;
+  my ($self, $from, $key, $contents_only) = @_;
+  # if (!defined $from) { croak "No from defined in subst"; }
+  # if (!defined $key) { croak "No key defined in subst"; }
 
   # warn "JMD CURLY $key";
 
   my $current_subst = $self->{current_subst};
-  if (!defined $from) { croak "No from defined in subst"; }
-  if (!defined $key) { croak "No key defined in subst"; }
   if ($current_subst->{inf_loop}) { return ""; }
 
   my $defval = undef;
   if ($key =~ s/\?([^\?]*)$//) { $defval = $1; }
 
-  # first, try normal ${content} items
-  my $cont = $self->{contents}->{$key};
-  if (!defined $cont) {
-    # metadata must have the format "blah.type"
-    if ($key =~ /^(.*)\.([^\.]+?)$/) {
-      my ($base, $subkey) = ($1, $2);
-      my $basecont = $self->{contents}->{$base};
-      if (defined $basecont) {
-      }
+  my $cont;
+
+  if ($contents_only) {			# expanding a ${foo} ref
+    $cont = $self->{contents}->{$key};
+    if (!defined $cont) {
+      $cont = $self->{metadatas}->{$key};
+    }
+
+  } else {				# expanding a $[foo] ref
+    $cont = $self->{metadatas}->{$key};
+
+    # it's also possible to refer to content items using the metadata reference
+    # type $[..], as in fact that reference type simply means a reference whose
+    # loading is deferred until other references have been expanded.  In
+    # addition, navlinks and breadcrumbs do this too.  To support this, check
+    # the contents hash as well as the metadata one, if there's no hit in the
+    # metadata hash.
+    if (!defined $cont) {
+      $cont = $self->{contents}->{$key};
     }
   }
 
   if (defined $cont) {
     $self->add_content_dependency ($cont);
 
-    if (defined $is_curly && $is_curly) {
+    if ($contents_only == 1) {
       if ($cont->is_only_usable_from_deferred_refs()) {
 	$self->fail ("content \$\{$key\} should only be used ".
 		"as \$\[$key\] in \"$from\".");
@@ -972,7 +1032,8 @@ sub _curly_subst {
   my $str = $self->get_deferred_builtin_content ($from, $key);
   if (defined $str) { return $str; }
 
-  # finally, metadata (quite expensive to look up)
+  # finally, metadata that hasn't been used yet as a content item
+  # (quite expensive to look up)
   my $meta = $self->subst_metadata ($from, $key, $defval);
   if (defined $meta) { return $meta; }
 
@@ -1041,73 +1102,78 @@ sub subst_metadata {
   return "" unless ($key =~ /^(.*)\.([^\.]+?)$/);
   my ($base, $subkey) = ($1, $2);
 
+  if ($from eq $base) { goto failed_to_find; }
+
   # see if it's a magic metadatum
-  if ($from ne $base) {
-    my $magicmeta = $self->get_magic_metadata ($from, $key, $base, $subkey);
-    if (defined $magicmeta) { return $magicmeta; }
-  }
+  my $magicmeta = $self->get_magic_metadata ($from, $key, $base, $subkey);
+  if (defined $magicmeta) { return $magicmeta; }
 
   # if it's an external (ie. not on "this") metadatum, try to
   # (a) get it from cache or (b) load the content to get it
-  if ($from ne $base && $base ne 'this')
-  {
+  if ($base ne 'this') {
     my $meta;
     my $cont = $self->{contents}->{$base};
     goto failed_to_find if (!defined $cont);
 
-    # only check the cache if the content was loaded from a
-    # datasource, ie. if we haven't already loaded its text.
-    if ($cont->is_from_datasource())
+    # just check the cache, if the datasource location has not
+    # been modified.
+    if ($self->check_content_dep ($cont->get_filename(),
+      		$self->{current_subst}->{filename}, undef)
+      		&& !$self->{force_output})
     {
-      my $dep = $cont->get_filename();
-      my $outfile = $self->{current_subst}->{filename};
-
-      # check the cache if the datasource location has not
-      # been modified.
-      if ($self->check_content_dep ($dep, $outfile, undef)) {
-	$meta = $self->getcache()->get_metadata ($key);
-	if (defined $meta) {
-	  return $self->metadata_to_content ($from, $key, $meta, $cont);
-	}
+      $meta = $self->getcache()->get_metadata ($key);
+      if (defined $meta) {
+	return $self->metadata_to_content ($from, $key, $meta, $cont);
       }
+      goto use_default_or_blank;
+    }
+
+    # if the content is generated, it can't have metadata
+    if ($cont->is_generated_content()) {
+      goto use_default_or_blank;
     }
 
     # load the content it may be defined in; that may cause it
     # to be loaded.
-    dbg2 ("loading content \"$base\" for meta tag \$\[$key\]");
-
-    # if the content is generated, it can't have metadata
-    if ($cont->is_generated_content()) {
-      if (defined $defval) { return $defval; }
-      return "";
-    }
-
-    $cont->load_metadata();
+    $cont->load_metadata ($base, $key);
     $meta = $self->getcache()->get_metadata ($key);
     if (defined $meta) {
       return $self->metadata_to_content ($from, $key, $meta, $cont);
     }
   }
 
-  if (defined $defval) { return $defval; }
-
-  # handle metadata that has generic builtin default values
-  $defval = $self->{metadata}->get_default_value ($subkey);
-  if (defined $defval) { return $defval; }
-
 failed_to_find:
+  $defval = $self->use_default_metadata($subkey, $defval);
+  if (defined $defval) { return $defval; }
+
   if (!$self->{current_subst}->{quiet}) {
-    if (defined $defval) { return $defval; }
     vrb ("no value defined for metadata \$[$key] in \"$from\".");
   }
+  return "";
 
+use_default_or_blank:
+  $defval = $self->use_default_metadata($subkey, $defval);
+  if (defined $defval) { return $defval; }
   return "";
 }
+
+sub use_default_metadata {
+  my ($self, $subkey, $defval) = @_;
+
+  if (!defined $defval) {
+    # handle metadata that has generic builtin defaults
+    $defval = $self->{metadata}->get_default_value ($subkey);
+  }
+
+  return $defval;
+}
+
+# -------------------------------------------------------------------------
 
 sub get_magic_metadata {
   my ($self, $from, $key, $base, $metaname) = @_;
 
-  my $cont = $self->{contents}->{$base};
+  my $cont = $self->get_content_obj ($base);
   if (!defined $cont) { return undef; }
 
   my $val = $cont->get_magic_metadata ($from, $metaname);
@@ -1174,7 +1240,7 @@ sub eval_code_at_parse {
 
   $self->{last_perl_code_text} = undef;
   $$str =~ s/^\s*\<\{(perlpreproc|perlpostdecl|perlout|perl)\s+(.+?)\s*\}\>/
-	    $self->_p_interpret($1,$2);
+	    $self->_p_interpret($1, $2, '');
 	  /gies;
   $self->{last_perl_code_text};
 }
@@ -1202,7 +1268,7 @@ sub eval_code_at_ref {
   /gies;
 
   $$str =~ s/\<\{(perlout|perl)\s*(.+?)\s*\}\>/
-    $self->_p_interpret($1, $2);
+    $self->_p_interpret($1, $2, '');
   /gies;
   $self->{last_perl_code_text};
 }
@@ -1213,7 +1279,7 @@ sub _eval_set {
   $name =~ s/^\'(.*)\'$/$1/g;
   $val =~ s/^\"(.*)\"$/$1/g;
   $val =~ s/^\'(.*)\'$/$1/g;
-  $self->add_fileless_content ($name, $val, undef, 1);
+  $self->set_unmapped_content ($name, $val);
   "";
 }
 
@@ -1235,11 +1301,11 @@ sub tag_strip_wmmeta { ""; }
 
 # -------------------------------------------------------------------------
 
-sub _p_interpret ($$$) {
-  my ($self, $type, $txt) = @_;
+sub _p_interpret ($$$$) {
+  my ($self, $type, $txt, $defunderscoreval) = @_;
 
   $self->{last_perl_code_text} = '<{'.$type.' '.$txt.'}>';
-  $self->getperlinterp()->interpret ($type, $txt);
+  $self->getperlinterp()->interpret ($type, $txt, $defunderscoreval);
 }
 
 # -------------------------------------------------------------------------
@@ -1607,10 +1673,11 @@ sub make_file ($$) {
   delete $self->{contents}->{"__MainContentName"};
 
   # clear out any "this.blah" content items from the previous file
-  foreach my $name (@{$self->{metas_added}}) {
-    delete $self->{contents}->{$name};
+  dbg2 ("clearing \"this.*\" metadata for $fname");
+  foreach my $name (@{$self->{this_metas_added}}) {
+    delete $self->{metadatas}->{$name};
   }
-  $self->{metas_added} = [ ];
+  $self->{this_metas_added} = [ ];
 
   $self->_subst_open($fname, $out->{name}, $dotdots, $fmt, $useurls);	#{
   my $txt = $out->get_text();
@@ -1748,7 +1815,9 @@ sub finish_deferred_files {
 
 sub rewrite_a_deferred_url {
   my ($self, $contname, $give_up_if_still_deferred) = @_;
-  my $obj = $self->{contents}->{$contname};
+
+  my $obj = $self->get_content_obj ($contname);
+
   my $url;
   if (!defined $obj || !defined ($url = $obj->get_url())) {
     $self->fail ("unable to get URL for content item: \${$contname}");
@@ -1803,14 +1872,16 @@ sub check_content_dep ($$$$) {
     dbg ("$fname depends on eval code (always rebuilt)");
     return 0;
   }
+  if ($dep eq '(dep_ignore)') {
+    return 1;
+  }
 
   my $prevmod = $self->getcache()->get_modtime ($dep);
   $prevmod ||= 0;
-  my $nowmod;
 
-  $nowmod = $self->cached_get_location_modtime ($dep);
+  my $nowmod = $self->cached_get_location_modtime ($dep);
 
-  if ($DEBUG > 1) {
+  if ($DEBUG > 1 && $dep ne '(dep_ignore)') {
     my $prevsecs = $self->{now} - $prevmod;
     my $nowsecs = $self->{now} - $nowmod;
     dbg ("$fname depends on $dep ($nowsecs secs old, previous: $prevsecs)");
@@ -1866,9 +1937,6 @@ sub finish {
 
   if (defined $self->{cache}) {
     $self->{cache}->untie();
-  }
-  if (defined $self->{perlinterp}) {
-    $self->{perlinterp}->finish();
   }
   $self->{failures};
 }

@@ -7,7 +7,7 @@
  <title>
 WebMake: Documentation: The &lt;metatable&gt; Tag
 </title>
- <meta name="generator" content="WebMake/1.1" />
+ <meta name="generator" content="WebMake/1.2" />
  <style>
 body {
  background-color: #ffffff; 
@@ -24,9 +24,9 @@ code, samp, pre
 {
  font-family: monospace;
 }
-H1 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; }
+H1 { font-size: x-large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFCC66; }
+H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFDD77; }
+H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; background: #FFEE88; }
 H4 { font-size: small; font-family: Garamond,Book Antiqua,Times,serif; }
 H5 { font-size: x-small; font-family: Garamond,Book Antiqua,Times,serif; }
 H6 { font-size: xx-small; font-family: Garamond,Book Antiqua,Times,serif; }
@@ -57,7 +57,7 @@ A:active {
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">
@@ -82,33 +82,38 @@ A:active {
 <td>
  <h1>The &lt;metatable&gt; Tag</h1><p>
 Metadata is usually embedded inside a content item using the &lt;wmmeta&gt;
-tag. However, sometimes you may want to tag a content item with <a href="wmmeta.html">metadata</a> from
+tag. However, sometimes you may want to tag a content item with <a href="metadata.html">metadata</a> from
 outside, if the text of the content is not under your control; or you may want
-to tag <a href="wmmeta.html">metadata</a> to an object that is not even a content item, such as an
-image.
+to tag <a href="metadata.html">metadata</a> to an object that is not text-based, such as an image.
 
 </p>
  <p>
-The <a href="metatable.html">metatable</a> tag allows you to do this, and in bulk. You list a table of
-content names and the <a href="wmmeta.html">metadata</a> you want to attach to each content item, in
-tab-, comma-, or pipe-separated-value format.
+The metatable tag allows you to do this, and in bulk. You list a table of
+content names and the <a href="metadata.html">metadata</a> you want to attach to each content item, in
+tab-, comma-, pipe-separated-value, or XML format.
 
 </p>
  <p>
+By default, the table is read from between the &lt;metatable&gt; and
+&lt;/metatable&gt; tags. However, if you set the <em>src</em> attribute,
+the table will be read from the location specified, instead.
+
+</p>
+ <a name="Delimiter_Separated_Value_Format"><h1>Delimiter-Separated-Value Format</h1></a> <p>
 Firstly, pick a delimiter character, such as <code>|</code>. Set the <em>delimiter</em>
 attribute to this character.
 
 </p>
  <p>
-Next, the first line of the <a href="metatable.html">metatable</a> lists the <a href="wmmeta.html">metadata</a> you wish to set; it
+Next, the first line of the metatable lists the <a href="metadata.html">metadata</a> you wish to set; it
 must start with the value <code>.</code>. This indicates to WebMake that it's
-defining the <a href="wmmeta.html">metadata</a> to be set.
+defining the <a href="metadata.html">metadata</a> to be set.
 
 </p>
  <p>
-Finally, list as many lines of <a href="wmmeta.html">metadata</a> as you like; the first value on the
-line is the name of the content item you wish to attach the <a href="wmmeta.html">metadata</a> to. From
-then on, the other values on the line are the values of the <a href="wmmeta.html">metadata</a>.
+Finally, list as many lines of <a href="metadata.html">metadata</a> as you like; the first value on the
+line is the name of the content item you wish to attach the <a href="metadata.html">metadata</a> to. From
+then on, the other values on the line are the values of the <a href="metadata.html">metadata</a>.
 
 </p>
  <p>
@@ -116,7 +121,7 @@ So, for example, consider this table, from the WebMake documentation:
 
 </p>
  <pre>
-&lt;<a href="metatable.html">metatable</a> delimiter="|"&gt;
+&lt;metatable delimiter="|"&gt;
  .|title|abstract
  Main.pm|HTML::WebMake::Main|module documentation
  PerlCodeLibrary.pm|HTML::WebMake::PerlCodeLibrary|module documentation
@@ -133,8 +138,32 @@ This will set <strong>Main.pm.title</strong> to <strong>HTML::WebMake::Main</str
 <strong>Main.pm.abstract</strong> to <strong>module documentation</strong>, etc.
 
 </p>
- <a name="Using__lt__a_href____metatable___metatable__a__gt__To_Tag_Non-Content_Items"><h2>Using &lt;<a href="metatable.html">metatable</a>&gt; To Tag Non-Content Items</h2></a> <p>
-Often, you will need to attach <a href="wmmeta.html">metadata</a> to non-content items, such as images,
+ <a name="XML_Format"><h1>XML Format</h1></a> <p>
+The XML block is surrounded with a &lt;metaset&gt; tag, and contains
+&lt;target&gt; blocks naming the content items the enclosed <a href="metadata.html">metadata</a> items are
+associated with.
+
+</p>
+ <p>
+Inside the &lt;target&gt; blocks, &lt;meta&gt; tags name each <a href="metadata.html">metadatum</a>, and
+enclose the <a href="metadata.html">metadatum</a>'s value.
+
+</p>
+ <p>
+<pre>
+
+        &lt;metaset&gt;
+          &lt;target id="foo.txt"&gt;
+            &lt;meta name="title"&gt;
+              This is Foo.txt's title.
+            &lt;/meta&gt;
+          &lt;/target&gt;
+        &lt;/metaset&gt;
+</pre>
+ 
+</p>
+ <a name="Using_lt_metatable_gt_To_Tag_Non_Content_Items"><h1>Using &lt;metatable&gt; To Tag Non-Content Items</h1></a> <p>
+Often, you will need to attach <a href="metadata.html">metadata</a> to non-content items, such as images,
 or HTML files that are not generated by WebMake. Here's how to do this.
 
 </p>
@@ -146,7 +175,7 @@ automatically take precedence over the URLs of the fake content items.
 
 </p>
  <p>
-Then use a <a href="metatable.html">metatable</a>, as above, to set the <a href="wmmeta.html">metadata</a> you wish to use.
+Then use a metatable, as above, to set the <a href="metadata.html">metadata</a> you wish to use.
 
 </p>
  <p>
@@ -169,7 +198,7 @@ Then use a <a href="metatable.html">metatable</a>, as above, to set the <a href=
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">

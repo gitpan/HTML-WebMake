@@ -2,20 +2,20 @@
 
 package HTML::WebMake::HTMLCleaner;
 
-require Exporter;
+
 use Carp;
 use strict;
 use HTML::Parser;
 use HTML::WebMake::Main;
 
 use vars	qw{
-  	@ISA @EXPORT
+  	@ISA
 	@ALLFEATURES $INLINE_TAGS $KEEP_FORMAT_TAGS
 	$EMPTY_ELEMENT_TAGS $BOOL_ATTR_VALUE
 };
 
 @ISA = qw(HTML::Parser);
-@EXPORT = qw();
+
 
 @ALLFEATURES =		qw{
     pack nocomments addimgsizes addxmlslashes fixcolors cleanattrs

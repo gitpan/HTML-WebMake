@@ -17,6 +17,9 @@ sites that update frequently with dynamic data; nor does it have support for
 what the user presents in their HTTP request.  (Of course, using WebMake does
 not preclude using PHP, mod_perl, Mason etc. to provide these, however.)
 
+In addition, it does not yet have a graphical interface for defining and
+editing content, although this is planned.
+
 Here's the relevant details of what it can do.
 
 WebMake's CMS Features
@@ -29,7 +32,9 @@ WebMake's CMS Features
 
     WebMake uses "content references" [refs] to include content into pages, and
     implement templating.  This allows you to separate the content text from
-    the template layout HTML.
+    the template layout HTML; the template designers just need to include
+    a content reference, such as ##&wmdollar;{body}##, instead of the
+    text.
 
   - **No requirement for text editors to know HTML**
 
@@ -46,12 +51,16 @@ WebMake's CMS Features
     and other text automatically, based on properties and metadata of the
     pieces of content loaded.
 
-    WebMake supports this using "metadata on content items" [$(wmmeta)].
+    WebMake supports this by "allowing any content item to carry arbitrary
+    metadata text" [$(wmmeta)].  Perl code can then be used to dynamically
+    request a list of content items that have a particular set of metadata,
+    and any page can refer to another content item's title, description,
+    abstract etc. without itself needing to parse the content text.
 
   - **Flexible URL support**
 
-    It should be trivial to rearrange a site, if required, totally changing the
-    URLs used in the site's pages.
+    It should be trivial to rearrange a site, if required, totally changing
+    the URLs used in the site's pages.
 
     WebMake supports this by using "symbolic URL references" [$(url_refs)],
     which can be modified by changing one line, causing references to that
@@ -62,12 +71,13 @@ What WebMake Is Missing
 
   - **Edit-In-Page Functionality**
 
-    Most CMSes boast a nicer, browser-based user interface to creating, naming,
+    Most CMSes boast a nice, browser-based user interface to creating, naming,
     uploading and filling out content items and media.
 
-    WebMake currently leaves you with your trusty text editor, to edit the .wmk
-    file and add the tags needed to define these.  This is fine if you're of
-    the UNIX mindset (like me ;) -- but it does need work.
+    WebMake currently leaves you with your trusty text editor, to edit the
+    .wmk file and add the tags needed to define these.  This is fine if you're
+    of the UNIX mindset -- but for general-purpose use, it will need a more
+    friendly interface.
 
   - **Database Support**
 
@@ -86,6 +96,10 @@ What WebMake Is Missing
     This will definitely arrive -- as soon as a good XSLT engine becomes part
     of Perl, or at least becomes easy to install from CPAN.  It's on my list ;)
 
+  - **Workflow**
+
+    There's currently no logic to support workflow.  This would not
+    be difficult to add to the graphical interface discussed above.
 
 	[ibm1]: http://www.delphion.com/details?pn=US06026413__
 	[CMS]: http://www.camworld.com/cms/

@@ -24,9 +24,10 @@ will be replaced with the string '' apples oranges pears''.  Note that the
 ##&wmdollar;_## variable is declared as local when you enter the perl block,
 you don't have to do this yourself.
 
-If you don't like the eval style, you can use a more PHP-like construct using
-the ##perlout## directive, which replaces the perl code text with anything
-that the perl code prints on STDOUT, like so:
+If you don't like the eval style, you can use a more PHP/JSP/ASP-like
+construct using the ##perlout## directive, which replaces the perl code text
+with anything that the perl code prints on the default output filehandle, like
+so:
 
 <pre>
 	&lt;{perlout
@@ -35,6 +36,9 @@ that the perl code prints on STDOUT, like so:
 	  }
 	}&gt;
 </pre>
+
+Note that this is not STDOUT, it's a local filehandle called ##$outhandle##.
+It __is__ selected as the default output handle, however.
 
 <a href=$(perl)>&lt;{perl}&gt;</a> sections found at the top level of the
 WebMake file will be evaluated during the file-parsing pass, as they

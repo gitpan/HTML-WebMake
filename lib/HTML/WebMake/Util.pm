@@ -2,7 +2,7 @@
 
 package HTML::WebMake::Util;
 
-require Exporter;
+
 use Carp;
 use File::Basename;
 use File::Path;
@@ -11,11 +11,11 @@ use Cwd;
 use strict;
 
 use vars	qw{
-  	@ISA @EXPORT
+  	@ISA
 };
 
-@ISA = qw(Exporter);
-@EXPORT = qw();
+
+
 
 ###########################################################################
 
@@ -120,21 +120,19 @@ sub strip_tags ($$$$$@) {
 }
 
 sub strip_first_tag ($$$$$@) {
-  my ($self, $file, $tag, $taghandler, $tagfn, @reqd_attributes) = @_;
+  my ($self, $fileref, $tag, $taghandler, $tagfn, @reqd_attributes) = @_;
   $self->{strip_tags_reqd_attrs} = \@reqd_attributes;
   $self->{strip_tags_handler_obj} = $taghandler;
   $self->{strip_tags_handler_method} = $tagfn;
   $self->{last_tag_text} = undef;
 
-  $file =~ s{^\s*<${tag}\b([^>]*?)/>}{
+  $$fileref =~ s{^\s*<${tag}\b([^>]*?)/>}{
     $self->_found_tag ($tag, $1, '');
-  }gies && return $file;
+  }gies && return;
 
-  $file =~ s{^\s*<${tag}\b([^>]*?)>(.*?)<\/\s*${tag}\s*>}{
+  $$fileref =~ s{^\s*<${tag}\b([^>]*?)>(.*?)<\/\s*${tag}\s*>}{
     $self->_found_tag ($tag, $1, $2);
   }gies;
-
-  $file;
 }
 
 sub _found_tag ($$$$) {

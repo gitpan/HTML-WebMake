@@ -7,7 +7,7 @@
  <title>
 WebMake: Documentation: Data Sources for the &lt;contents&gt; and &lt;media&gt; Tags
 </title>
- <meta name="generator" content="WebMake/1.1" />
+ <meta name="generator" content="WebMake/1.2" />
  <style>
 body {
  background-color: #ffffff; 
@@ -24,9 +24,9 @@ code, samp, pre
 {
  font-family: monospace;
 }
-H1 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; }
+H1 { font-size: x-large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFCC66; }
+H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFDD77; }
+H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; background: #FFEE88; }
 H4 { font-size: small; font-family: Garamond,Book Antiqua,Times,serif; }
 H5 { font-size: x-small; font-family: Garamond,Book Antiqua,Times,serif; }
 H6 { font-size: xx-small; font-family: Garamond,Book Antiqua,Times,serif; }
@@ -57,7 +57,7 @@ A:active {
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">
@@ -96,7 +96,7 @@ hint ;)
 <a href="#file">file:</a> is the default protocol, if none is specified.
 
 </p>
- <a name="Attributes_Supported_By_Datasource_Tags"><h1>Attributes Supported By Datasource Tags</h1></a> <dl>
+ <a name="Attributes_Supported_By_Datasource_Tags"><h2>Attributes Supported By Datasource Tags</h2></a> <dl>
 <dt>
 <em>src</em>
 </dt>
@@ -190,7 +190,7 @@ also contain meta-data, such as headlines, visibilty dates, workflow approval
 statuses, etc. by including <a href="wmmeta.html">metadata</a>.
 
 </p>
- <a name="file"> <a name="The_file__Protocol"><h1>The file: Protocol</h1></a> </a> <p>
+ <a name="file"> <a name="The_file_Protocol"><h2>The file: Protocol</h2></a> </a> <p>
 The file: protocol loads content from a directory; each file is made into one
 content chunk. The <em>src</em> attribute indicates the source directory, the
 <em>name</em> attribute indicates the <a href="globs.html">glob pattern</a> that will pick up the
@@ -228,7 +228,7 @@ above would define a content item called
 <strong>${dir1/foo/bar.txt}</strong>.
 
 </p>
- <a name="svfile"> <a name="The_svfile__Protocol"><h1>The svfile: Protocol</h1></a> </a> <p>
+ <a name="svfile"> <a name="The_svfile_Protocol"><h2>The svfile: Protocol</h2></a> </a> <p>
 The svfile: protocol loads content from a delimiter-separated-file; the
 <em>src</em> attribute is the name of the file, the <em>name</em> is the <a href="globs.html">glob
 pattern</a> used to catch the relevant content items. The <em>namefield</em>
@@ -245,7 +245,7 @@ attribute specifies the delimiter used to separate values in the file.
 
 </p>
 </blockquote>
- <a name="Adding_New_Protocols"><h1>Adding New Protocols</h1></a> <p>
+ <a name="Adding_New_Protocols"><h2>Adding New Protocols</h2></a> <p>
 New data sources for &lt;contents&gt; and &lt;media&gt; tags are added by
 writing an implementation of the <em>DataSourceBase.pm</em> module, in the
 <em>HTML::WebMake::DataSources</em> package space (the
@@ -378,7 +378,7 @@ Data sources that support the &lt;contents&gt; tag, and defer
 Data sources that support the &lt;contents&gt; tag need to implement
  <code>get_location_mod_time</code>. This is used to support dependency
  checking, and should return the modification time (in UNIX
- <code>time()</code> format) of that location. Note that since this is used
+ <code>time_t</code> format) of that location. Note that since this is used
  to compare the modification time of a content chunk from the
  previous time webmake was run, and the current modification time,
  this is called before the <strong>real</strong> data source is opened.
@@ -407,7 +407,7 @@ Data sources that support the &lt;contents&gt; tag need to implement
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">

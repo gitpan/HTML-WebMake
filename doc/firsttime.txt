@@ -9,16 +9,12 @@ Chances are, you already have a HTML site you wish to migrate to WebMake.
 This document introduces WebMake's way of doing things, and how to go
 about a typical migration.
 
----------------------------------------------------------------------------
-
 Place The .wmk File
 ~~~~~~~~~~~~~~~~~~~
 
 First, pick a top-level directory for the site; that's where you'll place your
 **.wmk** file.  All the generated files should be beneath this directory. In
 this example I'll call it **index.wmk**.
-
----------------------------------------------------------------------------
 
 Make Templates
 ~~~~~~~~~~~~~~
@@ -54,8 +50,6 @@ to use.
 ::   &lt;/body&gt;&lt;/html&gt;
 :: &lt;/content&gt;
 
----------------------------------------------------------------------------
-
 Grab The Pages' Text
 ~~~~~~~~~~~~~~~~~~
 
@@ -89,8 +83,6 @@ around for later, though.
 ::   ....your html here...
 :: &lt;/content&gt;
 
----------------------------------------------------------------------------
-
 Convert To EtText (OPTIONAL!)
 ~~~~~~~~~~~~~~~~~
 
@@ -109,8 +101,6 @@ though:
 To keep things simple, I'll assume you haven't used EtText in the examples
 from now on.
 
----------------------------------------------------------------------------
-
 Add Titles
 ~~~~~~~~~~
 
@@ -120,9 +110,9 @@ defined earlier.
 
 To really get some power from WebMake, use metadata to do this.
 
-<blockquote>
-
 ---------------------------------------------------------------------------
+
+<blockquote>
 
 **What is Metadata?**
 
@@ -147,15 +137,15 @@ items within the same page (as **&wmdollar;&etsqi;this.__metaname__&etsqo;**).
 Think of them as like size, modification time, owner etc. on files; or member
 variables in an object-oriented language.
 
----------------------------------------------------------------------------
-
 </blockquote>
+
+---------------------------------------------------------------------------
 
 Anyway, titles of pages are a perfect fit for metadata. So convert your
 page titles into &lt;wmmeta&gt; tags like so:
 
 :: &lt;content name=''document1.txt''&gt;
-::   &lt;wmmeta name=''title''&gt;Your Title Here&lt;/a&gt;
+::   &lt;wmmeta name=''title''&gt;Your Title Here&lt;/wmmeta&gt;
 ::   ....your ettext here...
 :: &lt;/content&gt;
 :: ...
@@ -167,8 +157,6 @@ simple.
 
 Metadata should always be referred to in **&wmdollar;&etsqi;square
 brackets&etsqo;**. I'll explain why in the next section.
-
----------------------------------------------------------------------------
 
 Naming The Output URLs
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -222,6 +210,11 @@ and referred to them as **&wmdollar;[this.title&etsqo;** in **page_template**,
 this is taken care of; once the **&wmdollar;{page_text}** reference is
 expanded, **&wmdollar;&etsqi;this.title&etsqo;** will be set.
 
+---------------------------------------------------------------------------
+
+What's With the Square Brackets?
+~~~~~~~~~~~~~~~~~~~~~~
+
 Remember I mentioned that metadata should always be referred to in
 **&wmdollar;&etsqi;square brackets&etsqo;**? Here's why.  Square bracket
 references, or "__deferred references__" [$(deferred_content_refs)], are
@@ -236,17 +229,19 @@ The example page contains the following content references:
 
     * &wmdollar;{page_text}
 
-This allows **&wmdollar;{page_text}** to be expanded first, which causes
-**this.title** to be set.  Finally, **&wmdollar;&etsqi;this.title&etsqo;** is
-expanded last.
+Since **&wmdollar;{page_text}** is a normal content reference, it will be
+expanded first; and when it's expanded, the &lt;wmmeta&gt; tag setting
+**title** will be encountered.  This will cause **this.title** to be set.
+
+Once all the normal content references are expanded, WebMake runs through
+the deferred references, causing **&wmdollar;&etsqi;this.title&etsqo;** to
+be expanded.
 
 If **page_template** had used a normal content reference to refer to
 **&wmdollar;{this.title}**, WebMake would have tried to expand it before
 **&wmdollar;{page_text}**, since it appeared in the file earlier.
 
 Anyway, I digress.
-
----------------------------------------------------------------------------
 
 Writing The &lt;out&gt; Tags
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -286,8 +281,6 @@ Let's see how 2. does it:
 
 Simple.
 
----------------------------------------------------------------------------
-
 Putting &lt;out&gt; Names To Work
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -305,8 +298,6 @@ with an "URL reference" [$(url_refs)], like this:
 
 Now, even if ''document1.html'' is renamed to ''blah/whatever/doc1.cgi'', you
 won't have to do a search-and-replace again.
-
----------------------------------------------------------------------------
 
 Getting Advanced - Adding Navigation and a Sitemap
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

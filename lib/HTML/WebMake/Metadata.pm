@@ -4,14 +4,14 @@ package HTML::WebMake::Metadata;
 
 ###########################################################################
 
-require Exporter;
+
 use Carp;
 use strict;
 
 use HTML::WebMake::Main;
 
 use vars	qw{
-  	@ISA @EXPORT %BUILTIN_TYPES $NUM $STR
+  	@ISA %BUILTIN_TYPES $NUM $STR
 };
 
 # -------------------------------------------------------------------------
@@ -35,8 +35,8 @@ $STR = 2;
 
 # -------------------------------------------------------------------------
 
-@ISA = qw(Exporter);
-@EXPORT = qw();
+
+
 
 ###########################################################################
 
@@ -140,43 +140,6 @@ sub string_to_sort_sub {
   dbg ("string to sort-sub: \"$sortstring\": $substr");
 
   $substr;
-}
-
-# -------------------------------------------------------------------------
-
-sub parse_metatable {
-  my ($self, $attrs, $text) = @_;
-
-  my $delim = $attrs->{delimiter};
-  $delim ||= "\t";
-  $delim = qr{\Q${delim}\E};
-
-  my @metanames = ();
-  my $i;
-
-  foreach my $line (split (/\n/, $text)) {
-    my @elems = split (/${delim}/, $line);
-    my $contname = shift @elems;
-    next unless defined $contname;
-
-    if ($contname eq '.') {
-      @metanames = @elems; next;
-    }
-
-    my $contobj = $self->{main}->{contents}->{$contname};
-    if (!defined $contobj) {
-      $self->{main}->fail ("<metatable>: cannot find content \${$contname}");
-      next;
-    }
-
-    for ($i = 0; $i <= $#elems && $i <= $#metanames; $i++) {
-      my $metaname = $metanames[$i];
-      my $val = $elems[$i];
-
-      $contobj->create_extra_metas_if_needed();
-      $contobj->{extra_metas}->{$metaname} = $val;
-    }
-  }
 }
 
 # -------------------------------------------------------------------------

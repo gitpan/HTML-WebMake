@@ -27,17 +27,16 @@ sub get_handler {
 
 ###########################################################################
 
-require Exporter;
+
 use Carp;
 use strict;
 
 use vars	qw{
-  	@ISA @EXPORT 
-	$SUPPORTED_HANDLERS
+  	@ISA 
 };
 
-@ISA = qw(Exporter);
-@EXPORT = qw();
+@ISA = qw();
+
 
 ###########################################################################
 
@@ -141,7 +140,7 @@ sub add {
     if ($val ne '') { $val .= ' '; }
     $val .= join (' ', @{$self->{file_list}});
 
-    $self->{main}->add_fileless_content ($lname, $val, undef, 1);
+    $self->{main}->set_unmapped_content ($lname, $val);
   }
 }
 

@@ -3,7 +3,7 @@
 WEBDIR=/home/jm/public_html_wm
 
 VERS=`./build/get_version` ; export VERS
-./build/update_devel
+# ./build/update_devel
 
 sudo cp $WEBDIR/devel/HTML-WebMake-$VERS.tar.gz \
 	/usr/src/redhat/SOURCES/HTML-WebMake-$VERS.tar.gz

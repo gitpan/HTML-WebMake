@@ -4,7 +4,7 @@ package HTML::WebMake::WMLinkGlossary;
 
 ###########################################################################
 
-require Exporter;
+
 use Carp;
 
 use strict;
@@ -14,11 +14,11 @@ use HTML::WebMake::SiteCache;
 use Text::EtText::LinkGlossary;
 
 use vars	qw{
-  	@ISA @EXPORT
+  	@ISA
 };
 
 @ISA = qw(Exporter Text::EtText::LinkGlossary);
-@EXPORT = qw();
+
 
 ###########################################################################
 

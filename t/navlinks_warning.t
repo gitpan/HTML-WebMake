@@ -8,13 +8,17 @@ use Test; BEGIN { plan tests => 17 };
 
 %patterns = (
 
-q{<a href="../log/navlinks_warning.html">Index</a> | 
+q{
+ <a href="../log/navlinks_warning.html">Index</a> | 
  <a href="../log/navlinks_warning_map.html">Site Map</a> <hr />
  | | <a href="../log/navlinks_warning_story_3.html">Next</a> <hr />
  <ul>
  <li>
  <a href="../log/navlinks_warning_story_3.html">Hot! story 3, etc etc.</a><br />
- <p> Story 3, the highest-scored story.  </p>}, 'index_top',
+ <p>
+Story 3, the highest-scored story.
+</p>
+}, 'index_top',
 
 
 q{ <a href="../log/navlinks_warning_map.html">Site Map</a> <hr /> <a

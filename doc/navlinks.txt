@@ -5,9 +5,10 @@
 generate back and forward navigation links
 </wmmeta>
 
-A common site structure strategy is to provide __Back__, __Forward__ and __Up__
-links between pages.  This is especially frequent in papers or documentation.
-WebMake now supports this using the &lt;navlinks&gt; tag.
+A common site structure strategy is to provide __Back__, __Forward__ and
+__Up__ links between pages.  This is especially frequent in papers or
+manuals, and (as you can see above) is used in this documentation.
+WebMake supports this using the &lt;navlinks&gt; tag.
 
 To use this, first define a "sitemap". This tells WebMake how to order the page
 hierarchy, and which pages to include.
@@ -47,9 +48,11 @@ will be replaced by either **&wmdollar;{__upcontentname__}** or
 **&wmdollar;{__noupcontentname__}** depending on if this is the top page or
 not.
 
-You can then add references to **&wmdollar;[__mynavlinks__]** in other content
-items, and the navigation links will be inserted.  __Note!__ be sure to use
-a deferred reference, or the links may not appear!
+You can then add references to **&wmdollar;&etsqi;__mynavlinks__&etsqo;** in
+other content items, and the navigation links will be inserted.
+
+	__Note:__ navlinks content items __must__ be included as a deferred
+	reference!
 
 Attribute Reference
 -------------------
@@ -89,8 +92,8 @@ Example
 =======
 
 This will generate an extremely simple set of &lt;a href&gt; links, no frills.
-The sitemap it uses isn't specified here; see the "sitemap documentation"
-[sitemap] for details on doing that.
+The sitemap it uses isn't detailed here; see the "sitemap documentation"
+[sitemap] for details on how to make a site map.
 
 <pre>
 	&lt;content name=up&gt;&lt;a href=&wmdollar;{url}&gt;Up&lt;/a&gt;&lt;/content&gt;

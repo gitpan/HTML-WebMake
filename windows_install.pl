@@ -4,8 +4,6 @@
 
 @EXE_FILES = qw{
   	webmake
-	ettext2html
-	ethtml2text
 };
 
 my $runperl;

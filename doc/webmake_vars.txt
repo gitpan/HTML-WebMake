@@ -29,5 +29,5 @@ the value at the time this documentation was generated.
 	(${WebMake.OutName})
 
 	**WebMake.PerlLib**:	The directory WebMake expects to find
-	Perl code library files (ie. plugins) in.
+	Perl code library files (ie. plugins) in. (${WebMake.PerlLib})
 

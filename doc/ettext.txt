@@ -7,14 +7,13 @@ A simple plain-text format, easily converted to HTML (format: <em>text/et</em>)
 
 This converter converts from Text::EtText, a simple plain-text format, to
 HTML.  Like most simple text markup formats (POD, setext, etc.), EtText markup
-handles the usual things: insertion of __&lt;P&gt;__ tags, header
-recognition and markup. However it adds a powerful link markup system.
+handles the usual things: insertion of __&lt;P&gt;__ tags, header recognition
+and markup. However it adds a powerful link markup system.
 
-EtText markup is simple and effective; it's based loosely on WikiWikiWeb
-[wiki] TextFormattingRules [rules].
-
-	Auto: [wiki]: http://c2.com/cgi/wiki?WikiWikiWeb
-	[rules]: http://c2.com/cgi/wiki?TextFormattingRules
+EtText is no longer included in WebMake; instead it must be downloaded
+separately from http://ettext.taint.org/, where there is also a more
+detailed set of documentation.  However, this page is retained in WebMake
+for quick reference.
 
 Basic Text Markup
 ~~~~~~~~~~~~~~~~~
@@ -196,8 +195,12 @@ an indented line like this:
 
 Text and markup can be enclosed in the quotes, everything quoted will become
 part of the link text. Single words or HTML tags do not need to be quoted, so
-**&lt;img src=''http://jmason.org/license_plate.jpg'' width=''10''
-height=''10''&gt; &etsqi;homepage&etsqo;** will work correctly.
+this will work correctly:
+
+<safe>
+  <img src="http://jmason.org/license_plate.jpg"
+  	width="10" height="10" /> [homepage]
+</safe>
 
 Glossary Links
 ~~~~~~~~~~~~~~

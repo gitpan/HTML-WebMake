@@ -15,7 +15,7 @@ sub MY::libscan {
 # the contents of the Makefile that is written.
 WriteMakefile(
     'NAME'	=> 'HTML::WebMake',
-    'VERSION_FROM' => 'lib/HTML/WebMake/Main.pm', # finds $VERSION
+    'VERSION_FROM' => 'lib/HTML/WebMake.pm', # finds $VERSION
 
     'EXE_FILES'	=> ['webmake'],
 

@@ -21,7 +21,7 @@ q{
 
 
 
- q{<strong>+</strong> <a href="../log/sitetree_story_5.html">Story 5, zzz blah blah<
+ q{<strong>.</strong> <a href="../log/sitetree_story_5.html">Story 5, zzz blah blah<
 /a>: Story 5, nothing much here.<br />
  
 </li>
@@ -31,7 +31,7 @@ q{
  
 </li>
 <li>
- <strong>+</strong> <a href="../log/sitetree_story_4.html">Story 4, zzzzzzz</a>: S
+ <strong>.</strong> <a href="../log/sitetree_story_4.html">Story 4, zzzzzzz</a>: S
 tory 4, incredibly boring.<br />}, 'bot_map',
 
 
@@ -44,7 +44,7 @@ a>: Story 1, just another story.<br />
  
 </li>
 <li>
- <strong>+</strong> <a href="../log/sitetree_story_2.html">Story 2, blah blah</a>:
+ <strong>.</strong> <a href="../log/sitetree_story_2.html">Story 2, blah blah</a>:
  Story 2, just another story.<br />}, 'story1',
 
  
@@ -58,7 +58,7 @@ a>: Story 2, just another story.<br />
  
 </li>
 <li>
- <strong>+</strong> <a href="../log/sitetree_story_6.html">Story 6, blah blah</a>:
+ <strong>.</strong> <a href="../log/sitetree_story_6.html">Story 6, blah blah</a>:
  Story 6, just another story.<br />}, 'story2',
 
 
@@ -75,7 +75,7 @@ c.</a>: Story 3, the highest-scored story.<br />
  
 </li>
 <li>
- <strong>+</strong> <a href="../log/sitetree_story_1.html">Story 1, blah blah</a>:
+ <strong>.</strong> <a href="../log/sitetree_story_1.html">Story 1, blah blah</a>:
  Story 1, just another story.<br />}, 'story3',
 
  
@@ -95,7 +95,7 @@ q{</li>
 
 
 
- q{<strong>+</strong> <a href="../log/sitetree_story_6.html">Story 6, blah blah</a>:
+ q{<strong>.</strong> <a href="../log/sitetree_story_6.html">Story 6, blah blah</a>:
  Story 6, just another story.<br />
  
 </li>
@@ -105,7 +105,7 @@ ah</a>: Story 5, nothing much here.<br />
  
 </li>
 <li>
- <strong>+</strong> <a href="../log/sitetree_map.html">WebMake Sample: site map</a
+ <strong>.</strong> <a href="../log/sitetree_map.html">WebMake Sample: site map</a
 >: Map of the site<br />
 }, 'story5',
 
@@ -118,7 +118,7 @@ a>: Story 6, just another story.<br />
  
 </li>
 <li>
- <strong>+</strong> <a href="../log/sitetree_story_5.html">Story 5, zzz blah blah<
+ <strong>.</strong> <a href="../log/sitetree_story_5.html">Story 5, zzz blah blah<
 /a>: Story 5, nothing much here.<br />
 }, 'story6',
 

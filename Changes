@@ -1,3 +1,170 @@
+2001-05-01 13:32  jmason
+
+	* wmblog: added -m to blog script
+
+2001-05-01 00:32  jmason
+
+	* wmblog, lib/HTML/WebMake/Main.pm,
+	lib/HTML/WebMake/NormalContent.pm, lib/HTML/WebMake/PerlCode.pm:
+	added blog work
+
+2001-04-29 22:57  jmason
+
+	* doc/: Content.pm.html, EtText2HTML.pm.html, HTML2EtText.pm.html,
+	Main.pm.html, PerlCodeLibrary.pm.html, allinone.html,
+	attrdefault.html, blurb.html, breadcrumbs.html, cache.html,
+	cleaner.html, cms.html, content.html, content_refs.html,
+	contents.html, contenttable.html, contributors.html,
+	csvtable_tag.wmk.html, datasources.html,
+	deferred_content_refs.html, docmap.html, download_tag.wmk.html,
+	dump_vars.wmk.html, ettext.html, firsttime.html, for.html,
+	format.html, globs.html, imgsize.html, include.html, index.html,
+	index_01-intro.html, index_02-tags_attrs.html,
+	index_03-proc_logic.html, index_04-var_refs.html,
+	index_05-meta.html, index_06-magic_vars.html,
+	index_07-fmt_converters.html, index_08-pod.html, index_09-man.html,
+	index_10-perllib.html, invoking.html, making.html, media.html,
+	metadata.html, metadefault.html, metatable.html, navlinks.html,
+	navtree.wmk.html, option.html, order.html, out.html, perl.html,
+	pod.html, safe_tag.wmk.html, set.html, sitemap.html,
+	sitetree.wmk.html, sorting.html, tags.html, topslash.html,
+	url_refs.html, use.html, using.html, webmake_tag.html,
+	webmake_vars.html, wmmeta.html: oops, did not want to check in
+	rendered HTML docs
+
+2001-04-29 22:55  jmason
+
+	* MANIFEST, doc/Content.pm.html, doc/EtText2HTML.pm.html,
+	doc/HTML2EtText.pm.html, doc/Main.pm.html,
+	doc/PerlCodeLibrary.pm.html, doc/allinone.html,
+	doc/attrdefault.html, doc/blurb.html, doc/breadcrumbs.html,
+	doc/breadcrumbs.txt, doc/cache.html, doc/cache.txt,
+	doc/cleaner.html, doc/cms.html, doc/content.html, doc/content.txt,
+	doc/content_refs.html, doc/contents.html, doc/contenttable.html,
+	doc/contributors.html, doc/csvtable_tag.wmk.html,
+	doc/datasources.html, doc/deferred_content_refs.html,
+	doc/docmap.html, doc/documentation.wmk, doc/download_tag.wmk.html,
+	doc/dump_vars.wmk.html, doc/ettext.html, doc/firsttime.html,
+	doc/for.html, doc/format.html, doc/globs.html, doc/imgsize.html,
+	doc/include.html, doc/index.html, doc/index_01-intro.html,
+	doc/index_02-tags_attrs.html, doc/index_03-proc_logic.html,
+	doc/index_04-var_refs.html, doc/index_05-meta.html,
+	doc/index_06-magic_vars.html, doc/index_07-fmt_converters.html,
+	doc/index_08-pod.html, doc/index_09-man.html,
+	doc/index_10-perllib.html, doc/invoking.html, doc/making.html,
+	doc/media.html, doc/metadata.html, doc/metadata.txt,
+	doc/metadefault.html, doc/metadefault.txt, doc/metatable.html,
+	doc/metatable.txt, doc/navlinks.html, doc/navlinks.txt,
+	doc/navtree.wmk.html, doc/option.html, doc/option.txt,
+	doc/order.html, doc/order.txt, doc/out.html, doc/out.txt,
+	doc/perl.html, doc/perl.txt, doc/pod.html, doc/safe_tag.wmk.html,
+	doc/sections.tsv, doc/set.html, doc/sitemap.html, doc/sitemap.txt,
+	doc/sitetree.wmk.html, doc/sorting.html, doc/tags.html,
+	doc/tags.txt, doc/topslash.html, doc/url_refs.html, doc/use.html,
+	doc/using.html, doc/webmake.html, doc/webmake_tag.html,
+	doc/webmake_vars.html, doc/wmmeta.html, doc/wmmeta.txt,
+	lib/HTML/WebMake/Main.pm, lib/HTML/WebMake/NormalContent.pm,
+	lib/HTML/WebMake/PerlCode.pm, lib/HTML/WebMake/WmkFile.pm,
+	lib/HTML/WebMake/PerlLib/download_tag.wmk: added section indexes in
+	doco, doco'd cache and option tags
+
+2001-04-29 19:48  jmason
+
+	* doc/: contenttable.html, contenttable.txt, datasources.txt,
+	format.txt, media.txt: doco updates
+
+2001-04-29 19:26  jmason
+
+	* MANIFEST, doc/cms.txt, doc/metatable.txt,
+	lib/HTML/WebMake/Content.pm, lib/HTML/WebMake/Contents.pm,
+	lib/HTML/WebMake/DataSource.pm, lib/HTML/WebMake/DataSourceBase.pm,
+	lib/HTML/WebMake/File.pm, lib/HTML/WebMake/FormatConvert.pm,
+	lib/HTML/WebMake/HTMLCleaner.pm, lib/HTML/WebMake/Main.pm,
+	lib/HTML/WebMake/Media.pm, lib/HTML/WebMake/MediaContent.pm,
+	lib/HTML/WebMake/MetaTable.pm, lib/HTML/WebMake/Metadata.pm,
+	lib/HTML/WebMake/MetadataContent.pm,
+	lib/HTML/WebMake/NormalContent.pm, lib/HTML/WebMake/Out.pm,
+	lib/HTML/WebMake/SiteCache.pm, lib/HTML/WebMake/SiteMap.pm,
+	lib/HTML/WebMake/SubstCtx.pm, lib/HTML/WebMake/UserTags.pm,
+	lib/HTML/WebMake/Util.pm, lib/HTML/WebMake/WMLinkGlossary.pm,
+	lib/HTML/WebMake/WmkFile.pm, lib/HTML/WebMake/PerlLib/navtree.wmk,
+	lib/WebMakeCGI/Dir.pm, lib/WebMakeCGI/Edit.pm, t/metatablexml.t,
+	t/data/metatablexml.wmk: major, major speedups for partial site
+	rebuilds. metatable tag now supports XML input, and loading from an
+	external location using the src attribute
+
+2001-04-23 13:57  jmason
+
+	* Changes, MANIFEST, build/get_version: [no log message]
+
+2001-04-23 00:08  jmason
+
+	* lib/HTML/WebMake.pm: pod cleanup
+
+2001-04-22 23:59  jmason
+
+	* README: added modules line
+
+2001-04-22 23:52  jmason
+
+	* MANIFEST, Makefile.PL, lib/HTML/WebMake.pm,
+	lib/HTML/WebMake/Content.pm, lib/HTML/WebMake/Main.pm: added CPAN
+	module
+
+2001-04-21 23:00  jmason
+
+	* windows_install.pl: fixed windows install script
+
+2001-04-19 14:19  jmason
+
+	* README, doc/documentation.wmk, lib/HTML/WebMake/Main.pm,
+	lib/HTML/WebMake/PerlCode.pm: changed perlout tag to use IO::String
+	to avoid pipe bug on Linux
+
+2001-04-19 13:27  jmason
+
+	* Changes, specfile.raw, webmake.vim, build/mkrpm,
+	doc/contenttable.html, doc/contributors.txt, doc/documentation.css,
+	doc/documentation.wmk, doc/firsttime.txt,
+	lib/HTML/WebMake/Content.pm, lib/HTML/WebMake/Main.pm,
+	lib/HTML/WebMake/Media.pm, lib/HTML/WebMake/MetadataContent.pm,
+	lib/HTML/WebMake/NormalContent.pm, lib/HTML/WebMake/PerlCode.pm,
+	lib/HTML/WebMake/PerlLib/navtree.wmk, t/example_sitemap.t,
+	t/metadefault.t, t/sitemap_with_metatable.t, t/sitetree.t,
+	lib/HTML/WebMake/PerlCode.pm, lib/HTML/WebMake/PerlLib/NavTree.pm:
+	added navtree support patch from Jan Hudec
+
+2001-04-13 10:46  jmason
+
+	* webmake.cgi, lib/WebMakeCGI/Dir.pm, lib/WebMakeCGI/Edit.pm,
+	lib/WebMakeCGI/Lib.pm: cgi work
+
+2001-04-06 12:11  jmason
+
+	* MANIFEST, MANIFEST.SKIP: fixed manifest
+
+2001-04-06 12:08  jmason
+
+	* webmake.cgi, lib/HTML/WebMake/MetadataContent.pm,
+	lib/HTML/WebMake/NormalContent.pm, lib/WebMakeCGI/Dir.pm,
+	lib/WebMakeCGI/Lib.pm: WebMakeCGI, new content subclasses added
+
+2001-04-06 12:05  jmason
+
+	* MANIFEST, doc/cms.txt, doc/contenttable.html,
+	doc/contenttable.txt, doc/ettext.txt, doc/firsttime.txt,
+	doc/format.txt, doc/globs.txt, doc/metadefault.txt,
+	doc/navlinks.txt, doc/perl.txt, doc/set.txt, doc/tags.txt,
+	doc/using.txt, doc/webmake_vars.txt, lib/HTML/WebMake/Content.pm,
+	lib/HTML/WebMake/Contents.pm, lib/HTML/WebMake/DataSource.pm,
+	lib/HTML/WebMake/Main.pm, lib/HTML/WebMake/PerlCodeLibrary.pm,
+	lib/HTML/WebMake/SiteMap.pm, lib/WebMakeCGI/Edit.pm, t/WMTest.pm,
+	t/etmore.t, t/ettextlinks.t, t/ettextmarkup.t, t/example_sitemap.t,
+	t/metacache.t, t/metadefault.t, t/navlinks_warning.t,
+	t/sitemap_with_metatable.t, t/data/metadefault.wmk: metadata now
+	stored separately from normal content, for 22% speedup on
+	documentation. First blast of WebMakeCGI code
+
 2001-03-21 12:54  jmason
 
 	* Changes, MANIFEST, MANIFEST.SKIP: removed WebMakeCGI from dist

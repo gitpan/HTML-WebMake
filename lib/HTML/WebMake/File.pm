@@ -2,7 +2,7 @@
 
 package HTML::WebMake::File;
 
-require Exporter;
+
 use Carp;
 use strict;
 use HTML::WebMake::Content;
@@ -11,11 +11,11 @@ use HTML::WebMake::Contents;
 use HTML::WebMake::Media;
 
 use vars	qw{
-  	@ISA @EXPORT
+  	@ISA
 };
 
-@ISA = qw(Exporter);
-@EXPORT = qw();
+
+
 
 ###########################################################################
 

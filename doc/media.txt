@@ -15,9 +15,9 @@ defined using the <a href=$(out)>&lt;out&gt;</a> tag.  However it is not handy
 when dealing with a images or other files that are not
 generated using WebMake.
 
-Therefore media files and external, non-WebMake files can be searched for
-using the &lt;media&gt; tag, which allows you to search a "data source" [ds]
-(directory, etc.) for a pattern.
+Therefore media files, such as images, and external, non-WebMake-controlled
+files, can be searched for using the &lt;media&gt; tag. This tag allows you to
+search a "data source" [ds] (directory, etc.) for a pattern.
 
 	[ds]: $(datasources)
 
@@ -26,7 +26,7 @@ The attributes supported are listed on the "data source" [ds] page.
 Note that data sources which do not map to files in a filesystem, or other
 methods accessible to a web browser browsing your site, do not make sense for
 the &lt;media&gt; tag; so, for example, the __svfile:__ protocol is not
-supported, as a web browser cannot load an image from a CSV file. (yet.)
+supported, as a web browser cannot load an image from a CSV file.
 
 As a result, currently only one data source protocol can be used with the
 &lt;media&gt; tag, namely __file:__.

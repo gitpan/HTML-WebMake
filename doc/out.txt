@@ -65,6 +65,11 @@ each file from which content was read to generate the output file.  If:
 
 then it does not need to be rebuilt.
 
+	__Note:__ the ##-r## switch to webmake, or the ##risky_fast_rebuild##
+	option to the ##HTML::WebMake::Main## constructor, indicates that
+	WebMake can take some risks when rebuilding.  If this is on, then
+	step 4. from the list above is ignored.
+
 Example
 =======
 

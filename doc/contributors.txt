@@ -15,6 +15,9 @@ Here's a list of people who've contributed to WebMake:
   - Caolan McNamara &lt;caolan /at/ csn.ul.ie&gt;: EtText contributions; lists,
     pre-formatted text, lots of suggestions
 
+  - Jan Hudec &lt;bulb /at/ ucw.cz&gt;: navtree plugin, patches to remove
+    metadata from site mapping and control mapping of media items
+
   - Matthew Clarke &lt;clamat /at/ van.maves.ca&gt;: doco fix for datasource
     documentation
 

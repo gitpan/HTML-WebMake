@@ -7,7 +7,7 @@
  <title>
 WebMake: Documentation: The &lt;content&gt; Tag
 </title>
- <meta name="generator" content="WebMake/1.1" />
+ <meta name="generator" content="WebMake/1.2" />
  <style>
 body {
  background-color: #ffffff; 
@@ -24,9 +24,9 @@ code, samp, pre
 {
  font-family: monospace;
 }
-H1 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; }
+H1 { font-size: x-large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFCC66; }
+H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFDD77; }
+H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; background: #FFEE88; }
 H4 { font-size: small; font-family: Garamond,Book Antiqua,Times,serif; }
 H5 { font-size: x-small; font-family: Garamond,Book Antiqua,Times,serif; }
 H6 { font-size: xx-small; font-family: Garamond,Book Antiqua,Times,serif; }
@@ -57,7 +57,7 @@ A:active {
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">
@@ -163,11 +163,11 @@ searched for and loaded en masse using the <a href="contents.html">&lt;contents&
 
 </p>
  <p>
-Every content item can have <a href="wmmeta.html">metadata</a> associated with it. See the
-documentation for the <a href="wmmeta.html">&lt;wmmeta&gt;</a> tag for details.
+Every content item can have <a href="metadata.html">metadata</a> associated with it. See the
+<a href="metadata.html">metadata documentation</a> for details.
 
 </p>
- <a name="Defining_Content_Items_On-The-Fly"><h2>Defining Content Items On-The-Fly</h2></a> <p>
+ <a name="Defining_Content_Items_On_The_Fly"><h1>Defining Content Items On-The-Fly</h1></a> <p>
 The <a href="set.html">&lt;{set}&gt; processing instruction</a> can be used to define small
 pieces of content on the fly, from within other content or <a href="out.html">&lt;out&gt;
 sections</a>.
@@ -178,7 +178,7 @@ In addition, Perl code can create content items using the <a href="PerlCodeLibra
 function.
 
 </p>
- <a name="Using_Content_From_Perl_Code"><h2>Using Content From Perl Code</h2></a> <p>
+ <a name="Using_Content_From_Perl_Code"><h1>Using Content From Perl Code</h1></a> <p>
 Perl code can obtain the text of content items using the <a href="PerlCodeLibrary.pm.html">get_content()</a>
 function, and can treat content items as whitespace-separated lists using
 <a href="PerlCodeLibrary.pm.html">get_list()</a>.
@@ -186,12 +186,12 @@ function, and can treat content items as whitespace-separated lists using
 </p>
  <p>
 In addition, each content item has a range of properties and associated
-<a href="wmmeta.html">metadata</a>; the <a href="PerlCodeLibrary.pm.html">get_content_object()</a> method allows Perl code to retrieve
+<a href="metadata.html">metadata</a>; the <a href="PerlCodeLibrary.pm.html">get_content_object()</a> method allows Perl code to retrieve
 an object of type <a href="Content.pm.html">HTML::WebMake::Content</a> representing the content
 item.
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+ <a name="Example"><h2>Example</h2></a> <p>
 <pre>
 
   &lt;content name="foo" format="text/html"&gt;
@@ -224,7 +224,7 @@ item.
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">

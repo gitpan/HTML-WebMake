@@ -24,14 +24,14 @@ the **##define_tag()##** call, will cause the handler function to be called.
 Handler functions are called as fcllows:
 
 <safe>
-        handler ($tagname, $attrs, $text, $perlcode);
+        handler ($tagname, $attrs, $text, $perlcodeself);
 </safe>
 
 Where &wmdollar;tagname is the name of the tag, &wmdollar;attrs is a reference
 to a hash containing the attribute names and the values used in the tag, and
 &wmdollar;text is the text between the start and end tags.
 
-&wmdollar;perlcode is the PerlCode object, allowing you to write proper
+&wmdollar;perlcodeself is the PerlCode object, allowing you to write proper
 object-oriented code that can be run in a threaded environment or from
 mod_perl. This can be ignored if you like.
 
@@ -39,11 +39,11 @@ Note that there are two variations, one for conventional tag pairs with a
 start and end tag, the other for stand-alone empty tags with no end tag.  The
 latter variation is called "**##define_empty_tag()##**" [def_empty_tag].
 
-	"**##define_empty_tag()##**" [def_empty_tag]:	define a content tag
-	with a start and end
-
-	"**##define_tag()##**" [def_tag]:	define a standalone
+	"**##define_empty_tag()##**" [def_empty_tag]:	define a standalone
 	content tag
+
+	"**##define_tag()##**" [def_tag]:	define a content tag with a
+	start and end
 
     [def_tag]: $(PerlCodeLibrary.pm.html)#item_define_tag
     [def_empty_tag]: $(PerlCodeLibrary.pm.html)#item_define_empty_tag
@@ -55,10 +55,10 @@ This is identical to using content tags, above, but the functions are as
 follows:
 
 	"**##define_empty_wmk_tag()##**" [def_empty_wmk_tag]:	define a
-	WebMake tag with a start and end
+	standalone WebMake tag
 
-	"**##define_wmk_tag()##**" [def_wmk_tag]:	define a standalone
-	WebMake tag
+	"**##define_wmk_tag()##**" [def_wmk_tag]:	define a WebMake tag
+	with a start and end
 
     [def_wmk_tag]: $(PerlCodeLibrary.pm.html)#item_define_wmk_tag
     [def_empty_wmk_tag]: $(PerlCodeLibrary.pm.html)#item_define_empty_wmk_tag
@@ -80,19 +80,19 @@ Let's say you've got the following in your WebMake file.
   </content>
 </safe>
 
-When the **foo** content item came to be included in an output file, the tag
+When the **foo** content item comes to be included in an output file, the tag
 will be replaced with a call to a perl function, as follows:
 
 <safe>
   make_thumbnail ("thumb",
      { img => 'big.jpg', thumb => 'big_thumb.jpg' },
-     'Picture of a big thing', $perlcode);
+     'Picture of a big thing', $perlcodeself);
 </safe>
 
 Note that if the tag omitted one of the 2 required attributes, __img__ or
 __thumb__, it would result in an error message.
 
-##&wmdollar;perlcode## is a reference to the PerlCode interpreter which called
-it, allowing you to use the object-oriented style of WebMake perl code, which
-is required for safe use under mod_perl or other multithreaded environments.
+For more serious examples of tag definition, the WebMake distribution comes
+with several "plugins" [$(use)], such as <a
+href=safe_tag.wmk.html>safe_tag.wmk</a> which define their own tags.
 

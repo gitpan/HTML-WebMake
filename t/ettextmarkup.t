@@ -63,17 +63,17 @@ use Test; BEGIN { plan tests => 37 };
   </p>},
   'h3',
 
-  q{<h2>A H2 HEADING WITH A LINE</h2></a>
+  q{<h1>A H2 HEADING WITH A LINE</h1></a>
   <p> More text.
   </p>},
   'h21',
 
-  q{<h1>A H1 HEADING WITH EQUALS SIGNS</h1></a>
+  q{<h2>A H1 HEADING WITH EQUALS SIGNS</h2></a>
   <p> Guess what's here then.
   </p>},		# fix vim: '
-  'h1',
+  'h2',
 
-  q{<h2>And Yet Another H2 Heading</h2></a>
+  q{<h1>And Yet Another H2 Heading</h1></a>
   <p> Pretty easy, this!
   </p>},
   'h22',

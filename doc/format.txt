@@ -13,9 +13,9 @@ sections would be used, too.
 
 The sections are specified using XML-/HTML-style notation, e.g.
 
-        &lt;type attribute=val ...&gt;
+        **&lt;type attribute=val ...&gt;**
         [ ...text... ]
-        &lt;/type&gt;
+        **&lt;/type&gt;**
 
 WebMake uses the XML style of comments -- everything between
 **&lt;!--** and **--&gt;** is ignored.
@@ -30,7 +30,11 @@ This comment format starts with **&lt;{!--** and ends with
 
 Take a look at <a href=documentation.wmk>documentation.wmk</a> for a sample
 WebMake file; this WebMake file is used to generate this documentation.
-Alternatively, there's lots more on the WebMake website [site].
+
+Be warned though, this documentation uses some advanced techniques, so it may
+not be an easy file to understand straight away.  There's lots more WebMake
+files linked to on the "WebMake website" [site], and they might be easier
+to grok.
 
 	[site]: http://webmake.taint.org/sample.html
 

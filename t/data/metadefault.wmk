@@ -148,7 +148,7 @@ Breaking news! this is story 3.
 </out>
 
 <sitemap name=fullsitemap rootname=index_chunk all=true
-      node=sitemapnode leaf=sitemapleaf dynamic=sitemapdynamic />
+	node=sitemapnode leaf=sitemapleaf dynamic=sitemapdynamic />
 
 </webmake>
 

@@ -7,7 +7,7 @@
  <title>
 WebMake: Documentation: Contents
 </title>
- <meta name="generator" content="WebMake/1.1" />
+ <meta name="generator" content="WebMake/1.2" />
  <style>
 body {
  background-color: #ffffff; 
@@ -24,9 +24,9 @@ code, samp, pre
 {
  font-family: monospace;
 }
-H1 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; }
+H1 { font-size: x-large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFCC66; }
+H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFDD77; }
+H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; background: #FFEE88; }
 H4 { font-size: small; font-family: Garamond,Book Antiqua,Times,serif; }
 H5 { font-size: x-small; font-family: Garamond,Book Antiqua,Times,serif; }
 H6 { font-size: xx-small; font-family: Garamond,Book Antiqua,Times,serif; }
@@ -57,13 +57,13 @@ A:active {
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">
  <div align="right">
 
- [ | <a href="blurb.html">Forward</a> | <a href="index.html">Index</a>
+ [ | <a href="index_01-intro.html">Forward</a> | <a href="index.html">Index</a>
  | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
  
 </div>
@@ -82,7 +82,7 @@ A:active {
 <td>
  <h1>Contents</h1> <ul>
  <li>
- <h2>Introduction</h2> <ul>
+ <h2><a href="index_01-intro.html">Introduction</a></h2> <ul>
  <li>
  <p>
 <a href="blurb.html">The Blurb</a> - What it is, and what it does
@@ -130,7 +130,7 @@ A:active {
  
 </li>
 <li>
- <h2>The Tags and Their Attributes</h2> <ul>
+ <h2><a href="index_02-tags_attrs.html">Tags and Their Attributes</a></h2> <ul>
  <li>
  <p>
 <a href="webmake_tag.html">The &lt;webmake&gt; Tag</a> - the webmake section
@@ -211,6 +211,18 @@ A:active {
 </li>
  <li>
  <p>
+<a href="cache.html">The &lt;cache&gt; Tag</a> - tell WebMake where to keep its cache files
+</p>
+ 
+</li>
+ <li>
+ <p>
+<a href="option.html">The &lt;option&gt; Tag</a> - set options controlling WebMake behaviour
+</p>
+ 
+</li>
+ <li>
+ <p>
 <a href="tags.html">Defining Tags</a> - defining tags for use in content items
 </p>
  
@@ -220,7 +232,7 @@ A:active {
  
 </li>
 <li>
- <h2>Processing Logic</h2> <ul>
+ <h2><a href="index_03-proc_logic.html">Processing Logic</a></h2> <ul>
  <li>
  <p>
 <a href="order.html">The Order of Processing</a> - the order of processing
@@ -256,7 +268,7 @@ A:active {
  
 </li>
 <li>
- <h2>Variable References</h2> <ul>
+ <h2><a href="index_04-var_refs.html">Variable References</a></h2> <ul>
  <li>
  <p>
 <a href="content_refs.html">${content_refs} - References to Content Chunks</a> - references to content chunks
@@ -280,10 +292,16 @@ A:active {
  
 </li>
 <li>
- <h2>Meta Tags and Meta-Data</h2> <ul>
+ <h2><a href="index_05-meta.html">Meta Tags and Meta-Data</a></h2> <ul>
  <li>
  <p>
-<a href="wmmeta.html">The &lt;wmmeta&gt; Tag</a> - meta-data for content items, and how to use it
+<a href="metadata.html">Metadata</a> - meta-data for content items, and how to use it
+</p>
+ 
+</li>
+ <li>
+ <p>
+<a href="wmmeta.html">The &lt;wmmeta&gt; Tag</a> - defining meta-data inside the tagged content object
 </p>
  
 </li>
@@ -310,7 +328,7 @@ A:active {
  
 </li>
 <li>
- <h2>Magic Variables</h2> <ul>
+ <h2><a href="index_06-magic_vars.html">Magic Variables</a></h2> <ul>
  <li>
  <p>
 <a href="imgsize.html">The ${IMGSIZE} Magic Variable</a> - automatically add image size information to an &lt;img&gt; tag
@@ -334,7 +352,7 @@ A:active {
  
 </li>
 <li>
- <h2>Format Converters</h2> <ul>
+ <h2><a href="index_07-fmt_converters.html">Format Converters</a></h2> <ul>
  <li>
  <p>
 <a href="ettext.html">The Text::EtText Format Converter</a> - A simple plain-text format, easily converted to HTML (format: <em>text/et</em>)
@@ -358,7 +376,7 @@ A:active {
  
 </li>
 <li>
- <h2>Module Documentation</h2> <ul>
+ <h2><a href="index_08-pod.html">Module Documentation</a></h2> <ul>
  <li>
  <p>
 <a href="Content.pm.html">HTML::WebMake::Content</a> - module documentation
@@ -382,7 +400,7 @@ A:active {
  
 </li>
 <li>
- <h2>Manual Pages</h2> <ul>
+ <h2><a href="index_09-man.html">Manual Pages</a></h2> <ul>
  <li>
  <p>
 <a href="webmake.html">webmake(1)</a> - manual page
@@ -394,7 +412,7 @@ A:active {
  
 </li>
 <li>
- <h2>Included Library Code</h2> <ul>
+ <h2><a href="index_10-perllib.html">Plugins and Libraries</a></h2> <ul>
  <li>
  <p>
 <a href="csvtable_tag.wmk.html">csvtable_tag.wmk</a> - define a HTML table using comma-separated values
@@ -410,6 +428,12 @@ A:active {
  <li>
  <p>
 <a href="dump_vars.wmk.html">dump_vars.wmk</a> - dump all WebMake variables and content items
+</p>
+ 
+</li>
+ <li>
+ <p>
+<a href="navtree.wmk.html">navtree.wmk</a> - WebMake tag to generate an alternative per-page sitemap
 </p>
  
 </li>
@@ -446,13 +470,13 @@ A:active {
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">
  <div align="right">
 
- [ | <a href="blurb.html">Forward</a> | <a href="index.html">Index</a>
+ [ | <a href="index_01-intro.html">Forward</a> | <a href="index.html">Index</a>
  | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
  
 </div>

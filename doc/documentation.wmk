@@ -71,6 +71,7 @@ Content.pm|HTML::WebMake::Content|module documentation
 webmake|webmake(1)|manual page
 dump_vars.wmk|dump_vars.wmk|dump all WebMake variables and content items
 sitetree.wmk|sitetree.wmk|WebMake tag to generate a per-page sitemap
+navtree.wmk|navtree.wmk|WebMake tag to generate an alternative per-page sitemap
 safe_tag.wmk|safe_tag.wmk|Tag to ''make safe'' WebMake, EtText or HTML data
 download_tag.wmk|download_tag.wmk|Tag for quick download links to files
 csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated values
@@ -162,8 +163,13 @@ csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated valu
     @files_in_sect = content_names_to_objects (@files_in_sect);
     @files_in_sect = sort_content_objects ('score title', @files_in_sect);
     @files_in_sect = content_objects_to_names (@files_in_sect);
+
     set_list ("$sectname.files", @files_in_sect);
+    push (@all_files, "index_$sectname.txt");
   }
+
+  set_list ("all_files", @all_files);
+
   '';
   
 }>
@@ -174,7 +180,7 @@ csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated valu
 
 <content name=index_section_item>
 <li>
-  <h2>${section_title}</h2>
+  <h2><a href=index_${section}.html>${section_title}</a></h2>
   <ul>
   ${section_list}
   </ul>
@@ -186,6 +192,8 @@ csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated valu
   <p><a href=$[${item}.url]>$[${item}.title]</a> - $[${item}.abstract]</p>
 </li>
 </content>
+
+<!-- ------------------------------------------------------------------------ -->
 
 <content name=index isroot=true map=true>
 <wmmeta name="title" value="Contents" />
@@ -213,6 +221,35 @@ csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated valu
   </ul>
 
 </content>
+
+<!-- ------------------------------------------------------------------------ -->
+
+<for name=sectname values="${all_sections}">
+  <content name=index_${sectname}.txt map=true>
+  <wmmeta name="title" value="Contents for the '${${sectname}}' section" />
+  <wmmeta name="abstract" value="section contents" />
+  <wmmeta name="score" value=1 />
+  <wmmeta name="section" value="${sectname}" />
+
+  <ul>
+
+    <{perl
+	my @section_list = ();
+	my $sectname = "${sectname}";	# expanded from for tag above
+
+	$_ = '';
+	foreach my $pg (get_list ("$sectname.files")) {
+	  set_content ("item", $pg);
+	  $_ .= get_content ("index_item");
+	}
+
+	$_;
+    }>
+
+  </ul>
+
+  </content>
+</for>
 
 <!-- ------------------------------------------------------------------------ -->
 <!-- sitemap for navigation -->
@@ -281,15 +318,21 @@ ${prevtext} | ${nexttext}
   <h1>$[index.title]</h1>
   ${index}<hr>
 
-  <{perl
-	foreach my $sectname (get_list ("all_sections")) {
-	  foreach my $pg (get_list ("$sectname.files")) {
+  <{perlout
+	foreach my $sectname (get_list ("all_sections"))
+	{
+	  my $pg = "index_$sectname.txt";
+	  print "<hr size=4><h1>". get_content("$pg.title"). "</h1>".
+		      get_content($pg). "<hr>\n";
+
+	  foreach $pg (get_list ("$sectname.files"))
+	  {
 	    my $shortpg = $pg; $shortpg =~ s/\.txt$//;
-	    $_ .= "<h1>".get_content("$pg.title")."</h1>".
-		  get_content ("$pg") . "<hr>";
+
+	    print "<h2>". get_content("$pg.title"). "</h2>".
+		  	get_content($pg). "<hr noshade>\n";
 	  }
 	}
-	$_;
   }>
 
   ${footer}

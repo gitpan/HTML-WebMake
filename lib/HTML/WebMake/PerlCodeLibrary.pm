@@ -72,7 +72,7 @@ sub content_names_to_objects {
   my ($self, @namelist) = @_;
   my @list = ();
   foreach my $elem (@namelist) {
-    my $contobj = $self->{main}->{contents}->{$elem};
+    my $contobj = $self->{main}->get_content_obj($elem);
     if (!defined $contobj) {
       warn "content_names_to_objects: not a <content> item: $elem\n";
       next;
@@ -93,7 +93,7 @@ of type L<HTML::WebMake::Content>.
 
 sub get_content_object {
   my ($self, $name) = @_;
-  my $contobj = $self->{main}->{contents}->{$name};
+  my $contobj = $self->{main}->get_content_obj($name);
   if (!defined $contobj) {
     warn "get_content_object: not a <content> item: $name\n";
   }
@@ -171,7 +171,7 @@ Get the item of content named C<$name>.  Equivalent to a $ {content_reference}.
 sub get_content {
   my ($self, $key) = @_;
   if (!defined $key) { croak ("get_content with undef key"); }
-  my $str = $self->{main}->curly_subst ("(eval)", $key);
+  my $str = $self->{main}->curly_or_meta_subst ("(eval)", $key);
   $str;
 }
 
@@ -185,7 +185,7 @@ list is stored in the content item in whitespace-separated format.
 sub get_list {
   my ($self, $key) = @_;
   if (!defined $key) { croak ("get_list with undef key"); }
-  my $str = $self->{main}->curly_subst ("(eval)", $key);
+  my $str = $self->{main}->curly_or_meta_subst ("(eval)", $key);
   split (' ', $str);
 }
 
@@ -202,7 +202,7 @@ sub set_content {
   my ($self, $key, $val) = @_;
   if (!defined $key) { croak ("set_content with undef key"); }
   if (!defined $val) { croak ("set_content with undef val"); }
-  return $self->{main}->add_fileless_content ($key, $val, undef, 1);
+  return $self->{main}->set_unmapped_content ($key, $val);
 }
 
 =item set_list ($name, @values);
@@ -218,8 +218,8 @@ Returns the content object created.
 sub set_list {
   my ($self, $key, @vals) = @_;
   if (!defined $key) { croak ("set_list with undef key"); }
-  return $self->{main}->add_fileless_content ($key,
-  				join (' ', @vals), undef, 1);
+  return $self->{main}->set_unmapped_content ($key,
+  				join (' ', @vals));
 }
 
 =item set_mapped_content ($name, $value, $upname);
@@ -238,7 +238,7 @@ sub set_mapped_content {
   if (!defined $key) { croak ("set_mapped_content with undef key"); }
   if (!defined $val) { croak ("set_mapped_content with undef val"); }
   if (!defined $upname) { croak ("set_mapped_content with undef upname"); }
-  return $self->{main}->add_fileless_content ($key, $val, $upname, 1);
+  return $self->{main}->set_mapped_content ($key, $val, $upname);
 }
 
 =item del_content ($name);
@@ -342,7 +342,7 @@ sub _make_sitemap {
   my $top = undef;
 
   if (defined $topname) {
-    $top = $self->{main}->{contents}->{$topname};
+    $top = $self->{main}->get_content_obj($topname);
     if (!defined $top) {
       warn "make_sitemap: <content> item not found: $topname\n";
       return "";

@@ -100,11 +100,11 @@ C<template> can be a $ {content_reference}.  The default template is:
 Note that this means that any unrecognised attributes of the download tag
 itself will become attributes of the A tag.
 
+=back
+
 =head1 OPTIONS WHICH AFFECT THIS TAG
 
 C<FileSearchPath> - WebMake option
-
-=back
 
 =cut
 

@@ -4,18 +4,18 @@ package HTML::WebMake::SubstCtx;
 
 ###########################################################################
 
-require Exporter;
+
 use Carp;
 use strict;
 
 use HTML::WebMake::Main;
 
 use vars	qw{
-  	@ISA @EXPORT 
+  	@ISA 
 };
 
-@ISA = qw(Exporter);
-@EXPORT = qw();
+
+
 
 ###########################################################################
 

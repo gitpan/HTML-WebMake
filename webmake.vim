@@ -58,6 +58,11 @@ syn keyword htmlArg contained prefix suffix noup sitemap
 syn keyword htmlArg contained opennode closednode thispage leaf
 syn keyword htmlArg contained plugin
 
+syn include @htmlPerlScript <sfile>:p:h/perl.vim
+syn region wmPerlScript start=+<{perl+ keepend end=+}>+me=e contains=@htmlPerlScript
+
+hi link wmPerlScript Special
+
 let b:current_syntax = "webmake"
 
 if main_syntax == 'webmake'

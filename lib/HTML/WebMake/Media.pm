@@ -2,17 +2,18 @@
 
 package HTML::WebMake::Media;
 
-require Exporter;
+
 use HTML::WebMake::DataSource;
+use HTML::WebMake::MediaContent;
 use Carp;
 use strict;
 
 use vars	qw{
-  	@ISA @EXPORT
+  	@ISA
 };
 
 @ISA = qw(HTML::WebMake::DataSource);
-@EXPORT = qw();
+
 
 ###########################################################################
 
@@ -21,6 +22,12 @@ sub new ($$$$$) {
   $class = ref($class) || $class;
   my ($main, $src, $name, $attrs) = @_;
   my $self = $class->SUPER::new (@_);
+
+  if(defined $attrs->{'map'}) {
+    $self->{'map'} = $main->{util}->parse_boolean ($attrs->{'map'});
+  } else {
+    $self->{'map'} = $main->{metadata}->get_attrdefault ('map');
+  }
 
   bless ($self, $class);
   $self;
@@ -48,17 +55,24 @@ sub add_location {
 
   # add a placeholder piece of content with the same name so
   # that metadata can be attached to Media items.
-  my $cont = $self->{main}->add_media_placeholder_content ($name, $url);
-  $cont->add_ref_from_url ($url);
-}
+  # this is code formerly separated to Main::add_media_placeholder_content
+  # but here it can read media object atributes
+
+  my $cont = new HTML::WebMake::MediaContent ($self->{main}, $name, {
+	    'format'		=> 'text/html',
+	    'map'		=> $self->{'map'},
+	  });
+
+    $cont->add_ref_from_url ($url);
+  }
 
 # -------------------------------------------------------------------------
 
-sub as_string {
-  my ($self) = @_;
-  "<media>";
-}
+  sub as_string {
+    my ($self) = @_;
+    "<media>";
+  }
 
 # -------------------------------------------------------------------------
 
-1;
+  1;

@@ -1,16 +1,16 @@
 
 package HTML::WebMake::Out;
 
-require Exporter;
+
 use Carp;
 use strict;
 
 use vars	qw{
-  	@ISA @EXPORT 
+  	@ISA 
 };
 
-@ISA = qw(Exporter);
-@EXPORT = qw();
+
+
 
 ###########################################################################
 

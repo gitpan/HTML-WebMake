@@ -40,7 +40,7 @@ If you wish to define a number of content sections at once, they can be
 searched for and loaded en masse using the "&lt;contents&gt;" [1] tag.
 
 Every content item can have "metadata" associated with it.  See the
-documentation for the "&lt;wmmeta&gt;" [metadata] tag for details.
+"metadata documentation" [metadata] for details.
 
 Defining Content Items On-The-Fly
 ---------------------------------
@@ -70,7 +70,7 @@ item.
 	[4]: $(out)
 	Auto: [content_refs]: $(content_refs)
 	[contobj]: $(Content.pm.html)
-	Auto: [metadata]: $(wmmeta)
+	Auto: [metadata]: $(metadata)
 	Auto: [sitemap]: $(sitemap)
 	Auto: [metadefault]: $(metadefault)
 	[attrdefault]: $(attrdefault)

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
-open (IN, "< lib/HTML/WebMake/Main.pm")
-	or die "cannot open lib/HTML/WebMake/Main.pm\n";
+open (IN, "< lib/HTML/WebMake.pm")
+	or die "cannot open lib/HTML/WebMake.pm\n";
 while (<IN>) {
   /^\s*\$VERSION\s*=\s*\"(\S+)\"\;/ or next;
   print "$1\n";

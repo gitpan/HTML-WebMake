@@ -7,7 +7,7 @@
  <title>
 WebMake: Documentation: All-In-One Documentation
 </title>
- <meta name="generator" content="WebMake/1.1" />
+ <meta name="generator" content="WebMake/1.2" />
  <style>
 body {
  background-color: #ffffff; 
@@ -24,9 +24,9 @@ code, samp, pre
 {
  font-family: monospace;
 }
-H1 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; }
+H1 { font-size: x-large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFCC66; }
+H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFDD77; }
+H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; background: #FFEE88; }
 H4 { font-size: small; font-family: Garamond,Book Antiqua,Times,serif; }
 H5 { font-size: x-small; font-family: Garamond,Book Antiqua,Times,serif; }
 H6 { font-size: xx-small; font-family: Garamond,Book Antiqua,Times,serif; }
@@ -57,13 +57,13 @@ A:active {
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">
  <div align="right">
 
- [ <a href="safe_tag.wmk.html">Back</a> | <a href="blurb.html">Forward</a> | <a href="index.html">Index</a>
+ [ <a href="safe_tag.wmk.html">Back</a> | <a href="index_01-intro.html">Forward</a> | <a href="index.html">Index</a>
  | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
  
 </div>
@@ -82,7 +82,7 @@ A:active {
 <td>
  <h1>All-In-One Documentation</h1> <h1>Contents</h1> <ul>
  <li>
- <h2>Introduction</h2> <ul>
+ <h2><a href="index_01-intro.html">Introduction</a></h2> <ul>
  <li>
  <p>
 <a href="blurb.html">The Blurb</a> - What it is, and what it does
@@ -130,7 +130,7 @@ A:active {
  
 </li>
 <li>
- <h2>The Tags and Their Attributes</h2> <ul>
+ <h2><a href="index_02-tags_attrs.html">Tags and Their Attributes</a></h2> <ul>
  <li>
  <p>
 <a href="webmake_tag.html">The &lt;webmake&gt; Tag</a> - the webmake section
@@ -211,6 +211,18 @@ A:active {
 </li>
  <li>
  <p>
+<a href="cache.html">The &lt;cache&gt; Tag</a> - tell WebMake where to keep its cache files
+</p>
+ 
+</li>
+ <li>
+ <p>
+<a href="option.html">The &lt;option&gt; Tag</a> - set options controlling WebMake behaviour
+</p>
+ 
+</li>
+ <li>
+ <p>
 <a href="tags.html">Defining Tags</a> - defining tags for use in content items
 </p>
  
@@ -220,7 +232,7 @@ A:active {
  
 </li>
 <li>
- <h2>Processing Logic</h2> <ul>
+ <h2><a href="index_03-proc_logic.html">Processing Logic</a></h2> <ul>
  <li>
  <p>
 <a href="order.html">The Order of Processing</a> - the order of processing
@@ -256,7 +268,7 @@ A:active {
  
 </li>
 <li>
- <h2>Variable References</h2> <ul>
+ <h2><a href="index_04-var_refs.html">Variable References</a></h2> <ul>
  <li>
  <p>
 <a href="content_refs.html">${content_refs} - References to Content Chunks</a> - references to content chunks
@@ -280,10 +292,16 @@ A:active {
  
 </li>
 <li>
- <h2>Meta Tags and Meta-Data</h2> <ul>
+ <h2><a href="index_05-meta.html">Meta Tags and Meta-Data</a></h2> <ul>
  <li>
  <p>
-<a href="wmmeta.html">The &lt;wmmeta&gt; Tag</a> - meta-data for content items, and how to use it
+<a href="metadata.html">Metadata</a> - meta-data for content items, and how to use it
+</p>
+ 
+</li>
+ <li>
+ <p>
+<a href="wmmeta.html">The &lt;wmmeta&gt; Tag</a> - defining meta-data inside the tagged content object
 </p>
  
 </li>
@@ -310,7 +328,7 @@ A:active {
  
 </li>
 <li>
- <h2>Magic Variables</h2> <ul>
+ <h2><a href="index_06-magic_vars.html">Magic Variables</a></h2> <ul>
  <li>
  <p>
 <a href="imgsize.html">The ${IMGSIZE} Magic Variable</a> - automatically add image size information to an &lt;img&gt; tag
@@ -334,7 +352,7 @@ A:active {
  
 </li>
 <li>
- <h2>Format Converters</h2> <ul>
+ <h2><a href="index_07-fmt_converters.html">Format Converters</a></h2> <ul>
  <li>
  <p>
 <a href="ettext.html">The Text::EtText Format Converter</a> - A simple plain-text format, easily converted to HTML (format: <em>text/et</em>)
@@ -358,7 +376,7 @@ A:active {
  
 </li>
 <li>
- <h2>Module Documentation</h2> <ul>
+ <h2><a href="index_08-pod.html">Module Documentation</a></h2> <ul>
  <li>
  <p>
 <a href="Content.pm.html">HTML::WebMake::Content</a> - module documentation
@@ -382,7 +400,7 @@ A:active {
  
 </li>
 <li>
- <h2>Manual Pages</h2> <ul>
+ <h2><a href="index_09-man.html">Manual Pages</a></h2> <ul>
  <li>
  <p>
 <a href="webmake.html">webmake(1)</a> - manual page
@@ -394,7 +412,7 @@ A:active {
  
 </li>
 <li>
- <h2>Included Library Code</h2> <ul>
+ <h2><a href="index_10-perllib.html">Plugins and Libraries</a></h2> <ul>
  <li>
  <p>
 <a href="csvtable_tag.wmk.html">csvtable_tag.wmk</a> - define a HTML table using comma-separated values
@@ -410,6 +428,12 @@ A:active {
  <li>
  <p>
 <a href="dump_vars.wmk.html">dump_vars.wmk</a> - dump all WebMake variables and content items
+</p>
+ 
+</li>
+ <li>
+ <p>
+<a href="navtree.wmk.html">navtree.wmk</a> - WebMake tag to generate an alternative per-page sitemap
 </p>
  
 </li>
@@ -432,7 +456,54 @@ A:active {
  
 </ul>
 <hr />
- <h1>The Blurb</h1><p>
+ <hr size="4" />
+<h1>Contents for the 'Introduction' section</h1> <ul>
+ <li>
+ <p>
+<a href="blurb.html">The Blurb</a> - What it is, and what it does
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="cms.html">WebMake as a CMS</a> - WebMake's content-management features, and shortcomings
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="making.html">WebMake Operation</a> - what happens when you run WebMake
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="invoking.html">Invoking Webmake</a> - how to run WebMake
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="firsttime.html">How to Use WebMake</a> - how to write a WebMake file
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="using.html">Tips On Using WebMake</a> - Some tips on using WebMake
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="contributors.html">Contributors to WebMake</a> - Contributors to WebMake
+</p>
+ 
+</li>
+ 
+</ul>
+<hr />
+ <h2>The Blurb</h2><p>
 WebMake is a simple content management system, based around a templating
 system for HTML documents, with lots of built-in smarts about what a
 "typical" informational website needs in the way of functionality; metadata,
@@ -534,8 +605,8 @@ sitemapping, navigational aids, and (of course) embedded perl code. ;)
 </p>
  
 </p>
-<hr />
-<h1>WebMake as a CMS</h1><p>
+<hr noshade />
+ <h2>WebMake as a CMS</h2><p>
 WebMake is, arguably, a Content Management System, or <a href="http://www.camworld.com/cms/">CMS</a>.
 
 </p>
@@ -554,10 +625,15 @@ not preclude using PHP, mod_perl, Mason etc. to provide these, however.)
 
 </p>
  <p>
+In addition, it does not yet have a graphical interface for defining and
+editing content, although this is planned.
+
+</p>
+ <p>
 Here's the relevant details of what it can do.
 
 </p>
- <a name="WebMake_s_CMS_Features"><h1>WebMake's CMS Features</h1></a> <ul>
+ <a name="WebMake_s_CMS_Features"><h2>WebMake's CMS Features</h2></a> <ul>
 <li>
 <p>
 <strong>Separation between content and layout</strong> 
@@ -574,7 +650,9 @@ Since, logically, content and layout are entirely separate tasks, they
 <p>
 WebMake uses <a href="content_refs.html">content references</a> to include content into pages, and
  implement templating. This allows you to separate the content text from
- the template layout HTML.
+ the template layout HTML; the template designers just need to include
+ a content reference, such as <code>${body}</code>, instead of the
+ text.
 
 </p>
 </blockquote>
@@ -600,20 +678,24 @@ WebMake provides <a href="ettext.html">Text::EtText</a>, which provides an
 </blockquote>
  <li>
 <p>
-<strong>Generation of pages automatically, using <a href="wmmeta.html">metadata</a> from content items</strong> 
+<strong>Generation of pages automatically, using <a href="metadata.html">metadata</a> from content items</strong> 
 </p>
 </li>
  <blockquote>
 <p>
 It should be possible to generate index pages, sitemaps, navigation links,
- and other text automatically, based on properties and <a href="wmmeta.html">metadata</a> of the
+ and other text automatically, based on properties and <a href="metadata.html">metadata</a> of the
  pieces of content loaded.
 
 </p>
 </blockquote>
  <blockquote>
 <p>
-WebMake supports this using <a href="wmmeta.html">metadata on content items</a>.
+WebMake supports this by <a href="wmmeta.html">allowing any content item to carry arbitrary
+ metadata text</a>. Perl code can then be used to dynamically
+ request a list of content items that have a particular set of <a href="metadata.html">metadata</a>,
+ and any page can refer to another content item's title, description,
+ abstract etc. without itself needing to parse the content text.
 
 </p>
 </blockquote>
@@ -624,8 +706,8 @@ WebMake supports this using <a href="wmmeta.html">metadata on content items</a>.
 </li>
  <blockquote>
 <p>
-It should be trivial to rearrange a site, if required, totally changing the
- URLs used in the site's pages.
+It should be trivial to rearrange a site, if required, totally changing
+ the URLs used in the site's pages.
 
 </p>
 </blockquote>
@@ -639,7 +721,7 @@ WebMake supports this by using <a href="url_refs.html">symbolic URL references</
 </blockquote>
  
 </ul>
-<a name="What_WebMake_Is_Missing"><h1>What WebMake Is Missing</h1></a> <ul>
+<a name="What_WebMake_Is_Missing"><h2>What WebMake Is Missing</h2></a> <ul>
 <li>
 <p>
 <strong>Edit-In-Page Functionality</strong> 
@@ -647,16 +729,17 @@ WebMake supports this by using <a href="url_refs.html">symbolic URL references</
 </li>
  <blockquote>
 <p>
-Most CMSes boast a nicer, browser-based user interface to creating, naming,
+Most CMSes boast a nice, browser-based user interface to creating, naming,
  uploading and filling out content items and media.
 
 </p>
 </blockquote>
  <blockquote>
 <p>
-WebMake currently leaves you with your trusty text editor, to edit the .wmk
- file and add the tags needed to define these. This is fine if you're of
- the UNIX mindset (like me ;) -- but it does need work.
+WebMake currently leaves you with your trusty text editor, to edit the
+ .wmk file and add the tags needed to define these. This is fine if you're
+ of the UNIX mindset -- but for general-purpose use, it will need a more
+ friendly interface.
 
 </p>
 </blockquote>
@@ -694,6 +777,18 @@ This will definitely arrive -- as soon as a good XSLT engine becomes part
 
 </p>
 </blockquote>
+ <li>
+<p>
+<strong>Workflow</strong> 
+</p>
+</li>
+ <blockquote>
+<p>
+There's currently no logic to support workflow. This would not
+ be difficult to add to the graphical interface discussed above.
+
+</p>
+</blockquote>
  
 </ul>
 <p>
@@ -701,8 +796,8 @@ This will definitely arrive -- as soon as a good XSLT engine becomes part
 </p>
  
 </p>
-<hr />
-<h1>WebMake Operation</h1><p>
+<hr noshade />
+ <h2>WebMake Operation</h2><p>
 When you run WebMake, it'll first search for a file ending with <strong>.wmk</strong> in
 the current directory, then in the parent directory, and so on 'til it hits
 the root directory.
@@ -736,7 +831,7 @@ If a target has been specified on the command line, that file will be made;
 otherwise, all the <strong>out</strong> files named in the WebMake file will be made.
 
 </p>
- <a name="Dependencies_And_Other_Optimisations"><h2>Dependencies And Other Optimisations</h2></a> <p>
+ <a name="Dependencies_And_Other_Optimisations"><h1>Dependencies And Other Optimisations</h1></a> <p>
 "Making" the target is not the end of it -- strictly speaking, the target
 may or may not be updated. WebMake tracks the dependencies of each file, and
 if these have not changed, the file will not be rebuilt.
@@ -763,7 +858,7 @@ command-line switch; this will force output whether or not the files have
 changed.
 
 </p>
- <a name="Ensuring_A_Seamless_Transition"><h2>Ensuring A Seamless Transition</h2></a> <p>
+ <a name="Ensuring_A_Seamless_Transition"><h1>Ensuring A Seamless Transition</h1></a> <p>
 A very large (or very complicated) WebMake site can take a while to update.
 To avoid broken links while updating the site, WebMake generates all output
 into temporary files called <strong><em>filename</em>.new</strong>; once all the output
@@ -771,9 +866,9 @@ has been generated, these are renamed into place. This minimises the
 time during which there may be inconsistencies in the site.
 
 </p>
- <a name="Caching"><h2>Caching</h2></a> <p>
+ <a name="Caching"><h1>Caching</h1></a> <p>
 Since WebMake uses dependencies to avoid rebuilding the entire site
-every time, it needs to cache <a href="wmmeta.html">metadata</a> and dependency information
+every time, it needs to cache <a href="metadata.html">metadata</a> and dependency information
 somewhere.
 
 </p>
@@ -786,8 +881,8 @@ where <em>filename</em> is a sanitised version of the WebMake file's name, in th
  <p>
 
 </p>
-<hr />
-<h1>Invoking Webmake</h1><p>
+<hr noshade />
+ <h2>Invoking Webmake</h2><p>
 WebMake can be run using the command-line tool <a href="webmake.html">webmake</a>, or by
 using the Perl module <em>HTML::WebMake::Main</em>.
 
@@ -826,21 +921,19 @@ And the POD documentation for the Perl module:
 </p>
  
 </p>
-<hr />
-<h1>How to Use WebMake</h1><p>
+<hr noshade />
+ <h2>How to Use WebMake</h2><p>
 Chances are, you already have a HTML site you wish to migrate to WebMake.
 This document introduces WebMake's way of doing things, and how to go
 about a typical migration.
 
 </p>
- <hr />
- <a name="Place_The__wmk_File"><h3>Place The .wmk File</h3></a> <p>
+ <a name="Place_The_wmk_File"><h3>Place The .wmk File</h3></a> <p>
 First, pick a top-level directory for the site; that's where you'll place your
 <strong>.wmk</strong> file. All the generated files should be beneath this directory. In
 this example I'll call it <strong>index.wmk</strong>.
 
 </p>
- <hr />
  <a name="Make_Templates"><h3>Make Templates</h3></a> <p>
 Next, identify the page templates used in the site. To keep it simple, let's
 imagine you have only one look and feel on the pages, with the usual stuff in
@@ -861,7 +954,7 @@ title as your typical template items.
  <p>
 So edit the <strong>index.wmk</strong> file, and add a template content item, by cutting
 and pasting it from one of your pages. Instead of cutting and pasting the
-<em>real</em> title, use a <a href="wmmeta.html">metadata</a> reference:
+<em>real</em> title, use a <a href="metadata.html">metadata</a> reference:
 <strong>$[this.title]</strong>. Also, replace the text of the page
 with <strong>${page_text}</strong>; the plan is that, before this content item
 will be referenced, this content item will have been set to the text you wish
@@ -881,8 +974,7 @@ to use.
   &lt;/body&gt;&lt;/html&gt;
 &lt;/content&gt;
 </pre>
- <hr />
- <a name="Grab_The_Pages__Text"><h3>Grab The Pages' Text</h3></a> <p>
+ <a name="Grab_The_Pages_Text"><h3>Grab The Pages' Text</h3></a> <p>
 Next, run through the pages you wish to WebMake-ify, and either:
 
 </p>
@@ -934,8 +1026,7 @@ around for later, though.
   ....your html here...
 &lt;/content&gt;
 </pre>
- <hr />
- <a name="Convert_To_EtText__OPTIONAL__"><h3>Convert To EtText (OPTIONAL!)</h3></a> <p>
+ <a name="Convert_To_EtText_OPTIONAL"><h3>Convert To EtText (OPTIONAL!)</h3></a> <p>
 Now, one of the best bits of WebMake (in my opinion) is <a href="ettext.html">EtText</a>,
 the built-in simple text markup language; to use this, run the command-line
 tool <em>ethtml2text</em> on each of your HTML files to convert them
@@ -957,7 +1048,6 @@ To keep things simple, I'll assume you haven't used EtText in the examples
 from now on.
 
 </p>
- <hr />
  <a name="Add_Titles"><h3>Add Titles</h3></a> <p>
 Next, you need to set the titles in the content items, so that they can be
 used in higher-level templates, such as the <strong>page_template</strong> content item we
@@ -965,16 +1055,16 @@ defined earlier.
 
 </p>
  <p>
-To really get some power from WebMake, use <a href="wmmeta.html">metadata</a> to do this.
+To really get some power from WebMake, use <a href="metadata.html">metadata</a> to do this.
 
 </p>
- <blockquote>
  <hr />
+ <blockquote>
  <p>
 <strong>What is Metadata?</strong> 
 </p>
  <p>
-A <em><a href="wmmeta.html">metadatum</a></em> is like a normal content item, except it is exposed to other
+A <em><a href="metadata.html">metadatum</a></em> is like a normal content item, except it is exposed to other
 pages in the <strong>index.wmk</strong> file. Normally, you cannot reliably read a dynamic
 content item that was set from another page; if one content item sets a
 variable like this:
@@ -1005,11 +1095,11 @@ Think of them as like size, modification time, owner etc. on files; or member
 variables in an object-oriented language.
 
 </p>
- <hr />
  
 </blockquote>
+ <hr />
  <p>
-Anyway, titles of pages are a perfect fit for <a href="wmmeta.html">metadata</a>. So convert your
+Anyway, titles of pages are a perfect fit for <a href="metadata.html">metadata</a>. So convert your
 page titles into &lt;wmmeta&gt; tags like so:
 
 </p>
@@ -1017,14 +1107,14 @@ page titles into &lt;wmmeta&gt; tags like so:
 </p>
  <pre>
 &lt;content name="document1.txt"&gt;
-  &lt;wmmeta name="title"&gt;Your Title Here&lt;/a&gt;
+  &lt;wmmeta name="title"&gt;Your Title Here&lt;/wmmeta&gt;
   ....your ettext here...
 &lt;/content&gt;
 ...
 </pre>
  <p>
 Sometimes, for example if you plan to generate index pages or a <a href="sitemap.html">sitemap</a> later
-on, you may wish to add a one-line summary of the content item as a <a href="wmmeta.html">metadatum</a>
+on, you may wish to add a one-line summary of the content item as a <a href="metadata.html">metadatum</a>
 called <strong>abstract</strong>. I'll leave it out of the examples, just to keep them
 simple.
 
@@ -1034,7 +1124,6 @@ Metadata should always be referred to in <strong>$[square
 brackets]</strong>. I'll explain why in the next section.
 
 </p>
- <hr />
  <a name="Naming_The_Output_URLs"><h3>Naming The Output URLs</h3></a> <p>
 Finally, you've assembled all the content items; now to tell WebMake
 where they should go. This is accomplished using the &lt;out&gt; tag.
@@ -1127,14 +1216,15 @@ BTW: you could simply skip defining this "helper" content item
 </p>
 </blockquote>
  <p>
-But what about the title? Handily, since we defined the titles as <a href="wmmeta.html">metadata</a>,
+But what about the title? Handily, since we defined the titles as <a href="metadata.html">metadata</a>,
 and referred to them as <strong>$[this.title]</strong> in <strong>page_template</strong>,
 this is taken care of; once the <strong>${page_text}</strong> reference is
 expanded, <strong>$[this.title]</strong> will be set.
 
 </p>
- <p>
-Remember I mentioned that <a href="wmmeta.html">metadata</a> should always be referred to in
+ <hr />
+ <a name="What_s_With_the_Square_Brackets"><h3>What's With the Square Brackets?</h3></a> <p>
+Remember I mentioned that <a href="metadata.html">metadata</a> should always be referred to in
 <strong>$[square brackets]</strong>? Here's why. Square bracket
 references, or <a href="deferred_content_refs.html"><em>deferred references</em></a>, are
 evaluated only after <a href="content_refs.html">normal, "squiggly bracket" content references</a>.
@@ -1166,9 +1256,15 @@ ${page_text}
  
 </ul>
 <p>
-This allows <strong>${page_text}</strong> to be expanded first, which causes
-<strong>this.title</strong> to be set. Finally, <strong>$[this.title]</strong> is
-expanded last.
+Since <strong>${page_text}</strong> is a normal content reference, it will be
+expanded first; and when it's expanded, the &lt;wmmeta&gt; tag setting
+<strong>title</strong> will be encountered. This will cause <strong>this.title</strong> to be set.
+
+</p>
+ <p>
+Once all the normal content references are expanded, WebMake runs through
+the deferred references, causing <strong>$[this.title]</strong> to
+be expanded.
 
 </p>
  <p>
@@ -1181,8 +1277,7 @@ If <strong>page_template</strong> had used a normal content reference to refer t
 Anyway, I digress.
 
 </p>
- <hr />
- <a name="Writing_The__lt_out_gt__Tags"><h3>Writing The &lt;out&gt; Tags</h3></a> <p>
+ <a name="Writing_The_lt_out_gt_Tags"><h3>Writing The &lt;out&gt; Tags</h3></a> <p>
 Each output URL needs an &lt;out&gt; tag, with a <em>name</em> and a <em>file</em>. The
 <em>name</em> provides a symbolic name which one can use to refer to the URL; the
 <em>file</em> names the file that the output should be written to.
@@ -1248,8 +1343,7 @@ Let's see how 2. does it:
 Simple.
 
 </p>
- <hr />
- <a name="Putting__lt_out_gt__Names_To_Work"><h3>Putting &lt;out&gt; Names To Work</h3></a> <p>
+ <a name="Putting_lt_out_gt_Names_To_Work"><h3>Putting &lt;out&gt; Names To Work</h3></a> <p>
 So you've named the output URLs. However all your content items contain
 static URLs in the HREFs! Let's fix that.
 
@@ -1278,8 +1372,7 @@ Now, even if "document1.html" is renamed to "blah/whatever/doc1.cgi", you
 won't have to do a search-and-replace again.
 
 </p>
- <hr />
- <a name="Getting_Advanced_-_Adding_Navigation_and_a_Sitemap"><h3>Getting Advanced - Adding Navigation and a Sitemap</h3></a> <p>
+ <a name="Getting_Advanced_Adding_Navigation_and_a_Sitemap"><h3>Getting Advanced - Adding Navigation and a Sitemap</h3></a> <p>
 This hasn't been written yet. Sorry! (TODO)
 
 </p>
@@ -1288,8 +1381,8 @@ This hasn't been written yet. Sorry! (TODO)
 </p>
  
 </p>
-<hr />
-<h1>Tips On Using WebMake</h1><p>
+<hr noshade />
+ <h2>Tips On Using WebMake</h2><p>
  <a name="Editor_IDE_Support"><h3>Editor/IDE Support</h3></a> <p>
 The root directory of the WebMake distribution includes a <a href="http://www.vim.org/">Vim</a> rc file
 to support syntax-highlighting for WebMake. To use it, make a directory
@@ -1299,11 +1392,18 @@ lines to your <strong>.vimrc</strong>:
 </p>
  <pre>
 au BufNewFile,BufReadPost *.wmk so $HOME/.vim/webmake.vim
- map ,wm :w!&lt;CR&gt;:! ~/ftp/webmake/webmake -R %&lt;CR&gt;
+ map ,wm :w!&lt;CR&gt;:! <strong>/usr/local/bin/webmake</strong> -R %&lt;CR&gt;
 </pre>
  <p>
+Change <strong>/usr/local/bin/webmake</strong> to whatever the real path to the <code>webmake</code>
+command is.
+
+</p>
+ <p>
 Once you do this, the macro sequence <strong>,wm</strong> will cause a rebuild of the site
-which contains the file you're currently editing.
+which contains the file you're currently editing. In addition, opening a
+file called <code>something.wmk</code> will automatically use WebMake syntax
+highlighting (if you have syntax highlighting enabled in VIM).
 
 </p>
  <a name="The_Button"><h3>The Button</h3></a> <p>
@@ -1343,8 +1443,8 @@ for the image:
 </p>
  
 </p>
-<hr />
-<h1>Contributors to WebMake</h1><p>
+<hr noshade />
+ <h2>Contributors to WebMake</h2><p>
 Here's a list of people who've contributed to WebMake:
 
 </p>
@@ -1366,6 +1466,13 @@ Mark McLoughlin &lt;mark /at/ skynet.ie&gt;: added <code>perlout</code> directiv
 <p>
 Caolan McNamara &lt;caolan /at/ csn.ul.ie&gt;: EtText contributions; lists,
  pre-formatted text, lots of suggestions
+
+</p>
+</li>
+ <li>
+<p>
+Jan Hudec &lt;bulb /at/ ucw.cz&gt;: navtree plugin, patches to remove
+ <a href="metadata.html">metadata</a> from site mapping and control mapping of media items
 
 </p>
 </li>
@@ -1395,8 +1502,109 @@ me writing the code ;)
 </p>
  
 </p>
+<hr noshade />
+ <hr size="4" />
+<h1>Contents for the 'Tags and Their Attributes' section</h1> <ul>
+ <li>
+ <p>
+<a href="webmake_tag.html">The &lt;webmake&gt; Tag</a> - the webmake section
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="include.html">The &lt;include&gt; Tag</a> - include another file into the current WebMake file
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="use.html">The &lt;use&gt; Tag</a> - use a WebMake plugin
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="content.html">The &lt;content&gt; Tag</a> - one chunk of content
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="contenttable.html">The &lt;contenttable&gt; Tag</a> - Define several small content items quickly, using a table
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="contents.html">The &lt;contents&gt; Tag</a> - load many chunks of content from one data source
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="media.html">The &lt;media&gt; Tag</a> - load many URLs from one data source
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="datasources.html">Data Sources for the &lt;contents&gt; and &lt;media&gt; Tags</a> - the protocols supported by &lt;contents&gt; and &lt;media&gt;
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="for.html">The &lt;for&gt; Tag</a> - iteration construct
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="out.html">The &lt;out&gt; Tag</a> - an output file and URL
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="sitemap.html">The &lt;sitemap&gt; Tag</a> - generate a site map
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="navlinks.html">The &lt;navlinks&gt; Tag</a> - generate back and forward navigation links
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="breadcrumbs.html">The &lt;breadcrumbs&gt; Tag</a> - generate a ''breadcrumb trail'' navigational aid
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="cache.html">The &lt;cache&gt; Tag</a> - tell WebMake where to keep its cache files
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="option.html">The &lt;option&gt; Tag</a> - set options controlling WebMake behaviour
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="tags.html">Defining Tags</a> - defining tags for use in content items
+</p>
+ 
+</li>
+ 
+</ul>
 <hr />
-<h1>The &lt;webmake&gt; Tag</h1><p>
+ <h2>The &lt;webmake&gt; Tag</h2><p>
 The &lt;webmake&gt; section is required in a WebMake file. Any text
 before or after this section will be ignored.
 
@@ -1406,7 +1614,7 @@ In the current implementation, you <em>can</em> leave these tags
 out, but it isn't advised; their requirement may be enforced later.
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+ <a name="Example"><h2>Example</h2></a> <p>
 <pre>
 
   &lt;webmake&gt;
@@ -1415,8 +1623,8 @@ out, but it isn't advised; their requirement may be enforced later.
 </pre>
  
 </p>
-<hr />
-<h1>The &lt;include&gt; Tag</h1><p>
+<hr noshade />
+ <h2>The &lt;include&gt; Tag</h2><p>
 Arbitrary files can be included into the current WebMake file
 using this tag. It has one attribute, <em>file</em>, which
 names the file to include.
@@ -1430,7 +1638,7 @@ should be loaded using the <a href="use.html">&lt;use&gt; tag</a> instead of thi
 one.
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+ <a name="Example"><h2>Example</h2></a> <p>
 <pre>
 
   &lt;include file="inc/footer.wmk" /&gt;
@@ -1440,8 +1648,8 @@ one.
  <p>
 
 </p>
-<hr />
-<h1>The &lt;use&gt; Tag</h1><p>
+<hr noshade />
+ <h2>The &lt;use&gt; Tag</h2><p>
 WebMake supports "plugin" libraries, which are generally other .wmk files or
 Perl modules which can be loaded to extend WebMake's functionality.
 
@@ -1480,7 +1688,7 @@ The set of standard plugins are listed in the <em>Included Library Code</em>
 section of the <a href="index.html">index page</a>.
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+ <a name="Example"><h2>Example</h2></a> <p>
 <pre>
 
   &lt;use plugin="safe_tag" /&gt;
@@ -1492,8 +1700,8 @@ section of the <a href="index.html">index page</a>.
 </p>
  
 </p>
-<hr />
-<h1>The &lt;content&gt; Tag</h1><p>
+<hr noshade />
+ <h2>The &lt;content&gt; Tag</h2><p>
 The &lt;content&gt; tag has one required attribute: its name, which is used to
 substitute in that section's text, by inserting it in other sections or out
 tags in a <a href="content_refs.html">curly-bracket reference</a>, like so:
@@ -1576,11 +1784,11 @@ searched for and loaded en masse using the <a href="contents.html">&lt;contents&
 
 </p>
  <p>
-Every content item can have <a href="wmmeta.html">metadata</a> associated with it. See the
-documentation for the <a href="wmmeta.html">&lt;wmmeta&gt;</a> tag for details.
+Every content item can have <a href="metadata.html">metadata</a> associated with it. See the
+<a href="metadata.html">metadata documentation</a> for details.
 
 </p>
- <a name="Defining_Content_Items_On-The-Fly"><h2>Defining Content Items On-The-Fly</h2></a> <p>
+ <a name="Defining_Content_Items_On_The_Fly"><h1>Defining Content Items On-The-Fly</h1></a> <p>
 The <a href="set.html">&lt;{set}&gt; processing instruction</a> can be used to define small
 pieces of content on the fly, from within other content or <a href="out.html">&lt;out&gt;
 sections</a>.
@@ -1591,7 +1799,7 @@ In addition, Perl code can create content items using the <a href="PerlCodeLibra
 function.
 
 </p>
- <a name="Using_Content_From_Perl_Code"><h2>Using Content From Perl Code</h2></a> <p>
+ <a name="Using_Content_From_Perl_Code"><h1>Using Content From Perl Code</h1></a> <p>
 Perl code can obtain the text of content items using the <a href="PerlCodeLibrary.pm.html">get_content()</a>
 function, and can treat content items as whitespace-separated lists using
 <a href="PerlCodeLibrary.pm.html">get_list()</a>.
@@ -1599,12 +1807,12 @@ function, and can treat content items as whitespace-separated lists using
 </p>
  <p>
 In addition, each content item has a range of properties and associated
-<a href="wmmeta.html">metadata</a>; the <a href="PerlCodeLibrary.pm.html">get_content_object()</a> method allows Perl code to retrieve
+<a href="metadata.html">metadata</a>; the <a href="PerlCodeLibrary.pm.html">get_content_object()</a> method allows Perl code to retrieve
 an object of type <a href="Content.pm.html">HTML::WebMake::Content</a> representing the content
 item.
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+ <a name="Example"><h2>Example</h2></a> <p>
 <pre>
 
   &lt;content name="foo" format="text/html"&gt;
@@ -1622,8 +1830,8 @@ item.
 </p>
  
 </p>
-<hr />
-<h1>The &lt;contenttable&gt; Tag</h1><p>
+<hr noshade />
+ <h2>The &lt;contenttable&gt; Tag</h2><p>
 Quite often, it's handy to define small (one-line) content items quickly, in
 bulk, directly inside the WMK file itself. The &lt;contenttable&gt; tag
 provides a good way to do this.
@@ -1639,19 +1847,31 @@ Next, list a table of content names and their values, separated by a delimiter
 character, one name-value-pair per line.
 
 </p>
- <p>
+ <blockquote>
+<p>
 <em>Note:</em> if you would prefer to load the content items from a separate
-file, the <a href="contents.html">&lt;contents&gt;</a> tag is better suited.
+ file, the <a href="contents.html">&lt;contents&gt;</a> tag is better suited.
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+</blockquote>
+ <blockquote>
+<p>
+<em>Another note:</em> this is not the way to define data <em>about</em> other content
+ items (in other words, <strong><a href="metadata.html">metadata</a></strong>), such as titles, authorship, or brief
+ descriptions, as WebMake's built-in <a href="metadata.html">metadata</a> support will not be available
+ in that case. Embedding the <a href="metadata.html">metadata</a> into the content item using
+ &lt;wmmeta&gt; tags, or loading them in bulk using &lt;<a href="metatable.html">metatable</a>&gt; tags,
+ should be used instead.
+
+</p>
+</blockquote>
+ <a name="Example"><h2>Example</h2></a> <p>
 <pre>
 
   &lt;contenttable delimiter="|"&gt;
-  index.title|The index
-  similar.title|Similar Projects
-  administrivia.title|Administrivia
-  reviews.title|Reviews
+  person1|Justin
+  person2|Catherine
+  person3|The cat
   &lt;/contenttable&gt;
 </pre>
  
@@ -1659,8 +1879,10 @@ file, the <a href="contents.html">&lt;contents&gt;</a> tag is better suited.
  <p>
 
 </p>
-<hr />
-<h1>The &lt;contents&gt; Tag</h1><p>
+ 
+</p>
+<hr noshade />
+ <h2>The &lt;contents&gt; Tag</h2><p>
 Content can be searched for using the &lt;contents&gt; tag, which allows you
 to search a <a href="datasources.html">data source</a> (directory, delimiter-separated-values file,
 database etc.) for a pattern.
@@ -1676,7 +1898,7 @@ identical to the <a href="content.html">content tag</a>; see that tag's document
 for details on what attributes are supported.
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+ <a name="Example"><h2>Example</h2></a> <p>
 <pre>
 
   &lt;contents src="file:raw/text" name=".../*.txt" format="text/et" /&gt;
@@ -1687,8 +1909,8 @@ for details on what attributes are supported.
  <p>
 
 </p>
-<hr />
-<h1>The &lt;media&gt; Tag</h1><p>
+<hr noshade />
+ <h2>The &lt;media&gt; Tag</h2><p>
 WebMake allows you to refer to files and web pages symbolically, separating
 the site layout from the URL structure, and avoiding later problems with
 dangling links when a page's URL is changed. This is done using <a href="url_refs.html">$(url_refs)</a>.
@@ -1702,9 +1924,9 @@ generated using WebMake.
 
 </p>
  <p>
-Therefore media files and external, non-WebMake files can be searched for
-using the &lt;media&gt; tag, which allows you to search a <a href="datasources.html">data source</a>
-(directory, etc.) for a pattern.
+Therefore media files, such as images, and external, non-WebMake-controlled
+files, can be searched for using the &lt;media&gt; tag. This tag allows you to
+search a <a href="datasources.html">data source</a> (directory, etc.) for a pattern.
 
 </p>
  <p>
@@ -1715,7 +1937,7 @@ The attributes supported are listed on the <a href="datasources.html">data sourc
 Note that data sources which do not map to files in a filesystem, or other
 methods accessible to a web browser browsing your site, do not make sense for
 the &lt;media&gt; tag; so, for example, the <em>svfile:</em> protocol is not
-supported, as a web browser cannot load an image from a CSV file. (yet.)
+supported, as a web browser cannot load an image from a CSV file.
 
 </p>
  <p>
@@ -1723,7 +1945,7 @@ As a result, currently only one data source protocol can be used with the
 &lt;media&gt; tag, namely <em>file:</em>.
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+ <a name="Example"><h2>Example</h2></a> <p>
 <pre>
 
   &lt;media src="file:images" name=".../*.gif" /&gt;
@@ -1731,8 +1953,8 @@ As a result, currently only one data source protocol can be used with the
 </pre>
  
 </p>
-<hr />
-<h1>Data Sources for the &lt;contents&gt; and &lt;media&gt; Tags</h1><p>
+<hr noshade />
+ <h2>Data Sources for the &lt;contents&gt; and &lt;media&gt; Tags</h2><p>
 Contents or URLs can be searched for using the <a href="contents.html">&lt;contents&gt;</a>
 or <a href="media.html">&lt;media&gt;</a> tags, which allow you to search a data source
 (directory, delimiter-separated-values file, database etc.) for a pattern.
@@ -1748,7 +1970,7 @@ hint ;)
 <a href="#file">file:</a> is the default protocol, if none is specified.
 
 </p>
- <a name="Attributes_Supported_By_Datasource_Tags"><h1>Attributes Supported By Datasource Tags</h1></a> <dl>
+ <a name="Attributes_Supported_By_Datasource_Tags"><h2>Attributes Supported By Datasource Tags</h2></a> <dl>
 <dt>
 <em>src</em>
 </dt>
@@ -1842,7 +2064,7 @@ also contain meta-data, such as headlines, visibilty dates, workflow approval
 statuses, etc. by including <a href="wmmeta.html">metadata</a>.
 
 </p>
- <a name="file"> <a name="The_file__Protocol"><h1>The file: Protocol</h1></a> </a> <p>
+ <a name="file"> <a name="The_file_Protocol"><h2>The file: Protocol</h2></a> </a> <p>
 The file: protocol loads content from a directory; each file is made into one
 content chunk. The <em>src</em> attribute indicates the source directory, the
 <em>name</em> attribute indicates the <a href="globs.html">glob pattern</a> that will pick up the
@@ -1880,7 +2102,7 @@ above would define a content item called
 <strong>${dir1/foo/bar.txt}</strong>.
 
 </p>
- <a name="svfile"> <a name="The_svfile__Protocol"><h1>The svfile: Protocol</h1></a> </a> <p>
+ <a name="svfile"> <a name="The_svfile_Protocol"><h2>The svfile: Protocol</h2></a> </a> <p>
 The svfile: protocol loads content from a delimiter-separated-file; the
 <em>src</em> attribute is the name of the file, the <em>name</em> is the <a href="globs.html">glob
 pattern</a> used to catch the relevant content items. The <em>namefield</em>
@@ -1897,7 +2119,7 @@ attribute specifies the delimiter used to separate values in the file.
 
 </p>
 </blockquote>
- <a name="Adding_New_Protocols"><h1>Adding New Protocols</h1></a> <p>
+ <a name="Adding_New_Protocols"><h2>Adding New Protocols</h2></a> <p>
 New data sources for &lt;contents&gt; and &lt;media&gt; tags are added by
 writing an implementation of the <em>DataSourceBase.pm</em> module, in the
 <em>HTML::WebMake::DataSources</em> package space (the
@@ -2030,7 +2252,7 @@ Data sources that support the &lt;contents&gt; tag, and defer
 Data sources that support the &lt;contents&gt; tag need to implement
  <code>get_location_mod_time</code>. This is used to support dependency
  checking, and should return the modification time (in UNIX
- <code>time()</code> format) of that location. Note that since this is used
+ <code>time_t</code> format) of that location. Note that since this is used
  to compare the modification time of a content chunk from the
  previous time webmake was run, and the current modification time,
  this is called before the <strong>real</strong> data source is opened.
@@ -2044,8 +2266,8 @@ Data sources that support the &lt;contents&gt; tag need to implement
 </p>
  
 </p>
-<hr />
-<h1>The &lt;for&gt; Tag</h1><p>
+<hr noshade />
+ <h2>The &lt;for&gt; Tag</h2><p>
 The &lt;for&gt; tag provides a quick way to iterate through a list of items.
 
 </p>
@@ -2055,7 +2277,7 @@ It requires two attributes, <em>name</em> and <em>values</em>; the content item 
 the text inside the block is processed.
 
 </p>
- <a name="Supported_Attributes"><h1>Supported Attributes</h1></a> <dl>
+ <a name="Supported_Attributes"><h2>Supported Attributes</h2></a> <dl>
 <dt>
 <em>name</em>
 </dt>
@@ -2095,7 +2317,7 @@ you can use this variable inside another variable reference, like this:
 <code>${all_${name}_text}</code> .
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+ <a name="Example"><h2>Example</h2></a> <p>
 Here's an example, taken from my own <a href="http://jmason.org/">home site</a>:
 
 </p>
@@ -2116,8 +2338,8 @@ Here's an example, taken from my own <a href="http://jmason.org/">home site</a>:
 </p>
  
 </p>
-<hr />
-<h1>The &lt;out&gt; Tag</h1><p>
+<hr noshade />
+ <h2>The &lt;out&gt; Tag</h2><p>
 The &lt;out&gt; tag is used to generate output. Surprise!
 
 </p>
@@ -2236,7 +2458,16 @@ none of the content items contain dynamic content, such as Perl
 then it does not need to be rebuilt.
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+ <blockquote>
+<p>
+<em>Note:</em> the <code>-r</code> switch to webmake, or the <code>risky_fast_rebuild</code>
+ option to the <code>HTML::WebMake::Main</code> constructor, indicates that
+ WebMake can take some risks when rebuilding. If this is on, then
+ step 4. from the list above is ignored.
+
+</p>
+</blockquote>
+ <a name="Example"><h2>Example</h2></a> <p>
 <pre>
 
   &lt;out name="index" file="index.html"&gt;
@@ -2249,8 +2480,8 @@ then it does not need to be rebuilt.
 </p>
  
 </p>
-<hr />
-<h1>The &lt;sitemap&gt; Tag</h1><p>
+<hr noshade />
+ <h2>The &lt;sitemap&gt; Tag</h2><p>
 The &lt;<a href="sitemap.html">sitemap</a>&gt; tag is used to generate a content item containing a map,
 in a tree structure, of the current site.
 
@@ -2262,20 +2493,20 @@ site map tree.
 
 </p>
  <p>
-While traversing, it also searches for content items with a <a href="wmmeta.html">metadatum</a> called <strong>up</strong>. This is used to tie all the content together into a
+While traversing, it also searches for content items with a <a href="metadata.html">metadatum</a> called <strong>up</strong>. This is used to tie all the content together into a
 tree structure.
 
 </p>
  <blockquote>
 <p>
-<em>Note:</em> content items that do not have an <strong>up</strong> <a href="wmmeta.html">metadatum</a> are considered
+<em>Note:</em> content items that do not have an <strong>up</strong> <a href="metadata.html">metadatum</a> are considered
  children of the root by default. If you do not want to map a piece of
  content, declare it with the attribute <strong>map=false</strong>.
 
 </p>
 </blockquote>
  <p>
-By default, the content items are arranged by their score and title <a href="wmmeta.html">metadata</a>
+By default, the content items are arranged by their score and title <a href="metadata.html">metadata</a>
 at each level. The sort criteria can be overridden by setting the
 <em>sortorder</em> attribute.
 
@@ -2284,7 +2515,7 @@ at each level. The sort criteria can be overridden by setting the
 <p>
 <em>Note:</em> if you wish to include external HTML pages into the <a href="sitemap.html">sitemap</a>, you
  will need to load them as URL references using the &lt;media&gt; tag and use
- the &lt;<a href="metatable.html">metatable</a>&gt; tag to associate <a href="wmmeta.html">metadata</a> with them.
+ the &lt;metatable&gt; tag to associate <a href="metadata.html">metadata</a> with them.
  <em>t/data/sitemap_with_metatable.wmk</em> in the WebMake test suite demonstrates
  this. This needs more documentation (TODO).
 
@@ -2351,7 +2582,7 @@ The root content item to start traversing at. The
 <dd>
 <p>
 Whether or not all content items should be mapped.
- Normally dynamic content, such as <a href="wmmeta.html">metadata</a> and perl-code-defined
+ Normally dynamic content, such as <a href="metadata.html">metadata</a> and perl-code-defined
  content items, are not included. (default: false)
 
 </p>
@@ -2382,7 +2613,7 @@ Perl code to evaluate at each step of the tree.
 </dt>
 <dd>
 <p>
-A <a href="sorting.html">sort string</a> specifying what <a href="wmmeta.html">metadata</a>
+A <a href="sorting.html">sort string</a> specifying what <a href="metadata.html">metadata</a>
  should be used to sort the items in the tree, for example "<em>section
  score title</em>".
 
@@ -2399,10 +2630,10 @@ The <a href="sitemap.html">sitemap</a> can be declared either as an empty elemen
 end, or with a pair of starting and ending tags and text between. If the
 <a href="sitemap.html">sitemap</a> is declared using the latter style, any text between the tags will be
 prepended to the generated site map. It's typically only useful if you wish
-to set <a href="wmmeta.html">metadata</a> on the map itself.
+to set <a href="metadata.html">metadata</a> on the map itself.
 
 </p>
- <a name="Processing"><h2>Processing</h2></a> <p>
+ <a name="Processing"><h1>Processing</h1></a> <p>
 Here's the key to <a href="sitemap.html">sitemap</a> generation. Once the internal tree structure of the
 site has been determined, WebMake will run through each node from the root
 down up to 20 levels deep, and for each node, evaluate one of the 3 content
@@ -2425,7 +2656,7 @@ items named in the &lt;<a href="sitemap.html">sitemap</a>&gt; tag's attributes:
  <li>
 <p>
 <em>dynamic</em>: For dynamic content items, defined by perl code
- or <a href="wmmeta.html">metadata</a>.
+ or <a href="metadata.html">metadata</a>.
 
 </p>
 </li>
@@ -2455,7 +2686,7 @@ the content name
 </dt>
 <dd>
 <p>
-the content's <strong>Title</strong> <a href="wmmeta.html">metadatum</a>, if set
+the content's <strong>Title</strong> <a href="metadata.html">metadatum</a>, if set
 
 </p>
 </dd>
@@ -2464,7 +2695,7 @@ the content's <strong>Title</strong> <a href="wmmeta.html">metadatum</a>, if set
 </dt>
 <dd>
 <p>
-the content's <strong>Score</strong> <a href="wmmeta.html">metadatum</a>, if set
+the content's <strong>Score</strong> <a href="metadata.html">metadatum</a>, if set
 
 </p>
 </dd>
@@ -2511,7 +2742,7 @@ the first URL listed in a WebMake &lt;out&gt; tag
 Confused? Don't worry, there's an example below.
 
 </p>
- <a name="Grep"><h2>Grep</h2></a> <p>
+ <a name="Grep"><h1>Grep</h1></a> <p>
 The <em>grep</em> attribute is used to filter which content items are included in
 the site map.
 
@@ -2528,7 +2759,7 @@ the node is skipped; if the perl code sets the variable <code>$PRUNE</code> to 1
 nodes at this level and below are skipped.
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+ <a name="Example"><h2>Example</h2></a> <p>
 If you're still not sure how it works, take a look at <em>examples/sitemap.wmk</em>
 in the distribution. Here's the important bits from that file.
 
@@ -2544,20 +2775,25 @@ a template for a leaf. Note the use of <strong>$(url)</strong>,
 
 	&lt;content name=sitemapnode map=false&gt;
 	  &lt;li&gt;
-	    &lt;p&gt;
-	      &lt;a href=$(url)&gt;${title}&lt;/a&gt;: $[${name}.abstract]&lt;br&gt;
-	      &lt;!-- don't forget to list the sub-items --&gt;
-	      &lt;ul&gt; ${list} &lt;/ul&gt;
-	    &lt;/p&gt;
+	    &lt;a href=$(url)&gt;${title}&lt;/a&gt;: $[${name}.abstract]&lt;br&gt;
+	    &lt;!-- don't forget to list the sub-items --&gt;
+	    &lt;ul&gt; ${list} &lt;/ul&gt;
 	  &lt;/li&gt;
 	&lt;/content&gt;
+</pre>
+ 
+</p>
+ <p>
+And the template for the leaf nodes. Note that the <strong>${list}</strong>
+reference is not needed here.
+
+</p>
+ <p>
+<pre>
 
 	&lt;content name=sitemapleaf map=false&gt;
 	  &lt;li&gt;
-	    &lt;p&gt;
-	      &lt;a href=$(url)&gt;${title}&lt;/a&gt;: $[${name}.abstract]&lt;br&gt;
-	      &lt;!-- no sub-items here --&gt;
-	    &lt;/p&gt;
+	    &lt;a href=$(url)&gt;${title}&lt;/a&gt;: $[${name}.abstract]&lt;br&gt;
 	  &lt;/li&gt;
 	  &lt;/li&gt;
 	&lt;/content&gt;
@@ -2603,11 +2839,12 @@ the navigation links. Take a look <a href="docmap.html">here</a>.
 </p>
  
 </p>
-<hr />
-<h1>The &lt;navlinks&gt; Tag</h1><p>
-A common site structure strategy is to provide <em>Back</em>, <em>Forward</em> and <em>Up</em>
-links between pages. This is especially frequent in papers or documentation.
-WebMake now supports this using the &lt;<a href="navlinks.html">navlinks</a>&gt; tag.
+<hr noshade />
+ <h2>The &lt;navlinks&gt; Tag</h2><p>
+A common site structure strategy is to provide <em>Back</em>, <em>Forward</em> and
+<em>Up</em> links between pages. This is especially frequent in papers or
+manuals, and (as you can see above) is used in this documentation.
+WebMake supports this using the &lt;navlinks&gt; tag.
 
 </p>
  <p>
@@ -2625,7 +2862,7 @@ direction in question.
 </p>
  <p>
 Also, references to <strong>${name}</strong> will be expanded to the name of the
-content item in that direction, allowing you to retrieve <a href="wmmeta.html">metadata</a> for that
+content item in that direction, allowing you to retrieve <a href="metadata.html">metadata</a> for that
 content like so: <strong>$[${name}.title]</strong> .
 
 </p>
@@ -2636,7 +2873,7 @@ no <em>up</em> content item. These are strictly optional though.
 
 </p>
  <p>
-Then add a <strong>&lt;<a href="navlinks.html">navlinks</a>&gt;</strong> tag to the WebMake file as follows.
+Then add a <strong>&lt;navlinks&gt;</strong> tag to the WebMake file as follows.
 
 </p>
  <p>
@@ -2664,13 +2901,19 @@ not.
 
 </p>
  <p>
-You can then add references to <strong>$</strong> in other content
-items, and the navigation links will be inserted. <em>Note!</em> be sure to use
-a deferred reference, or the links may not appear!
+You can then add references to <strong>$[<em>mynavlinks</em>]</strong> in
+other content items, and the navigation links will be inserted.
 
 </p>
- <a name="Attribute_Reference"><h2>Attribute Reference</h2></a> <p>
-These are the attributes accepted by the <strong>&lt;<a href="navlinks.html">navlinks</a>&gt;</strong> tag.
+ <blockquote>
+<p>
+<em>Note:</em> navlinks content items <em>must</em> be included as a deferred
+ reference!
+
+</p>
+</blockquote>
+ <a name="Attribute_Reference"><h1>Attribute Reference</h1></a> <p>
+These are the attributes accepted by the <strong>&lt;navlinks&gt;</strong> tag.
 
 </p>
  <dl>
@@ -2759,9 +3002,9 @@ the name of the content item used when there is
 </dd>
  
 </dl>
-<a name="Example"><h1>Example</h1></a> <p>
+<a name="Example"><h2>Example</h2></a> <p>
 This will generate an extremely simple set of &lt;a href&gt; links, no frills.
-The <a href="sitemap.html">sitemap</a> it uses isn't specified here; see the <a href="sitemap.html">sitemap documentation</a> for details on doing that.
+The <a href="sitemap.html">sitemap</a> it uses isn't detailed here; see the <a href="sitemap.html">sitemap documentation</a> for details on how to make a site map.
 
 </p>
  <p>
@@ -2784,13 +3027,13 @@ The <a href="sitemap.html">sitemap</a> it uses isn't specified here; see the <a 
 </p>
  
 </p>
-<hr />
-<h1>The &lt;breadcrumbs&gt; Tag</h1><p>
+<hr noshade />
+ <h2>The &lt;breadcrumbs&gt; Tag</h2><p>
 Another common site navigation strategy is to provide what Jakob Nielsen has
-called a "breadcrumb trail". The &lt;<a href="breadcrumbs.html">breadcrumbs</a>&gt; tag supports this.
+called a "breadcrumb trail". The &lt;breadcrumbs&gt; tag supports this.
 
 </p>
- <a name="WTF_Is_A_Breadcrumb_Trail_"><h2>WTF Is A Breadcrumb Trail?</h2></a> <p>
+ <a name="WTF_Is_A_Breadcrumb_Trail"><h1>WTF Is A Breadcrumb Trail?</h1></a> <p>
 The "breadcrumb trail" is a piece of navigation text, displaying a list of
 the parent pages, from the top-level page right down to the current page.
 You've probably seen them before; take a look at this <a href="http://dir.yahoo.com/Business_and_Economy/Shopping_and_Services/Communication_and_Information_Management/Internet_and_World_Wide_Web/Portals/Personalized/">Yahoo
@@ -2820,7 +3063,7 @@ If you have a site that contains pages that are more than 2 levels deep from
 the front page, you should consider using this to aid navigation.
 
 </p>
- <a name="How_To_Use_It_With_WebMake"><h2>How To Use It With WebMake</h2></a> <p>
+ <a name="How_To_Use_It_With_WebMake"><h1>How To Use It With WebMake</h1></a> <p>
 To use a breadcrumb trail, first define a <a href="sitemap.html">sitemap</a>. This tells WebMake how to
 order the page hierarchy, and which pages to include.
 
@@ -2829,14 +3072,14 @@ order the page hierarchy, and which pages to include.
 Next, define a content item to be used for each entry in the trail. This
 should contain references to <strong>${url}</strong> (note: <em>not</em> <strong>$(url)</strong>), which will be replaced with the URL for the page in
 question; and <strong>${name}</strong>, which will be expanded to the name of the
-"main" content item on that page, allowing you to retrieve <a href="wmmeta.html">metadata</a> for that
+"main" content item on that page, allowing you to retrieve <a href="metadata.html">metadata</a> for that
 content like so: <strong>$[${name}.title]</strong> .
 
 </p>
  <blockquote>
 <p>
 <em>Note:</em> the "main" content item is defined as the first content
- item on the page which is not <a href="wmmeta.html">metadata</a>, not perl-generated code, and
+ item on the page which is not <a href="metadata.html">metadata</a>, not perl-generated code, and
  has the <em>map</em> attribute set to <em>"true"</em>.
 
 </p>
@@ -2845,11 +3088,11 @@ content like so: <strong>$[${name}.title]</strong> .
 You can also define two more content items to be used at the <em>top</em> of the
 breadcrumb trail, ie. the root page, and at the <em>tail</em> of it, ie. the
 current page being viewed. These are optional though, and if not specified,
-the above content item will be used.
+the generic content item detailed above will be used as a default.
 
 </p>
  <p>
-Then add a <strong>&lt;<a href="breadcrumbs.html">breadcrumbs</a>&gt;</strong> tag to the WebMake file as follows.
+Then add a <strong>&lt;breadcrumbs&gt;</strong> tag to the WebMake file as follows.
 
 </p>
  <p>
@@ -2874,8 +3117,8 @@ other content items, and the breadcrumb-trail text will be inserted. <em>Note!</
 be sure to use a deferred reference, or the links may not appear!
 
 </p>
- <a name="Attribute_Reference"><h2>Attribute Reference</h2></a> <p>
-These are the attributes accepted by the <strong>&lt;<a href="breadcrumbs.html">breadcrumbs</a>&gt;</strong> tag.
+ <a name="Attribute_Reference"><h1>Attribute Reference</h1></a> <p>
+These are the attributes accepted by the <strong>&lt;breadcrumbs&gt;</strong> tag.
 
 </p>
  <dl>
@@ -2933,9 +3176,9 @@ the name of the content item used to draw the link to
 </dd>
  
 </dl>
-<a name="Example"><h1>Example</h1></a> <p>
+<a name="Example"><h2>Example</h2></a> <p>
 This will generate an extremely simple set of &lt;a href&gt; links, no frills.
-The <a href="sitemap.html">sitemap</a> it uses isn't specified here; see the <a href="sitemap.html">sitemap documentation</a> for details on doing that.
+The <a href="sitemap.html">sitemap</a> it uses isn't specified here; see the <a href="sitemap.html">sitemap tag documentation</a> for details on how to generate a site map.
 
 </p>
  <p>
@@ -2960,14 +3203,125 @@ The <a href="sitemap.html">sitemap</a> it uses isn't specified here; see the <a 
 </p>
  
 </p>
-<hr />
-<h1>Defining Tags</h1><p>
+<hr noshade />
+ <h2>The &lt;cache&gt; Tag</h2><p>
+The &lt;cache&gt; tag takes one attribute, <em>dir</em>, which names the
+directory where the WebMake site cache is kept.
+
+</p>
+ <p>
+WebMake will store data about the site in this directory in order
+to speed up later rebuilds of the site.
+
+</p>
+ <p>
+The following special characters and escapes are supported:
+
+</p>
+ <dl>
+<dt>
+<strong>~</strong>
+</dt>
+<dd>
+<p>
+the user's home directory on UNIX.
+
+</p>
+</dd>
+ <dt>
+<strong>%u</strong>
+</dt>
+<dd>
+<p>
+the user's username.
+
+</p>
+</dd>
+ <dt>
+<strong>%f</strong>
+</dt>
+<dd>
+<p>
+.wmk filename, non-alphanums replaced with _ .
+
+</p>
+</dd>
+ <dt>
+<strong>%F</strong>
+</dt>
+<dd>
+<p>
+.wmk full path, non-alphanums replaced with _ .
+
+</p>
+</dd>
+ <dt>
+<strong>%l</strong>
+</dt>
+<dd>
+<p>
+perl lib dir for plugins.
+
+</p>
+</dd>
+ 
+</dl>
+<p>
+The default setting is <code>~/.webmake/%F</code>.
+
+</p>
+ <a name="Example"><h2>Example</h2></a> <p>
+<pre>
+
+  &lt;cache file="../webmake.cache" /&gt;
+</pre>
+ 
+</p>
+ 
+</p>
+<hr noshade />
+ <h2>The &lt;option&gt; Tag</h2><p>
+The &lt;option&gt; tag takes two attributes:
+
+</p>
+ <dl>
+<dt>
+<em>name</em>
+</dt>
+<dd>
+<p>
+The name of the option;
+
+</p>
+</dd>
+ <dt>
+<em>value</em>
+</dt>
+<dd>
+<p>
+The value to set it to.
+
+</p>
+</dd>
+ 
+</dl>
+<a name="Example"><h2>Example</h2></a> <p>
+<pre>
+
+  &lt;option name="FileSearchPath" value="../files" /&gt;
+</pre>
+ 
+</p>
+ 
+</p>
+<hr noshade />
+ <h2>Defining Tags</h2><p>
 Like Roxen or Java Server Pages, WebMake allows you to define your own tags;
 these cause a perl function to be called whenever they are encountered in
 either content text, or inside the WebMake file itself.
 
 </p>
- <a name="Defining_Content_Tags"><h1>Defining Content Tags</h1></a> <p>
+ <a name="Defining_Content_Tags"><h2>Defining Content Tags</h2></a> <p>
 You do this by calling the <a href="PerlCodeLibrary.pm.html#item_define_tag"><strong><code>define_tag()</code></strong></a> function from
 within a <a href="perl.html">&lt;{perl}&gt;</a> section in the WebMake file. This
 will set up a tag, and indicates a reference to the handler function to call
@@ -2987,7 +3341,7 @@ Handler functions are called as fcllows:
  <p>
 <pre>
 
-        handler (&#36;tagname, &#36;attrs, &#36;text, &#36;perlcode);
+        handler (&#36;tagname, &#36;attrs, &#36;text, &#36;perlcodeself);
 </pre>
  
 </p>
@@ -2998,7 +3352,7 @@ $text is the text between the start and end tags.
 
 </p>
  <p>
-$perlcode is the PerlCode object, allowing you to write proper
+$perlcodeself is the PerlCode object, allowing you to write proper
 object-oriented code that can be run in a threaded environment or from
 mod_perl. This can be ignored if you like.
 
@@ -3015,8 +3369,8 @@ latter variation is called <a href="PerlCodeLibrary.pm.html#item_define_empty_ta
 </dt>
 <dd>
 <p>
-define a content tag
- with a start and end
+define a standalone
+ content tag
 
 </p>
 </dd>
@@ -3025,14 +3379,14 @@ define a content tag
 </dt>
 <dd>
 <p>
-define a standalone
- content tag
+define a content tag with a
+ start and end
 
 </p>
 </dd>
  
 </dl>
-<a name="Defining_WebMake_Tags"><h1>Defining WebMake Tags</h1></a> <p>
+<a name="Defining_WebMake_Tags"><h2>Defining WebMake Tags</h2></a> <p>
 This is identical to using content tags, above, but the functions are as
 follows:
 
@@ -3044,7 +3398,7 @@ follows:
 <dd>
 <p>
 define a
- WebMake tag with a start and end
+ standalone WebMake tag
 
 </p>
 </dd>
@@ -3053,14 +3407,14 @@ define a
 </dt>
 <dd>
 <p>
-define a standalone
- WebMake tag
+define a WebMake tag
+ with a start and end
 
 </p>
 </dd>
  
 </dl>
-<a name="Example"><h1>Example</h1></a> <p>
+<a name="Example"><h2>Example</h2></a> <p>
 Let's say you've got the following in your WebMake file.
 
 </p>
@@ -3080,7 +3434,7 @@ Let's say you've got the following in your WebMake file.
  
 </p>
  <p>
-When the <strong>foo</strong> content item came to be included in an output file, the tag
+When the <strong>foo</strong> content item comes to be included in an output file, the tag
 will be replaced with a call to a perl function, as follows:
 
 </p>
@@ -3089,7 +3443,7 @@ will be replaced with a call to a perl function, as follows:
 
   make_thumbnail ("thumb",
      { img =&gt; 'big.jpg', thumb =&gt; 'big_thumb.jpg' },
-     'Picture of a big thing', &#36;perlcode);
+     'Picture of a big thing', &#36;perlcodeself);
 </pre>
  
 </p>
@@ -3099,9 +3453,8 @@ Note that if the tag omitted one of the 2 required attributes, <em>img</em> or
 
 </p>
  <p>
-<code>$perlcode</code> is a reference to the PerlCode interpreter which called
-it, allowing you to use the object-oriented style of WebMake perl code, which
-is required for safe use under mod_perl or other multithreaded environments.
+For more serious examples of tag definition, the WebMake distribution comes
+with several <a href="use.html">plugins</a>, such as <a href="safe_tag.wmk.html">safe_tag.wmk</a> which define their own tags.
 
 </p>
  <p>
@@ -3109,13 +3462,48 @@ is required for safe use under mod_perl or other multithreaded environments.
 </p>
  
 </p>
+<hr noshade />
+ <hr size="4" />
+<h1>Contents for the 'Processing Logic' section</h1> <ul>
+ <li>
+ <p>
+<a href="order.html">The Order of Processing</a> - the order of processing
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="set.html">The &lt;{set}&gt; Directive</a> - set a content chunk while inside another content chunk's scope
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="perl.html">The &lt;{perl}&gt; Directives</a> - embed arbitrary perl logic
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="globs.html">Globs and Regexps</a> - glob patterns, regular expressions and pattern matching
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="sorting.html">Sorting Lists of Content Items</a> - how, and where, it is done
+</p>
+ 
+</li>
+ 
+</ul>
 <hr />
-<h1>The Order of Processing</h1><p>
+ <h2>The Order of Processing</h2><p>
 In order to fully control the WebMake file processing using Perl code, it's
 important to know the order in which the tags and so on are parsed.
 
 </p>
- <p>
+ <a name="Parsing_of_the_WebMake_File"><h2>Parsing of the WebMake File</h2></a> <p>
 Initially, WebMake used a set order of tag parsing, but this proved to be
 unwieldy and confusing. Now, it uses the order in which the tags are defined
 in the .wmk file, so if you want tag A to be interpreted before tag B, put A
@@ -3123,16 +3511,49 @@ before B and the right thing will happen.
 
 </p>
  <p>
+Perl code embedded inside the WebMake file, using <a href="perl.html">&lt;{perl}&gt;</a> processing directives, will be evaluated there
+and then (unless the &lt;{perl}&gt; block is embedded in another block, such
+as a content item or <a href="out.html">&lt;out&gt;</a> file block).
+
+</p>
+ <p>
+This means that you can define content items by hand, search for other content
+items using a <a href="contents.html">&lt;contents&gt;</a> tag, and then use a <a href="perl.html">&lt;{perl}&gt;</a> section to define a list of all content items
+which satisfy a particular set of criteria.
+
+</p>
+ <p>
+This list can then be used in later <a href="perl.html">&lt;{perl}&gt;</a> blocks, content references, or <a href="for.html">&lt;for&gt;</a> tags.
+
+</p>
+ <a name="Processing_the_lt_out_gt_Tags"><h2>Processing the &lt;out&gt; Tags</h2></a> <p>
 Once the file is fully parsed, the <a href="out.html">&lt;out&gt;</a> tags are
-processed, one by one. At this point, <a href="set.html">&lt;{set}&gt;</a> and <a href="perl.html">&lt;{perl}&gt;</a> processing directives will be interpreted, if
-they are found within content chunks.
+processed, one by one.
+
+</p>
+ <p>
+At this point, content references, <a href="set.html">&lt;{set}&gt;</a> tags, and
+<a href="perl.html">&lt;{perl}&gt;</a> processing directives will be interpreted,
+if they are found within content chunks. Finally, deferred content references
+and <a href="metadata.html">metadata</a> references are expanded.
+
+</p>
+ <p>
+Eventually, no content references, <a href="set.html">&lt;{set}&gt;</a> tags, <a href="perl.html">&lt;{perl}&gt;</a> processing directives, <a href="metadata.html">metadata</a> references, or
+URL references are left in the file text. At this point, the file is written
+to disk under a temporary name, and the next output file is processed.
+
+</p>
+ <p>
+Once all output files are processed, the entire set of files which have
+been modified are moved into place, replacing any previous versions.
 
 </p>
  <p>
 
 </p>
-<hr />
-<h1>The &lt;{set}&gt; Directive</h1><p>
+<hr noshade />
+ <h2>The &lt;{set}&gt; Directive</h2><p>
 Small pieces of content can be set from within other content chunks or
 &lt;out&gt; sections using the &lt;set&gt; directive. The format is
 
@@ -3144,22 +3565,22 @@ Small pieces of content can be set from within other content chunks or
 </p>
 </blockquote>
  <p>
-This can be useful to set headlines or titles, by including a <a href="set.html">&lt;{set}&gt;</a> directive in their text.
+This can be useful to set small chunks of text, by including a <a href="set.html">&lt;{set}&gt;</a> directive in the content item that uses them.
 
 </p>
  <p>
-In addition, to insert some text into a template, set the text as
-variables beforehand:
+For example, a common use of &lt;{set}&gt; is to define, ahead of
+time, what text should be inserted into a template:
 
 </p>
  <blockquote>
 <p>
-&lt;{set body="${foo.txt}"}&gt;
+&lt;{set template_body="${foo.txt}"}&gt;
  ${bar_template}
 
 </p>
 </blockquote>
- <a name="Note__Order_of_Content_Reference_Processing"><h3>Note: Order of Content Reference Processing</h3></a> <p>
+ <a name="Note_Order_of_Content_Reference_Processing"><h3>Note: Order of Content Reference Processing</h3></a> <p>
 The processing of content references starts at each <a href="out.html">&lt;out&gt;</a> URL in turn, and descends from the chunk of text
 defined for that file, replacing each <a href="content_refs.html">${content_ref}</a> and <a href="url_refs.html">$(url_ref)</a> one-by-one, in a depth-first manner.
 
@@ -3177,15 +3598,16 @@ a <a href="deferred_content_refs.html">$[deferred content ref]</a> to
 access it.
 
 </p>
- <a name="How__lt__set__gt__Relates_To_Meta-data"><h3>How &lt;{set}&gt; Relates To Meta-data</h3></a> <p>
-The &lt;{set}&gt; directive was implemented before <a href="wmmeta.html">metadata</a> was, and initially
+ <a name="How_lt_set_gt_Relates_To_Meta_data"><h3>How &lt;{set}&gt; Relates To Meta-data</h3></a> <p>
+The &lt;{set}&gt; directive was implemented before <a href="metadata.html">metadata</a> was, and initially
 provided a way to do similar things, such as substitute page titles, etc.
 
 </p>
  <p>
-Now, however, it's probably better to use <a href="wmmeta.html">&lt;wmmeta&gt; tags</a> to do
-that kind of content-item <a href="wmmeta.html">metadata</a>, as it means your pages will be able to
-take advantage of new features, like index and site-map generation.
+Now, however, it's probably better to use <a href="wmmeta.html">&lt;wmmeta&gt; tags</a> to
+handle data that is associated with a content-item. Using &lt;wmmeta&gt; tags
+means your pages will be able to take advantage of new features, like index
+and site-map generation.
 
 </p>
  <p>
@@ -3199,8 +3621,8 @@ purposes.
 </p>
  
 </p>
-<hr />
-<h1>The &lt;{perl}&gt; Directives</h1><p>
+<hr noshade />
+ <h2>The &lt;{perl}&gt; Directives</h2><p>
 Arbitrary perl code can be executed using this directive.
 
 </p>
@@ -3229,9 +3651,10 @@ you don't have to do this yourself.
 
 </p>
  <p>
-If you don't like the eval style, you can use a more PHP-like construct using
-the <code>perlout</code> directive, which replaces the perl code text with anything
-that the perl code prints on STDOUT, like so:
+If you don't like the eval style, you can use a more PHP/JSP/ASP-like
+construct using the <code>perlout</code> directive, which replaces the perl code text
+with anything that the perl code prints on the default output filehandle, like
+so:
 
 </p>
  <p>
@@ -3244,6 +3667,11 @@ that the perl code prints on STDOUT, like so:
 	}&gt;
 </pre>
  
+</p>
+ <p>
+Note that this is not STDOUT, it's a local filehandle called <code>$outhandle</code>.
+It <em>is</em> selected as the default output handle, however.
+
 </p>
  <p>
 <a href="perl.html">&lt;{perl}&gt;</a> sections found at the top level of the
@@ -3275,13 +3703,13 @@ A good example of perl use inside a WebMake file can be found in the
  <p>
 
 </p>
-<hr />
-<h1>Globs and Regexps</h1><p>
+<hr noshade />
+ <h2>Globs and Regexps</h2><p>
 A number of WebMake parameters and perl APIs support pattern matching.
 This is performed using glob patterns and regular expressions.
 
 </p>
- <a name="Glob_Patterns"><h2>Glob Patterns</h2></a> <p>
+ <a name="Glob_Patterns"><h1>Glob Patterns</h1></a> <p>
 These are more-or-less traditional shell- or MS-DOS-like globs, as follows:
 
 </p>
@@ -3323,27 +3751,29 @@ This is the default mode of matching. Example globs are:
 <strong>*.html</strong>, <strong>.../*.txt</strong>.
 
 </p>
- <a name="Regular_Expressions"><h2>Regular Expressions</h2></a> <p>
+ <a name="Regular_Expressions"><h1>Regular Expressions</h1></a> <p>
 These are perl-style regular expressions. They are differentiated
 from glob patterns by prefixing them with <strong>RE:</strong>, for example:
 <strong><code>RE:^.*\.html$</code></strong>.
 
 </p>
  <p>
-For more details, check your perl documentation, or search the web.
+An introduction to regular expressions is beyond the scope of this
+documentation. For more details, check your perl documentation, or search the
+web.
 
 </p>
  <p>
 
 </p>
-<hr />
-<h1>Sorting Lists of Content Items</h1><p>
+<hr noshade />
+ <h2>Sorting Lists of Content Items</h2><p>
 Frequently, you will need to get a list of content items in sorted order.
 WebMake itself does this for the <a href="sitemap.html">sitemap</a> tag, among others.
 
 </p>
  <p>
-Sorting is typically performed using a content item's metadata; some <a href="wmmeta.html">metadata</a>
+Sorting is typically performed using a content item's metadata; some <a href="metadata.html">metadata</a>
 that are especially useful are:
 
 </p>
@@ -3415,18 +3845,18 @@ This is typically used either with the Perl code library's
 
 </p>
  <p>
-A <a href="sorting.html">sort string</a> is a text string, containing a space-separated list of <a href="wmmeta.html">metadata</a>
+A <a href="sorting.html">sort string</a> is a text string, containing a space-separated list of <a href="metadata.html">metadata</a>
 items. The first entry in the list is the main sorting criterion; the second
 entry is then used to break deadlocks if two entries match for the main
 criterion, etc.
 
 </p>
  <p>
-In addition, a <a href="wmmeta.html">metadata</a> item can be prefixed with a <code>!</code>, to reverse its
+In addition, a <a href="metadata.html">metadata</a> item can be prefixed with a <code>!</code>, to reverse its
 order.
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+ <a name="Example"><h2>Example</h2></a> <p>
 <strong>score title</strong>: sort by score, and if two content items have the same
 score, sort by title.
 
@@ -3446,8 +3876,31 @@ item have the same score and title, sort them into oldest-first order.
 </p>
  
 </p>
+<hr noshade />
+ <hr size="4" />
+<h1>Contents for the 'Variable References' section</h1> <ul>
+ <li>
+ <p>
+<a href="content_refs.html">${content_refs} - References to Content Chunks</a> - references to content chunks
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="url_refs.html">$(url_refs) - References to URLs</a> - references to URLs
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="deferred_content_refs.html">$[deferred_content refs] - Deferred Content References</a> - deferred references to content chunks
+</p>
+ 
+</li>
+ 
+</ul>
 <hr />
-<h1>${content_refs} - References to Content Chunks</h1><p>
+ <h2>${content_refs} - References to Content Chunks</h2><p>
 Content chunks and variables can be referred to using this format. This is
 evaluated before any other variable reference is.
 
@@ -3478,8 +3931,8 @@ with a question mark and the default value.
 </p>
  
 </p>
-<hr />
-<h1>$(url_refs) - References to URLs</h1><p>
+<hr noshade />
+ <h2>$(url_refs) - References to URLs</h2><p>
 URLs of defined &lt;out&gt; sections and &lt;media&gt; items can be inserted
 into the current content using this reference format.
 
@@ -3510,8 +3963,8 @@ using this format:
 </p>
  
 </p>
-<hr />
-<h1>$[deferred_content refs] - Deferred Content References</h1><p>
+<hr noshade />
+ <h2>$[deferred_content refs] - Deferred Content References</h2><p>
 These are identical to <a href="content_refs.html">${content_refs}</a>,
 but are evaluated only after all other references.
 
@@ -3527,7 +3980,7 @@ titles.
 
 </p>
  <p>
-In addition, this is the recommended way to access metadata set using the
+In addition, this is the recommended way to access <a href="metadata.html">metadata</a> set using the
 <a href="wmmeta.html">wmmeta</a> tag.
 
 </p>
@@ -3545,207 +3998,111 @@ Again, a default value can be supplied, using this format:
 </p>
  
 </p>
-<hr />
-<h1>The &lt;wmmeta&gt; Tag</h1><p>
-WebMake can load <a href="wmmeta.html">metadata</a> embedded in any content chunk, and use this <a href="wmmeta.html">metadata</a>
-at any point in the site. In addition, <a href="wmmeta.html">metadata</a> can be set externally from
-the content using the <a href="metatable.html">&lt;metatable&gt;</a> and
-<a href="metadefault.html">&lt;metadefault&gt;</a> tags.
-
-</p>
+<hr noshade />
+ <hr size="4" />
+<h1>Contents for the 'Meta Tags and Meta-Data' section</h1> <ul>
+ <li>
  <p>
-A <em>metadatum</em> is like a normal content item, except it is exposed to other
-pages in the <strong>index.wmk</strong> file. Normally, you cannot reliably read a dynamic
-content item that was set from another page; if one content item sets a
-variable like this:
-
+<a href="metadata.html">Metadata</a> - meta-data for content items, and how to use it
 </p>
  
-</p>
- <pre>
-&lt;{set foo="Value!"}&gt;
-</pre>
+</li>
+<li>
  <p>
-Any content items evaluated after that variable is set can access
-<strong>${foo}</strong>, <em>as long as they occur on the same output page</em>.
-However if they occur on another output page, they may not be able to access
-<strong>${foo}</strong>.
+<a href="wmmeta.html">The &lt;wmmeta&gt; Tag</a> - defining meta-data inside the tagged content object
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="metadefault.html">The &lt;metadefault&gt; Tag</a> - Specify default metadata to attach to content
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="metatable.html">The &lt;metatable&gt; Tag</a> - Attach metadata to another content item
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="attrdefault.html">The &lt;attrdefault&gt; Tag</a> - Specify default attributes for content items
+</p>
+ 
+</li>
+ 
+</ul>
+<hr />
+ <h2>Metadata</h2><p>
+ <a name="What_Is_Metadata"><h3>What Is Metadata?</h3></a> <p>
+Everyone is familiar with data, but the term <em>meta-data</em> is not so familiar.
+Here's a brief primer.
 
 </p>
  <p>
-To get around this, WebMake includes the <strong>&lt;wmmeta></strong> tag, which allows you
-to attach data to a content item. This data will then be accessible, both to
-other pages in the site (as
-<strong>$[<em>contentname</em>.<em>metaname</em>]</strong>), and to other content
-items within the same page (as <strong>$[this.<em>metaname</em>]</strong>).
+To illustrate, I'll use an example familiar to most readers. Most computer
+operating systems nowadays have the concept of files in a filesystem. If you
+consider the files as <em>data</em>, then details such as file size, modification
+times, username of the owner etc. are <em><a href="metadata.html">metadata</a></em>, ie. data about the files.
 
 </p>
  <p>
-Think of them as like size, modification time, owner etc. on files; or member
-variables in an object-oriented language. Another good way to think of it is
+In WebMake, <a href="metadata.html">metadata</a> is used to refer to properties of textual content items.
+For example, a newspaper article may have a <em>title</em>, an <em>abstract</em> (ie. a
+brief summary), etc.
+
+</p>
+ <p>
+This kind of data is very useful for building indices and catalogues, in the
+same way that Windows Explorer or the UNIX ls(1) command uses filesystem
+<a href="metadata.html">metadata</a> to display file listings. As a result, a good way to think of it is
 as "catalog data", as opposed to "narrative data", which is what a normal
 content item is. (thanks to Vaibhav Arya, vaibhav /at/ mymcomm.com, for that
 analogy.)
 
 </p>
- <p>
-Examples of <a href="wmmeta.html">metadata</a> that can be useful, and suggested names for that data,
-are as follows:
+ <a name="How_to_Define_Metadata"><h3>How to Define Metadata</h3></a> <p>
+WebMake can load <a href="metadata.html">metadata</a> from a number of sources:
 
 </p>
- <dl>
-<dt>
-<em>Title</em>
-</dt>
-<dd>
+ <ul>
+<li>
 <p>
-the title of a content item. The default title for
- content items is <em>(Untitled)</em>. (built-in)
+<strong>Inferred from the content text itself</strong>: WebMake supports
+ "magic" <a href="metadata.html">metadata</a>, which contains some inferred data about the
+ content, such as its last modification date (which can be inferred
+ from the filesystem storage of the content file itself). In
+ addition, title <a href="metadata.html">metadata</a> can be inferred from several sources, such
+ as the <code>&lt;title&gt;</code> tag in HTML, or <code>=head1</code> tags in POD
+ text.
 
 </p>
-</dd>
- <dt>
-<em>Score</em>
-</dt>
-<dd>
+</li>
+ <li>
 <p>
-a number representing the "priority" of a content
- item; used to affect how the item should be ranked in a list of
- stories. The default value is <em>50</em>. (built-in)
+<strong>Tags embedded within the content text</strong>: This is handled
+ using the <a href="wmmeta.html">&lt;wmmeta&gt;</a> tag.
 
 </p>
-</dd>
- <dt>
-<em>Abstract</em>
-</dt>
-<dd>
+</li>
+ <li>
 <p>
-a short summary of a content item. (optional)
+<strong>Set as defaults before the content items are defined</strong>: the
+ <a href="metadefault.html">&lt;metadefault&gt;</a> WebMake tag.
 
 </p>
-</dd>
- <dt>
-<em>Up</em>
-</dt>
-<dd>
+</li>
+ <li>
 <p>
-used to map the site's content; this <a href="wmmeta.html">metadata</a> indicates the
- content item that is the parent of the current content item. This
- metadatum is used to generate dynamic sitemaps. (built-in)
+<strong>Defined in bulk and added to the content items</strong>: the
+ <a href="metatable.html">&lt;metatable&gt;</a> tag.
 
 </p>
-</dd>
+</li>
  
-</dl>
-<p>
-Here's some built-in "magic" items of <a href="wmmeta.html">metadata</a> that do not need to be tagged
-with the &lt;wmmeta&gt; tag. Instead, they are automatically inferred by
-WebMake itself:
-
-</p>
- <dl>
-<dt>
-<em>declared</em>
-</dt>
-<dd>
-<p>
-the item's declaration order. This is a number
- representing when the content item was first encountered in the
- WebMake file; earlier content items have a lower declaration order.
- Useful for sorting.
-
-</p>
-</dd>
- <dt>
-<em>url</em>
-</dt>
-<dd>
-<p>
-the first &lt;out&gt; URL which contains that content
- item (you should order your &lt;out&gt; tags to ensure each stories'
- "primary" page is listed first, or set <em>ismainurl=false</em> on the
- "alternative" output pages, if you plan to use this). See also the
- <strong>get_url()</strong> method on the <a href="Content.pm.html">HTML::WebMake::Content</a> object.
-
-</p>
-</dd>
- <dt>
-<em>is_generated</em>
-</dt>
-<dd>
-<p>
-0 for items loaded from a &lt;content&gt; or
- &lt;contents&gt; tag, 1 for items created by Perl code using the
- <em>add_content()</em> function.
-
-</p>
-</dd>
- <dt>
-<em>mtime</em>
-</dt>
-<dd>
-<p>
-The modification date, in UNIX time_t
- seconds-since-the-epoch format, of the file the content item was
- loaded from. Handy for sorting.
-
-</p>
-</dd>
- 
-</dl>
-<p>
-More suggested meta tags, and their formats, are listed at the end of this
-document.
-
-</p>
- <p>
-Note that content items representing <a href="wmmeta.html">metadata</a> cannot, themselves, have
-<a href="wmmeta.html">metadata</a>.
-
-</p>
- <a name="How_to_Use_It"><h3>How to Use It</h3></a> <p>
-Meta-data is set from within a content chunk using the <em>&lt;wmmeta&gt;</em> tag;
-this tag is automatically stripped from the content when the content is
-referenced. It can be used either as an XML-style empty tag, similar to the
-HTML &lt;meta&gt; tag, if it ends in <em>/&gt;</em>:
-
-</p>
- <p>
-<pre>
-
-  &lt;wmmeta name="Title" value="Story 1, blah blah" /&gt;
-</pre>
- 
-</p>
- <p>
-or with start and end tags, for longer bits of content:
-
-</p>
- <p>
-<pre>
-
-  &lt;wmmeta name="Abstract"&gt;
-    Story 1, just another story.
-  &lt;/wmmeta&gt;
-</pre>
- 
-</p>
- <p>
-As you can see, each item of <a href="wmmeta.html">metadata</a> needs a <em>name</em> and a <em>value</em>. The
-latter format reads the <em>value</em> from the text between the start and end tags.
-
-</p>
- <p>
-For efficiency during subsequent site builds, <a href="wmmeta.html">metadata</a> is cached in the site
-cache file, so it will not need to be re-read from the original content chunk
-unless that content chunk is modified again.
-
-</p>
- <p>
-Meta tag names are case-insensitive, for compatibility with HTML meta tags.
-
-</p>
- <a name="Referring_to_Metadata"><h3>Referring to Metadata</h3></a> <p>
+</ul>
+<a name="Referring_to_Metadata"><h3>Referring to Metadata</h3></a> <p>
 Metadata is referred to using the <a href="deferred_content_refs.html">deferred content ref</a> format:
 
 </p>
@@ -3757,19 +4114,23 @@ $[<em>content</em>.<em>metaname</em>]
 </blockquote>
  <p>
 Where <em>content</em> is the name of the content item, and <em>metaname</em> is the
-name of the metadatum. So, for example, <em>$[blurb.txt.title]</em>
-would return the <em>title</em> metadatum from the content item <em>blurb.txt</em>.
+name of the <a href="metadata.html">metadatum</a>. So, for example, <em>$[blurb.txt.title]</em>
+would return the <em>title</em> <a href="metadata.html">metadatum</a> from the content item <em>blurb.txt</em>.
 
 </p>
  <p>
-Any content chunk can access <a href="wmmeta.html">metadata</a> from other content chunks within the
+Meta tag names are case-insensitive, for compatibility with HTML meta tags.
+
+</p>
+ <p>
+Any content chunk can access <a href="metadata.html">metadata</a> from other content chunks within the
 same <a href="out.html">&lt;out&gt;</a> tag, using <strong>this</strong> as the <em>content</em> name, i.e.
 <em>$[this.title]</em> . This is handy, for example, in setting the
 page title in the main content chunk, and accessing it from the header chunk.
 
 </p>
  <p>
-If more than one content item sets the same item of <a href="wmmeta.html">metadata</a> inside the
+If more than one content item sets the same item of <a href="metadata.html">metadata</a> inside the
 <a href="out.html">&lt;out&gt;</a> tag, the first one will take precedence.
 
 </p>
@@ -3777,19 +4138,39 @@ If more than one content item sets the same item of <a href="wmmeta.html">metada
 The example files "news_site.wmk" and "news_site_with_sections.wmk"
 demonstrate how meta tags can be used to generate a SlashDot or Wired
 News-style news site. The index pages in those sites are generated
-dynamically, using the <a href="wmmeta.html">metadata</a> to decide which pages to link to, their
+dynamically, using the <a href="metadata.html">metadata</a> to decide which pages to link to, their
 ordering, and the titles and abstracts to use.
 
 </p>
- <a name="Suggested_Metadata_Names"><h3>Suggested Metadata Names</h3></a> <p>
-The tags marked <em>(built-in)</em> are supported directly inside WebMake, and used
+ <a name="How_Do_I_Use_Metadata_In_WebMake"><h3>How Do I Use Metadata In WebMake?</h3></a> <p>
+WebMake provides extra support for <a href="metadata.html">metadata</a> in an efficient way. A
+<em><a href="metadata.html">metadatum</a></em> is like a normal content item, except it is exposed to all other
+pages in the WebMake file. This data is accessible, both to other pages in
+the site (as <strong>$[<em>contentname</em>.<em>metaname</em>]</strong>), and to other
+content items within the same page (as
+<strong>$[this.<em>metaname</em>]</strong>).
+
+</p>
+ <p>
+In addition, WebMake caches <a href="metadata.html">metadata</a> in the site cache file between runs, so
+that a subsequent partial site build will not require loading all the content
+text, just to read a page title.
+
+</p>
+ <p>
+Note that content items representing <a href="metadata.html">metadata</a> cannot, themselves, have
+<a href="metadata.html">metadata</a>.
+
+</p>
+ <a name="What_Metadata_Should_I_Use"><h3>What Metadata Should I Use?</h3></a> <p>
+The items marked <em>(built-in)</em> are supported directly inside WebMake, and used
 internally for functionality like building site maps and indices. All the
-other suggested <a href="wmmeta.html">metadata</a> names here are just that, suggestions, which support
+other suggested <a href="metadata.html">metadata</a> names here are just that, suggestions, which support
 commonly-required functionality.
 
 </p>
  <p>
-Also note that tag names are case-insensitive, they're just capitalised here
+Also note that the names are case-insensitive, they're just capitalised here
 for presentation.
 
 </p>
@@ -3800,7 +4181,8 @@ for presentation.
 <dd>
 <p>
 the title of a content item. The default title for
- content items is <em>(Untitled)</em>. (built-in)
+ content items is inferred from the content text where possible,
+ or <em>(Untitled)</em> if no title can be found. (built-in)
 
 </p>
 </dd>
@@ -3822,6 +4204,17 @@ a number representing the "priority" of a content
 <dd>
 <p>
 a short summary of a content item.
+
+</p>
+</dd>
+ <dt>
+<em>Up</em>
+</dt>
+<dd>
+<p>
+used to map the site's content; this <a href="metadata.html">metadata</a> indicates the
+ content item that is the parent of the current content item. This <a href="metadata.html">metadatum</a>
+ is used to generate dynamic sitemaps. (built-in)
 
 </p>
 </dd>
@@ -3881,7 +4274,7 @@ the end of an item's "visibility window",
 </dt>
 <dd>
 <p>
-a <a href="http://www.ietf.org/rfc/rfc2413.txt">Dublin Core</a> tag. The organisation or
+a <a href="http://www.ietf.org/rfc/rfc2413.txt">Dublin Core</a> <a href="metadata.html">metadatum</a>. The organisation or
  individual that publishes the entire site.
 
 </p>
@@ -3889,16 +4282,71 @@ a <a href="http://www.ietf.org/rfc/rfc2413.txt">Dublin Core</a> tag. The organis
  
 </dl>
 <p>
-The <a href="http://www.ietf.org/rfc/rfc2413.txt">Dublin Core</a> is a whole load of suggested <a href="wmmeta.html">metadata</a> names and formats,
-which can be used either to replace or supplement the optional tags named
-above. Regardless of whether you replace or supplement the tags above
-internally, it is definitely recommended to use the DC tag names for <a href="wmmeta.html">metadata</a>
+The <a href="http://www.ietf.org/rfc/rfc2413.txt">Dublin Core</a> is a whole load of suggested <a href="metadata.html">metadata</a> names and formats,
+which can be used either to replace or supplement the optional <a href="metadata.html">metadata</a> named
+above. Regardless of whether you replace or supplement the <a href="metadata.html">metadata</a> above
+internally, it is definitely recommended to use the DC names for <a href="metadata.html">metadata</a>
 that's made visible in the output HTML through conventional HTML &lt;meta&gt;
 tags.
 
 </p>
- <a name="Why_Use_Metadata"><h3>Why Use Metadata</h3></a> <p>
-Support for <a href="wmmeta.html">metadata</a> is an important CMS feature.
+ <a name="Built_In_Metadata"><h3>Built-In Metadata</h3></a> <p>
+These are some built-in "magic" items of <a href="metadata.html">metadata</a> that do not need to be
+defined manually. Instead, they are automatically inferred by WebMake itself:
+
+</p>
+ <dl>
+<dt>
+<em>declared</em>
+</dt>
+<dd>
+<p>
+the item's declaration order. This is a number
+ representing when the content item was first encountered in the
+ WebMake file; earlier content items have a lower declaration order.
+ Useful for sorting.
+
+</p>
+</dd>
+ <dt>
+<em>url</em>
+</dt>
+<dd>
+<p>
+the first &lt;out&gt; URL which contains that content
+ item (you should order your &lt;out&gt; tags to ensure each stories'
+ "primary" page is listed first, or set <em>ismainurl=false</em> on the
+ "alternative" output pages, if you plan to use this). See also the
+ <strong>get_url()</strong> method on the <a href="Content.pm.html">HTML::WebMake::Content</a> object.
+
+</p>
+</dd>
+ <dt>
+<em>is_generated</em>
+</dt>
+<dd>
+<p>
+0 for items loaded from a &lt;content&gt; or
+ &lt;contents&gt; tag, 1 for items created by Perl code using the
+ <em>add_content()</em> function.
+
+</p>
+</dd>
+ <dt>
+<em>mtime</em>
+</dt>
+<dd>
+<p>
+The modification date, in UNIX time_t
+ seconds-since-the-epoch format, of the file the content item was
+ loaded from. Handy for sorting.
+
+</p>
+</dd>
+ 
+</dl>
+<a name="Why_Use_Metadata"><h3>Why Use Metadata</h3></a> <p>
+Support for <a href="metadata.html">metadata</a> is an important CMS feature.
 
 </p>
  <p>
@@ -3915,7 +4363,49 @@ enables index pages to be generated using Perl code easily and in a
 well-defined way.
 
 </p>
- <a name="Example"><h1>Example</h1></a> <p>
+ <p>
+
+</p>
+ 
+</p>
+<hr noshade />
+ <h2>The &lt;wmmeta&gt; Tag</h2><p>
+WebMake can load <a href="metadata.html">meta-data</a> directly from the content text,
+using the &lt;wmmeta&gt; tag.
+
+</p>
+ <p>
+This tag is automatically stripped from the content when the content is
+referenced. It can be used either as an XML-style empty tag, similar to the
+HTML &lt;meta&gt; tag, if it ends in <em>/&gt;</em>:
+
+</p>
+ <p>
+<pre>
+
+  &lt;wmmeta name="Title" value="Story 1, blah blah" /&gt;
+</pre>
+ 
+</p>
+ <p>
+or with start and end tags, for longer bits of content:
+
+</p>
+ <p>
+<pre>
+
+  &lt;wmmeta name="Abstract"&gt;
+    Story 1, just another story. Blah blah blah foo bar baz etc.
+  &lt;/wmmeta&gt;
+</pre>
+ 
+</p>
+ <p>
+As you can see, each item of <a href="metadata.html">metadata</a> needs a <em>name</em> and a <em>value</em>. The
+latter format reads the <em>value</em> from the text between the start and end tags.
+
+</p>
+ <a name="Example"><h2>Example</h2></a> <p>
 <pre>
 
   &lt;content name="foo"&gt;
@@ -3929,19 +4419,17 @@ well-defined way.
 </pre>
  
 </p>
- 
-</p>
-<hr />
-<h1>The &lt;metadefault&gt; Tag</h1><p>
+<hr noshade />
+ <h2>The &lt;metadefault&gt; Tag</h2><p>
 Metadata is usually embedded inside a content item using the &lt;wmmeta&gt;
 tag. However, this can be a chore for lots of content items, so to make
-things easier, you can specify a default <a href="wmmeta.html">metadata</a> using the
+things easier, you can specify default <a href="metadata.html">metadata</a> settings, using the
 &lt;<a href="metadefault.html">metadefault</a>&gt; tag.
 
 </p>
  <p>
 Specify this tag before the content items in question, and those content items
-will all be tagged with the <a href="wmmeta.html">metadata</a> you set.
+will all be tagged with the <a href="metadata.html">metadata</a> you set.
 
 </p>
  <p>
@@ -3951,7 +4439,7 @@ Like the <a href="attrdefault.html">attrdefault</a> tag, this tag can be used ei
 </p>
  <a name="Scoped_Mode"><h3>Scoped Mode</h3></a> <p>
 "Scoped" mode uses opening (<strong>&lt;<a href="metadefault.html">metadefault</a>&gt;</strong>) and closing
-(<strong>&lt;/metadefault&gt;</strong>) tags; the <a href="wmmeta.html">metadata</a> is only set on content items
+(<strong>&lt;/metadefault&gt;</strong>) tags; the <a href="metadata.html">metadata</a> is only set on content items
 between the two tags.
 
 </p>
@@ -3959,24 +4447,24 @@ between the two tags.
 <p>
 <em>Note!</em> one warning about "scoped" mode: note that WebMake does not use
  a fully-correct XML parser to parse the XML in the .wmk file, so if you nest
- &lt;<a href="metadefault.html">metadefault</a>&gt; tags, it will not correctly parse them; instead, the
+ &lt;<a href="metadefault.html">metadefault</a>&gt; tags, it may not correctly parse them; instead, the
  first closing <strong>&lt;/metadefault&gt;</strong> tag found will be used.
 
 </p>
 </blockquote>
  <a name="Command_Mode"><h3>Command Mode</h3></a> <p>
 Command mode uses standalone tags (<strong>&lt;<a href="metadefault.html">metadefault</a> ... /&gt;</strong>); the
-<a href="wmmeta.html">metadata</a> are set until the end of the WebMake file, or until you change
+<a href="metadata.html">metadata</a> are set until the end of the WebMake file, or until you change
 them with another &lt;<a href="metadefault.html">metadefault</a>&gt; tag.
 
 </p>
- <a name="Attributes"><h1>Attributes</h1></a> <dl>
+ <a name="Attributes"><h2>Attributes</h2></a> <dl>
 <dt>
 <em>name</em>
 </dt>
 <dd>
 <p>
-the <a href="wmmeta.html">metadatum</a>'s name, e.g. <em>Title</em>, <em>Section</em>,
+the <a href="metadata.html">metadatum</a>'s name, e.g. <em>Title</em>, <em>Section</em>,
  etc. This is required.
 
 </p>
@@ -3986,49 +4474,90 @@ the <a href="wmmeta.html">metadatum</a>'s name, e.g. <em>Title</em>, <em>Section
 </dt>
 <dd>
 <p>
-the <a href="wmmeta.html">metadatum</a>'s value. This is optional. If the
- value is not specified, the <a href="wmmeta.html">metadatum</a> will be removed from the list of
- default <a href="wmmeta.html">metadata</a>.
+the <a href="metadata.html">metadatum</a>'s value. This is optional. If the
+ value is not specified, the <a href="metadata.html">metadatum</a> will be removed from the list of
+ default <a href="metadata.html">metadata</a>.
 
 </p>
 </dd>
  
 </dl>
-<p>
+<a name="Example"><h2>Example</h2></a> <p>
+Using the scoped style:
+
+</p>
+ <p>
+<pre>
+
+  &lt;metadefault name="section" value="tags_and_attributes"&gt;
+
+    &lt;content name="chunk_1.txt"&gt;...&lt;/content&gt;
+    &lt;content name="chunk_2.txt"&gt;...&lt;/content&gt;
+    &lt;content name="chunk_3.txt"&gt;...&lt;/content&gt;
+    &lt;content name="chunk_4.txt"&gt;...&lt;/content&gt;
+
+  &lt;/metadefault&gt;
+</pre>
+ 
+</p>
+ <p>
+Or, in the "command" style:
+
+</p>
+ <p>
+<pre>
+
+  &lt;metadefault name="section" value="tags_and_attributes" /&gt;
+
+  &lt;content name="chunk_1.txt"&gt;...&lt;/content&gt;
+  &lt;content name="chunk_2.txt"&gt;...&lt;/content&gt;
+  &lt;content name="chunk_3.txt"&gt;...&lt;/content&gt;
+  &lt;content name="chunk_4.txt"&gt;...&lt;/content&gt;
+
+  &lt;metadefault name="section" /&gt;
+</pre>
+ 
+</p>
+ <p>
 
 </p>
  
 </p>
-<hr />
-<h1>The &lt;metatable&gt; Tag</h1><p>
+<hr noshade />
+ <h2>The &lt;metatable&gt; Tag</h2><p>
 Metadata is usually embedded inside a content item using the &lt;wmmeta&gt;
-tag. However, sometimes you may want to tag a content item with <a href="wmmeta.html">metadata</a> from
+tag. However, sometimes you may want to tag a content item with <a href="metadata.html">metadata</a> from
 outside, if the text of the content is not under your control; or you may want
-to tag <a href="wmmeta.html">metadata</a> to an object that is not even a content item, such as an
-image.
+to tag <a href="metadata.html">metadata</a> to an object that is not text-based, such as an image.
 
 </p>
  <p>
-The <a href="metatable.html">metatable</a> tag allows you to do this, and in bulk. You list a table of
-content names and the <a href="wmmeta.html">metadata</a> you want to attach to each content item, in
-tab-, comma-, or pipe-separated-value format.
+The metatable tag allows you to do this, and in bulk. You list a table of
+content names and the <a href="metadata.html">metadata</a> you want to attach to each content item, in
+tab-, comma-, pipe-separated-value, or XML format.
 
 </p>
  <p>
+By default, the table is read from between the &lt;metatable&gt; and
+&lt;/metatable&gt; tags. However, if you set the <em>src</em> attribute,
+the table will be read from the location specified, instead.
+
+</p>
+ <a name="Delimiter_Separated_Value_Format"><h1>Delimiter-Separated-Value Format</h1></a> <p>
 Firstly, pick a delimiter character, such as <code>|</code>. Set the <em>delimiter</em>
 attribute to this character.
 
 </p>
  <p>
-Next, the first line of the <a href="metatable.html">metatable</a> lists the <a href="wmmeta.html">metadata</a> you wish to set; it
+Next, the first line of the metatable lists the <a href="metadata.html">metadata</a> you wish to set; it
 must start with the value <code>.</code>. This indicates to WebMake that it's
-defining the <a href="wmmeta.html">metadata</a> to be set.
+defining the <a href="metadata.html">metadata</a> to be set.
 
 </p>
  <p>
-Finally, list as many lines of <a href="wmmeta.html">metadata</a> as you like; the first value on the
-line is the name of the content item you wish to attach the <a href="wmmeta.html">metadata</a> to. From
-then on, the other values on the line are the values of the <a href="wmmeta.html">metadata</a>.
+Finally, list as many lines of <a href="metadata.html">metadata</a> as you like; the first value on the
+line is the name of the content item you wish to attach the <a href="metadata.html">metadata</a> to. From
+then on, the other values on the line are the values of the <a href="metadata.html">metadata</a>.
 
 </p>
  <p>
@@ -4036,7 +4565,7 @@ So, for example, consider this table, from the WebMake documentation:
 
 </p>
  <pre>
-&lt;<a href="metatable.html">metatable</a> delimiter="|"&gt;
+&lt;metatable delimiter="|"&gt;
  .|title|abstract
  Main.pm|HTML::WebMake::Main|module documentation
  PerlCodeLibrary.pm|HTML::WebMake::PerlCodeLibrary|module documentation
@@ -4053,8 +4582,32 @@ This will set <strong>Main.pm.title</strong> to <strong>HTML::WebMake::Main</str
 <strong>Main.pm.abstract</strong> to <strong>module documentation</strong>, etc.
 
 </p>
- <a name="Using__lt__a_href____metatable___metatable__a__gt__To_Tag_Non-Content_Items"><h2>Using &lt;<a href="metatable.html">metatable</a>&gt; To Tag Non-Content Items</h2></a> <p>
-Often, you will need to attach <a href="wmmeta.html">metadata</a> to non-content items, such as images,
+ <a name="XML_Format"><h1>XML Format</h1></a> <p>
+The XML block is surrounded with a &lt;metaset&gt; tag, and contains
+&lt;target&gt; blocks naming the content items the enclosed <a href="metadata.html">metadata</a> items are
+associated with.
+
+</p>
+ <p>
+Inside the &lt;target&gt; blocks, &lt;meta&gt; tags name each <a href="metadata.html">metadatum</a>, and
+enclose the <a href="metadata.html">metadatum</a>'s value.
+
+</p>
+ <p>
+<pre>
+
+        &lt;metaset&gt;
+          &lt;target id="foo.txt"&gt;
+            &lt;meta name="title"&gt;
+              This is Foo.txt's title.
+            &lt;/meta&gt;
+          &lt;/target&gt;
+        &lt;/metaset&gt;
+</pre>
+ 
+</p>
+ <a name="Using_lt_metatable_gt_To_Tag_Non_Content_Items"><h1>Using &lt;metatable&gt; To Tag Non-Content Items</h1></a> <p>
+Often, you will need to attach <a href="metadata.html">metadata</a> to non-content items, such as images,
 or HTML files that are not generated by WebMake. Here's how to do this.
 
 </p>
@@ -4066,7 +4619,7 @@ automatically take precedence over the URLs of the fake content items.
 
 </p>
  <p>
-Then use a <a href="metatable.html">metatable</a>, as above, to set the <a href="wmmeta.html">metadata</a> you wish to use.
+Then use a metatable, as above, to set the <a href="metadata.html">metadata</a> you wish to use.
 
 </p>
  <p>
@@ -4074,8 +4627,8 @@ Then use a <a href="metatable.html">metatable</a>, as above, to set the <a href=
 </p>
  
 </p>
-<hr />
-<h1>The &lt;attrdefault&gt; Tag</h1><p>
+<hr noshade />
+ <h2>The &lt;attrdefault&gt; Tag</h2><p>
 Attributes are usually specified inside a content item's <a href="content.html">&lt;content&gt;</a> or <a href="contents.html">&lt;contents&gt;</a> tags, or, for output files, inside
 the <a href="out.html">&lt;out&gt;</a> tag. However, this can be a chore if you have many
 items to set attributes on, so, to make things easier, you can specify default
@@ -4113,7 +4666,7 @@ attributes are set until the end of the WebMake file, or until you change
 them with another &lt;attrdefault&gt; tag.
 
 </p>
- <a name="Attributes"><h1>Attributes</h1></a> <dl>
+ <a name="Attributes"><h2>Attributes</h2></a> <dl>
 <dt>
 <em>name</em>
 </dt>
@@ -4137,7 +4690,7 @@ the attribute's value. This is optional. If the
 </dd>
  
 </dl>
-<a name="Example"><h1>Example</h1></a> <p>
+<a name="Example"><h2>Example</h2></a> <p>
 Using the scoped style:
 
 </p>
@@ -4176,8 +4729,31 @@ Or, in the "command" style:
 </p>
  
 </p>
+<hr noshade />
+ <hr size="4" />
+<h1>Contents for the 'Magic Variables' section</h1> <ul>
+ <li>
+ <p>
+<a href="imgsize.html">The ${IMGSIZE} Magic Variable</a> - automatically add image size information to an &lt;img&gt; tag
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="topslash.html">The $(TOP/) Magic Variable</a> - a relative path to the top-level of the site, for URLs
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="webmake_vars.html">The ${WebMake.*} Magic Variables</a> - information about the environment WebMake is run in, such as the version of WebMake, the timestamp, the user who ran it, etc.
+</p>
+ 
+</li>
+ 
+</ul>
 <hr />
-<h1>The ${IMGSIZE} Magic Variable</h1><p>
+ <h2>The ${IMGSIZE} Magic Variable</h2><p>
 This reference provides an easy way to automatically add image size
 information to an &lt;img&gt; tag, for example:
 
@@ -4208,8 +4784,8 @@ it does nothing.
 </p>
  
 </p>
-<hr />
-<h1>The $(TOP/) Magic Variable</h1><p>
+<hr noshade />
+ <h2>The $(TOP/) Magic Variable</h2><p>
 This URL reference always evaluates to a relative path to the top-level of the
 site, for URLs.
 
@@ -4223,8 +4799,8 @@ specification, to be made relative to the top-level of the site.
  <p>
 
 </p>
-<hr />
-<h1>The ${WebMake.*} Magic Variables</h1><p>
+<hr noshade />
+ <h2>The ${WebMake.*} Magic Variables</h2><p>
 WebMake defines several magic variables that expand to useful information about
 the current environment. These are as follows. Each one is illustrated with
 the value at the time this documentation was generated.
@@ -4237,7 +4813,7 @@ the value at the time this documentation was generated.
 <dd>
 <p>
 The version of WebMake
- that generated this site. (1.1)
+ that generated this site. (1.2)
 
 </p>
 </dd>
@@ -4248,7 +4824,7 @@ The version of WebMake
 <p>
 A <em>generator string</em> for
  WebMake; this is in the form <strong>WebMake/v.vv</strong> where <em>v.vv</em>
- is the version number of WebMake. (WebMake/1.1)
+ is the version number of WebMake. (WebMake/1.2)
 
 </p>
 </dd>
@@ -4268,7 +4844,7 @@ The username of the person who generated
 <dd>
 <p>
 The time the site was last generated.
- (Wed Mar 21 15:10:28 2001)
+ (Thu May 3 13:01:51 2001)
 
 </p>
 </dd>
@@ -4298,7 +4874,7 @@ The name used in the current &lt;out&gt; tag.
 <dd>
 <p>
 The directory WebMake expects to find
- Perl code library files (ie. plugins) in.
+ Perl code library files (ie. plugins) in. (/nethome/jm/ftp/webmake/lib/HTML/WebMake/PerlLib)
 
 </p>
 </dd>
@@ -4309,16 +4885,42 @@ The directory WebMake expects to find
 </p>
  
 </p>
+<hr noshade />
+ <hr size="4" />
+<h1>Contents for the 'Format Converters' section</h1> <ul>
+ <li>
+ <p>
+<a href="ettext.html">The Text::EtText Format Converter</a> - A simple plain-text format, easily converted to HTML (format: <em>text/et</em>)
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="pod.html">The POD Format Converter</a> - Perl ''plain old documentation'' support (format: <em>text/pod</em>)
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="cleaner.html">The HTML Cleaner</a> - the HTML cleaning filter
+</p>
+ 
+</li>
+ 
+</ul>
 <hr />
-<h1>The Text::EtText Format Converter</h1><p>
+ <h2>The Text::EtText Format Converter</h2><p>
 This converter converts from Text::EtText, a simple plain-text format, to
 HTML. Like most simple text markup formats (POD, <a href="http://www.bsdi.com/setext/">setext</a>, etc.), EtText markup
-handles the usual things: insertion of <em>&lt;P&gt;</em> tags, header
-recognition and markup. However it adds a powerful link markup system.
+handles the usual things: insertion of <em>&lt;P&gt;</em> tags, header recognition
+and markup. However it adds a powerful link markup system.
 
 </p>
  <p>
-EtText markup is simple and effective; it's based loosely on <a href="http://c2.com/cgi/wiki?WikiWikiWeb">WikiWikiWeb</a> <a href="http://c2.com/cgi/wiki?TextFormattingRules">TextFormattingRules</a>.
+EtText is no longer included in WebMake; instead it must be downloaded
+separately from <a href="http://ettext.taint.org/">http://ettext.taint.org/</a>, where there is also a more
+detailed set of documentation. However, this page is retained in WebMake
+for quick reference.
 
 </p>
  <a name="Basic_Text_Markup"><h3>Basic Text Markup</h3></a> <p>
@@ -4479,7 +5081,7 @@ The same goes for indented paragraphs that start with the string
 <code>1.</code>, followed by whitespace. However the default list tag in this
 case will be an <strong>&lt;ol&gt;</strong>...<strong>&lt;/ol&gt;</strong> list. Any positive integer
 followed immediately by a full stop and a space will do the trick. (BTW: I
-used to use <code>#</code> to do this, but I preferred the <a href="http://c2.com/cgi/wiki?WikiWikiWeb">WikiIdea</a>, it
+used to use <code>#</code> to do this, but I preferred the WikiIdea, it
 looks better.)
 
 </p>
@@ -4510,7 +5112,7 @@ WebMake supports this.
 </p>
  <p>
 Indented paragraphs that start with <code><strong>term</strong>:</code> <em>tab</em> <code><strong>rest of paragraph</strong></code> will be converted
-into definition lists (this is another <a href="http://c2.com/cgi/wiki?WikiWikiWeb">StolenFromWikiIdea</a>). They
+into definition lists (this is another StolenFromWikiIdea). They
 look like this:
 
 </p>
@@ -4634,9 +5236,16 @@ an indented line like this:
  <p>
 Text and markup can be enclosed in the quotes, everything quoted will become
 part of the link text. Single words or HTML tags do not need to be quoted, so
-<strong>&lt;img src="<a href="http://jmason.org/license_plate.jpg" ">http://jmason.org/license_plate.jpg"</a> width="10"
-height="10"&gt; [homepage]</strong> will work correctly.
+this will work correctly:
 
+</p>
+ <p>
+<pre>
+
+  &lt;img src="http://jmason.org/license_plate.jpg"
+  	width="10" height="10" /&gt; &#91;homepage&#93;
+</pre>
+ 
 </p>
  <a name="Glossary_Links"><h3>Glossary Links</h3></a> <p>
 EtText also supports a concept called <em>glossary links</em>; if you define a
@@ -4650,7 +5259,7 @@ quotes. For example:
 </p>
 </blockquote>
  <p>
-will mean that any occurrence of the name <strong>"Justin Mason''</strong>, in quotes, in
+will mean that any occurrence of the name <strong>"Justin Mason"</strong>, in quotes, in
 <em>any</em> EtText content chunk or file in the site, becomes a link to that
 address. These links are stored in the WebMake <a href="making.html">cache file</a>.
 
@@ -4683,7 +5292,7 @@ Yes, 1993. Setext has been around for a while!
 
 </p>
  <p>
-<a href="http://c2.com/cgi/wiki?WikiWikiWeb">WikiWikiWeb</a> is quite a recent, well-established system which uses
+WikiWikiWeb is quite a recent, well-established system which uses
 a similar markup style.
 
 </p>
@@ -4716,8 +5325,8 @@ in the structured text format</em>.
 </p>
  
 </p>
-<hr />
-<h1>The POD Format Converter</h1><p>
+<hr noshade />
+ <h2>The POD Format Converter</h2><p>
 This converter converts from POD to HTML, using Tom Christiansen's
 <strong>Pod::Html</strong> module.
 
@@ -4759,7 +5368,7 @@ If you are reading POD documentation embedded inside other files,
 </li>
  
 </ul>
-<a name="Specifying_Options_to_the_POD_Translator"><h2>Specifying Options to the POD Translator</h2></a> <p>
+<a name="Specifying_Options_to_the_POD_Translator"><h1>Specifying Options to the POD Translator</h1></a> <p>
 If you want to specify <strong>pod2html</strong> options to the converter, just
 put them in a string as a <em>podargs</em> attribute of the &lt;content&gt; tag,
 like so:
@@ -4778,8 +5387,8 @@ like so:
 </p>
  
 </p>
-<hr />
-<h1>The HTML Cleaner</h1><p>
+<hr noshade />
+ <h2>The HTML Cleaner</h2><p>
 The HTML cleaner is a powerful filter which can polish grotty, messy HTML into
 fully-standards-compliant glory. By default, all output of format
 <strong>text/html</strong> (the default format) will be passed through it.
@@ -4849,8 +5458,31 @@ This is the default.
 </p>
  
 </p>
+<hr noshade />
+ <hr size="4" />
+<h1>Contents for the 'Module Documentation' section</h1> <ul>
+ <li>
+ <p>
+<a href="Content.pm.html">HTML::WebMake::Content</a> - module documentation
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="Main.pm.html">HTML::WebMake::Main</a> - module documentation
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="PerlCodeLibrary.pm.html">HTML::WebMake::PerlCodeLibrary</a> - module documentation
+</p>
+ 
+</li>
+ 
+</ul>
 <hr />
-<h1>HTML::WebMake::Content</h1> <ul>
+ <h2>HTML::WebMake::Content</h2> <ul>
  <li>
 <a href="#NAME">NAME</a> <li>
 <a href="#SYNOPSIS">SYNOPSIS</a> <li>
@@ -4966,6 +5598,24 @@ Returns the content item's declaration order. This is a number representing
 when the content item was first encountered in the WebMake file; earlier
 content items have a lower declaration order. Useful for sorting.
 <dt>
+<strong><a name="item__kidobjs">@kidobjs = $cont-&gt;get_kids ($sortstring);</a></strong><dd>
+ <p>
+
+Get the child content items for this item. The ''child'' content items are
+items that use this content as their <code>up</code> metadatum.
+<p>
+
+Returns a list of content objects in unsorted order.
+<dt>
+<strong>@kidobjs = $cont-&gt;get_sorted_kids ($sortstring);</strong><dd>
+ <p>
+
+Get the child content items for this item. The ''child'' content items are
+items that use this content as their <code>up</code> metadatum.
+<p>
+
+Returns a list of content objects sorted by the provided sort string.
+<dt>
 <strong>$text = $cont-&gt;get_url();</strong><dd>
  <p>
 
@@ -4980,8 +5630,8 @@ writing the file in question until all other output files have been
 processed and the URL has been found.
 
 </dl>
-<hr />
-<h1>HTML::WebMake::Main</h1> <ul>
+<hr noshade />
+ <h2>HTML::WebMake::Main</h2> <ul>
  <li>
 <a href="#NAME">NAME</a> <li>
 <a href="#SYNOPSIS">SYNOPSIS</a> <li>
@@ -5150,8 +5800,8 @@ well as:
  <pre>
   <a href="http://webmake.taint.org/">http://webmake.taint.org/</a>
 </pre>
-<hr />
-<h1>HTML::WebMake::PerlCodeLibrary</h1> <ul>
+<hr noshade />
+ <h2>HTML::WebMake::PerlCodeLibrary</h2> <ul>
  <li>
 <a href="#NAME">NAME</a> <li>
 <a href="#SYNOPSIS">SYNOPSIS</a> <li>
@@ -5324,7 +5974,7 @@ Delete an URL.
 
 Generate a list by iterating through the <code>@namelist</code>, setting the content item
 <code>item</code> to the current name, and interpreting the content chunk named
-<code>$itemname</code>. This content chunk should refer to <code>sitetree.wmk</code> appropriately.
+<code>$itemname</code>. This content chunk should refer to <code>PerlCodeLibrary.pm</code> appropriately.
 <p>
 
 Each resulting block of content is appended to a $listtext, which is
@@ -5419,8 +6069,19 @@ object. Virtually all of WebMake's functionality and internals can be
 accessed through this.
 
 </dl>
+<hr noshade />
+ <hr size="4" />
+<h1>Contents for the 'Manual Pages' section</h1> <ul>
+ <li>
+ <p>
+<a href="webmake.html">webmake(1)</a> - manual page
+</p>
+ 
+</li>
+ 
+</ul>
 <hr />
-<h1>webmake(1)</h1> <ul>
+ <h2>webmake(1)</h2> <ul>
  <li>
 <a href="#NAME">NAME</a> <li>
 <a href="#SYNOPSIS">SYNOPSIS</a> <li>
@@ -5585,8 +6246,49 @@ Justin Mason &lt;jm /at/ jmason.org&gt;
  <hr />
  <h1><a name="COREQUISITES">COREQUISITES</a></h1> <p>
  <code>Image::Size</code> is required to support the IMGSIZE tag. If this tag is not used, or if the
-module is not available, <strong>webmake</strong> can still operate acceptably.<hr />
-<h1>csvtable_tag.wmk</h1> <ul>
+module is not available, <strong>webmake</strong> can still operate acceptably.<hr noshade />
+ <hr size="4" />
+<h1>Contents for the 'Plugins and Libraries' section</h1> <ul>
+ <li>
+ <p>
+<a href="csvtable_tag.wmk.html">csvtable_tag.wmk</a> - define a HTML table using comma-separated values
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="download_tag.wmk.html">download_tag.wmk</a> - Tag for quick download links to files
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="dump_vars.wmk.html">dump_vars.wmk</a> - dump all WebMake variables and content items
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="navtree.wmk.html">navtree.wmk</a> - WebMake tag to generate an alternative per-page sitemap
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="safe_tag.wmk.html">safe_tag.wmk</a> - Tag to ''make safe'' WebMake, EtText or HTML data
+</p>
+ 
+</li>
+<li>
+ <p>
+<a href="sitetree.wmk.html">sitetree.wmk</a> - WebMake tag to generate a per-page sitemap
+</p>
+ 
+</li>
+ 
+</ul>
+<hr />
+ <h2>csvtable_tag.wmk</h2> <ul>
  <li>
 <a href="#LOADING">LOADING</a> <li>
 <a href="#HTML_TAGS">HTML TAGS</a> <li>
@@ -5682,8 +6384,8 @@ numbered cells (counting from 1). For example:
  <hr />
  <h1><a name="THANKS">THANKS</a></h1> <p>
 
-Thanks to Chris Barrett; he suggested this tag.<hr />
-<h1>download_tag.wmk</h1> <ul>
+Thanks to Chris Barrett; he suggested this tag.<hr noshade />
+ <h2>download_tag.wmk</h2> <ul>
  <li>
 <a href="#LOADING">LOADING</a> <li>
 <a href="#HTML_TAGS">HTML TAGS</a> <li>
@@ -5802,9 +6504,11 @@ The remaining attributes of the download tag.
 
 Note that this means that any unrecognised attributes of the download tag
 itself will become attributes of the A tag.
-<h1><a name="OPTIONS_WHICH_AFFECT_THIS_TAG">OPTIONS WHICH AFFECT THIS TAG</a></h1> <p>
- <code>FileSearchPath</code> - WebMake option<hr />
-<h1>dump_vars.wmk</h1> <ul>
+<p>
+ <hr />
+ <h1><a name="OPTIONS_WHICH_AFFECT_THIS_TAG">OPTIONS WHICH AFFECT THIS TAG</a></h1> <p>
+ <code>FileSearchPath</code> - WebMake option<hr noshade />
+ <h2>dump_vars.wmk</h2> <ul>
  <li>
 <a href="#NAME">NAME</a> <li>
 <a href="#LOADING">LOADING</a> <li>
@@ -5852,8 +6556,221 @@ This content contains a dump of all content items defined, including their
 names and their values. It excludes and .
 
 </dl>
-<hr />
-<h1>safe_tag.wmk</h1> <ul>
+<hr noshade />
+ <h2>navtree.wmk</h2> <ul>
+ <li>
+<a href="#LOADING">LOADING</a> <li>
+<a href="#WEBMAKE_TAGS">WEBMAKE TAGS</a> <li>
+<a href="#DESCRIPTION">DESCRIPTION</a> <li>
+<a href="#ATTRIBUTES">ATTRIBUTES</a> <li>
+<a href="#VARIABLES">VARIABLES</a> <li>
+<a href="#THANKS">THANKS</a> 
+</ul>
+  <hr />
+ <p>
+ <h1><a name="LOADING">LOADING</a></h1> <p>
+ <pre>
+  &lt; use plugin=&quot;navtree&quot; /&gt;
+</pre>
+ <p>
+ <hr />
+ <h1><a name="WEBMAKE_TAGS">WEBMAKE TAGS</a></h1> <p>
+ <pre>
+  &lt; navtree name=... sitemap=...
+        opennode=... closednode=...
+        thisnode=... thisleaf=...
+        leaf=... depth=... /&gt;
+</pre>
+ <p>
+ <hr />
+ <h1><a name="DESCRIPTION">DESCRIPTION</a></h1> <p>
+
+This WebMake plugin provides the <code>navtree</code> tag.
+<p>
+ <code>navtree</code> operates similarly to the <code>sitetree</code> tag, but displays only a subset of all the site's nodes; it will map all of
+the top-level nodes of the site, the parent nodes of the current page,
+their direct children, and the current page plus it's children up to depth <a href="#item_depth">depth</a>. The effect is similar to a tree-view-based file browser, like Windows
+Explorer.
+<p>
+
+This differs from the <code>sitetree</code> tag in that <code>sitetree</code> does not support displaying the current page's children.
+<p>
+
+So, for a site like this:
+<dl>
+ <dt>
+<strong><a name="item__">+ Section 1</a></strong><dd>
+ <dl>
+ <dt>
+<strong>+ Section 1 Subsection 1</strong><dd>
+ <dt>
+<strong>+ Section 1 Subsection 2</strong><dd>
+ 
+</dl>
+ <dt>
+<strong>+ Section 2</strong><dd>
+ <dl>
+ <dt>
+<strong>+ Section 2 Subsection 1</strong><dd>
+ <dt>
+<strong>+ Section 2 Subsection 2</strong><dd>
+ 
+</dl>
+ 
+</dl>
+ <p>
+
+A reference to the site tree on page <code>Section 1</code> would result in a site tree like this:
+<dl>
+ <dt>
+<strong><a name="item__">- Main Page</a></strong><dd>
+ <dl>
+ <dt>
+<strong>- Section 1</strong><dd>
+ <ul>
+ <li>
+<strong><a name="item_Section">Section 1 Subsection 1</a></strong> <li>
+<strong><a name="item_Section">Section 1 Subsection 2</a></strong> 
+</ul>
+ <dt>
+<strong>+ Section 2</strong><dd>
+ 
+</dl>
+ 
+</dl>
+ <p>
+
+Display of each page's entry in the tree is performed by expanding one of
+the 5 template content items named in the tag's attributes: <a href="#item_closednode">closednode</a>,
+<a href="#item_opennode">opennode</a>, <a href="#item_thisnode">thisnode</a>, <a href="#item_thisleaf">thisleaf</a> or <a href="#item_leaf">leaf</a>. See the <a href="#item_sitemap">sitemap</a> tag documentation for more details on how to use these (note however that
+the
+<em>is_node</em> variable is not available for sitetrees).
+<p>
+ <hr />
+ <h1><a name="ATTRIBUTES">ATTRIBUTES</a></h1> <dl>
+ <dt>
+<strong><a name="item_name">name</a></strong><dd>
+ <p>
+
+The name of the sitetree object. To include a sitetree in a page, refer to
+it using this name, as a deferred reference.
+<dt>
+<strong><a name="item_sitemap">sitemap</a></strong><dd>
+ <p>
+
+The name of the sitemap. The sitetree requires a sitemap, as the sitemap is
+responsible for mapping out the site and defining which pages and content
+items are included.
+<dt>
+<strong><a name="item_closednode">closednode</a></strong><dd>
+ <p>
+
+A content item which is evaluated to display a ''closed'' node, ie. a node
+which is not on the path to the current page.
+<dt>
+<strong><a name="item_opennode">opennode</a></strong><dd>
+ <p>
+
+A content item which is evaluated to display an ''open'' node, one which is
+on the path to the current page. As for the <a href="#item_sitemap">sitemap</a> tag's <code>node</code> attribute, this content item must include a reference to the <strong>list</strong> variable, which will contain all the entries for the pages beneath it in
+the hierarchy.
+<dt>
+<strong><a name="item_rootnode">rootnode</a></strong><dd>
+ <p>
+
+A content item which is evaluated to display an ''open'' root node. It
+defaults to <a href="#item_opennode">opennode</a> if not specified. It may be used to generate ''multirooted'' tree (a
+forest). In that case you should create a dummy root content (it upsets
+sitemap code if you dont have one single root) and create <a href="#item_rootnode">rootnode</a> template to output only the list with apropriate decorations.
+<dt>
+<strong><a name="item_thisnode">thisnode</a></strong><dd>
+ <p>
+
+A content item which is evaluated to display the current page if it is an
+inner node, that is it has children. Iff <a href="#item_depth">depth</a> &gt; 0, <a href="#item_thisnode">thisnode</a> must include a reference to the <strong>list</strong> variable.
+<dt>
+<strong><a name="item_thisleaf">thisleaf</a></strong><dd>
+ <p>
+
+A content item which is evaluated to display the current page if it is a
+leaf.
+<dt>
+<strong><a name="item_leaf">leaf</a></strong><dd>
+ <p>
+
+A content item which is evaluated to display a leaf-node page, one which
+has no pages beneath it in the hierarchy.
+<dt>
+<strong><a name="item_depth">depth</a></strong><dd>
+ <p>
+
+How many levels beneath the current page should be listed. 0 means none
+(behavior of <code>sitetree</code> tag). The default is 1 which means to list direct children of the current
+node.
+
+</dl>
+ <p>
+ <hr />
+ <h1><a name="VARIABLES">VARIABLES</a></h1> <p>
+
+Following variables (content items) are defined for use in templates:
+<dl>
+ <dt>
+<strong><a name="item_title">title</a></strong><dd>
+ <p>
+
+The <a href="#item_title">title</a> metadatum of the node.
+<dt>
+<strong><a name="item_score">score</a></strong><dd>
+ <p>
+
+The <a href="#item_score">score</a> metadatum of the node.
+<dt>
+<strong>name</strong><dd>
+ <p>
+
+The name of the node.
+<dt>
+<strong><a name="item_url">url</a></strong><dd>
+ <p>
+
+The url of the node. Should be referenced using url reference (<code>$ (url)</code>).
+<dt>
+<strong><a name="item_level">level</a></strong><dd>
+ <p>
+
+The level of the node, that is how deep it is in the tree. Root node has
+level 0, it's children 1, their children 2 and so on.
+<dt>
+<strong><a name="item_sublvl">sublvl</a></strong><dd>
+ <p>
+
+The level under current page. This is similar to <a href="#item_level">level</a>, except that current page is considered root. -1 for nodes not descendant
+from current page.
+<dt>
+<strong><a name="item_left">left</a></strong><dd>
+ <p>
+
+This is <a href="#item_depth">depth</a> above the current node and <code>depth - sublvl</code> for the descendants of the current node.
+<dt>
+<strong><a name="item_is_leaf">is_leaf</a></strong><dd>
+ <p>
+
+This is 1 for leaf nodes and 0 for inner nodes (both closed and open).
+<dt>
+<strong><a name="item_list">list</a></strong><dd>
+ <p>
+
+This is the list of children, which should be output by open nodes.
+
+</dl>
+ <p>
+ <hr />
+ <h1><a name="THANKS">THANKS</a></h1> <p>
+
+Thanks to Jan Hudec &amp;lt;bulb /at/ ucw.cz&amp;gt;, who provided this
+tag.<hr noshade />
+ <h2>safe_tag.wmk</h2> <ul>
  <li>
 <a href="#LOADING">LOADING</a> <li>
 <a href="#HTML_TAGS">HTML TAGS</a> <li>
@@ -5894,8 +6811,8 @@ names and their values. It excludes and .
 
 This WebMake Perl library provides a way to ``make safe'' WebMake, EtText
 or HTML data, escaping all metacharacters appropriately so that content
-references, EtText links or HTML tags are not interpreted.<hr />
-<h1>sitetree.wmk</h1> <ul>
+references, EtText links or HTML tags are not interpreted.<hr noshade />
+ <h2>sitetree.wmk</h2> <ul>
  <li>
 <a href="#LOADING">LOADING</a> <li>
 <a href="#WEBMAKE_TAGS">WEBMAKE TAGS</a> <li>
@@ -6022,7 +6939,7 @@ has no pages beneath it in the hierarchy.
  <hr />
  <h1><a name="THANKS">THANKS</a></h1> <p>
 
-Thanks go to Alex Canady, who came up with the idea for this one.<hr />
+Thanks go to Alex Canady, who came up with the idea for this one.<hr noshade />
  
 </td>
 </tr>
@@ -6039,13 +6956,13 @@ Thanks go to Alex Canady, who came up with the idea for this one.<hr />
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">
  <div align="right">
 
- [ <a href="safe_tag.wmk.html">Back</a> | <a href="blurb.html">Forward</a> | <a href="index.html">Index</a>
+ [ <a href="safe_tag.wmk.html">Back</a> | <a href="index_01-intro.html">Forward</a> | <a href="index.html">Index</a>
  | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
  
 </div>

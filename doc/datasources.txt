@@ -170,7 +170,7 @@ Notes:
 	- Data sources that support the &lt;contents&gt; tag need to implement
 	  ##get_location_mod_time##. This is used to support dependency
 	  checking, and should return the modification time (in UNIX
-	  ##time()## format) of that location.  Note that since this is used
+	  ##time_t## format) of that location.  Note that since this is used
 	  to compare the modification time of a content chunk from the
 	  previous time webmake was run, and the current modification time,
 	  this is called before the **real** data source is opened.

@@ -51,7 +51,7 @@ content like so: **&wmdollar;&etsqi;&wmdollar;{name}.title&etsqo;** .
 You can also define two more content items to be used at the __top__ of the
 breadcrumb trail, ie. the root page, and at the __tail__ of it, ie. the
 current page being viewed.  These are optional though, and if not specified,
-the above content item will be used.
+the generic content item detailed above will be used as a default.
 
 Then add a **&lt;breadcrumbs&gt;** tag to the WebMake file as follows.
 
@@ -97,8 +97,8 @@ Example
 =======
 
 This will generate an extremely simple set of &lt;a href&gt; links, no frills.
-The sitemap it uses isn't specified here; see the "sitemap documentation"
-[sitemap] for details on doing that.
+The sitemap it uses isn't specified here; see the "sitemap tag documentation"
+[sitemap] for details on how to generate a site map.
 
 <pre>
   &lt;content name=btop map=false&gt;

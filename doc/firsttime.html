@@ -7,7 +7,7 @@
  <title>
 WebMake: Documentation: How to Use WebMake
 </title>
- <meta name="generator" content="WebMake/1.1" />
+ <meta name="generator" content="WebMake/1.2" />
  <style>
 body {
  background-color: #ffffff; 
@@ -24,9 +24,9 @@ code, samp, pre
 {
  font-family: monospace;
 }
-H1 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; }
+H1 { font-size: x-large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFCC66; }
+H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFDD77; }
+H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; background: #FFEE88; }
 H4 { font-size: small; font-family: Garamond,Book Antiqua,Times,serif; }
 H5 { font-size: x-small; font-family: Garamond,Book Antiqua,Times,serif; }
 H6 { font-size: xx-small; font-family: Garamond,Book Antiqua,Times,serif; }
@@ -57,7 +57,7 @@ A:active {
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">
@@ -86,14 +86,12 @@ This document introduces WebMake's way of doing things, and how to go
 about a typical migration.
 
 </p>
- <hr />
- <a name="Place_The__wmk_File"><h3>Place The .wmk File</h3></a> <p>
+ <a name="Place_The_wmk_File"><h3>Place The .wmk File</h3></a> <p>
 First, pick a top-level directory for the site; that's where you'll place your
 <strong>.wmk</strong> file. All the generated files should be beneath this directory. In
 this example I'll call it <strong>index.wmk</strong>.
 
 </p>
- <hr />
  <a name="Make_Templates"><h3>Make Templates</h3></a> <p>
 Next, identify the page templates used in the site. To keep it simple, let's
 imagine you have only one look and feel on the pages, with the usual stuff in
@@ -114,7 +112,7 @@ title as your typical template items.
  <p>
 So edit the <strong>index.wmk</strong> file, and add a template content item, by cutting
 and pasting it from one of your pages. Instead of cutting and pasting the
-<em>real</em> title, use a <a href="wmmeta.html">metadata</a> reference:
+<em>real</em> title, use a <a href="metadata.html">metadata</a> reference:
 <strong>$[this.title]</strong>. Also, replace the text of the page
 with <strong>${page_text}</strong>; the plan is that, before this content item
 will be referenced, this content item will have been set to the text you wish
@@ -134,8 +132,7 @@ to use.
   &lt;/body&gt;&lt;/html&gt;
 &lt;/content&gt;
 </pre>
- <hr />
- <a name="Grab_The_Pages__Text"><h3>Grab The Pages' Text</h3></a> <p>
+ <a name="Grab_The_Pages_Text"><h3>Grab The Pages' Text</h3></a> <p>
 Next, run through the pages you wish to WebMake-ify, and either:
 
 </p>
@@ -187,8 +184,7 @@ around for later, though.
   ....your html here...
 &lt;/content&gt;
 </pre>
- <hr />
- <a name="Convert_To_EtText__OPTIONAL__"><h3>Convert To EtText (OPTIONAL!)</h3></a> <p>
+ <a name="Convert_To_EtText_OPTIONAL"><h3>Convert To EtText (OPTIONAL!)</h3></a> <p>
 Now, one of the best bits of WebMake (in my opinion) is <a href="ettext.html">EtText</a>,
 the built-in simple text markup language; to use this, run the command-line
 tool <em>ethtml2text</em> on each of your HTML files to convert them
@@ -210,7 +206,6 @@ To keep things simple, I'll assume you haven't used EtText in the examples
 from now on.
 
 </p>
- <hr />
  <a name="Add_Titles"><h3>Add Titles</h3></a> <p>
 Next, you need to set the titles in the content items, so that they can be
 used in higher-level templates, such as the <strong>page_template</strong> content item we
@@ -218,16 +213,16 @@ defined earlier.
 
 </p>
  <p>
-To really get some power from WebMake, use <a href="wmmeta.html">metadata</a> to do this.
+To really get some power from WebMake, use <a href="metadata.html">metadata</a> to do this.
 
 </p>
- <blockquote>
  <hr />
+ <blockquote>
  <p>
 <strong>What is Metadata?</strong> 
 </p>
  <p>
-A <em><a href="wmmeta.html">metadatum</a></em> is like a normal content item, except it is exposed to other
+A <em><a href="metadata.html">metadatum</a></em> is like a normal content item, except it is exposed to other
 pages in the <strong>index.wmk</strong> file. Normally, you cannot reliably read a dynamic
 content item that was set from another page; if one content item sets a
 variable like this:
@@ -258,11 +253,11 @@ Think of them as like size, modification time, owner etc. on files; or member
 variables in an object-oriented language.
 
 </p>
- <hr />
  
 </blockquote>
+ <hr />
  <p>
-Anyway, titles of pages are a perfect fit for <a href="wmmeta.html">metadata</a>. So convert your
+Anyway, titles of pages are a perfect fit for <a href="metadata.html">metadata</a>. So convert your
 page titles into &lt;wmmeta&gt; tags like so:
 
 </p>
@@ -270,14 +265,14 @@ page titles into &lt;wmmeta&gt; tags like so:
 </p>
  <pre>
 &lt;content name="document1.txt"&gt;
-  &lt;wmmeta name="title"&gt;Your Title Here&lt;/a&gt;
+  &lt;wmmeta name="title"&gt;Your Title Here&lt;/wmmeta&gt;
   ....your ettext here...
 &lt;/content&gt;
 ...
 </pre>
  <p>
 Sometimes, for example if you plan to generate index pages or a <a href="sitemap.html">sitemap</a> later
-on, you may wish to add a one-line summary of the content item as a <a href="wmmeta.html">metadatum</a>
+on, you may wish to add a one-line summary of the content item as a <a href="metadata.html">metadatum</a>
 called <strong>abstract</strong>. I'll leave it out of the examples, just to keep them
 simple.
 
@@ -287,7 +282,6 @@ Metadata should always be referred to in <strong>$[square
 brackets]</strong>. I'll explain why in the next section.
 
 </p>
- <hr />
  <a name="Naming_The_Output_URLs"><h3>Naming The Output URLs</h3></a> <p>
 Finally, you've assembled all the content items; now to tell WebMake
 where they should go. This is accomplished using the &lt;out&gt; tag.
@@ -380,14 +374,15 @@ BTW: you could simply skip defining this "helper" content item
 </p>
 </blockquote>
  <p>
-But what about the title? Handily, since we defined the titles as <a href="wmmeta.html">metadata</a>,
+But what about the title? Handily, since we defined the titles as <a href="metadata.html">metadata</a>,
 and referred to them as <strong>$[this.title]</strong> in <strong>page_template</strong>,
 this is taken care of; once the <strong>${page_text}</strong> reference is
 expanded, <strong>$[this.title]</strong> will be set.
 
 </p>
- <p>
-Remember I mentioned that <a href="wmmeta.html">metadata</a> should always be referred to in
+ <hr />
+ <a name="What_s_With_the_Square_Brackets"><h3>What's With the Square Brackets?</h3></a> <p>
+Remember I mentioned that <a href="metadata.html">metadata</a> should always be referred to in
 <strong>$[square brackets]</strong>? Here's why. Square bracket
 references, or <a href="deferred_content_refs.html"><em>deferred references</em></a>, are
 evaluated only after <a href="content_refs.html">normal, "squiggly bracket" content references</a>.
@@ -419,9 +414,15 @@ ${page_text}
  
 </ul>
 <p>
-This allows <strong>${page_text}</strong> to be expanded first, which causes
-<strong>this.title</strong> to be set. Finally, <strong>$[this.title]</strong> is
-expanded last.
+Since <strong>${page_text}</strong> is a normal content reference, it will be
+expanded first; and when it's expanded, the &lt;wmmeta&gt; tag setting
+<strong>title</strong> will be encountered. This will cause <strong>this.title</strong> to be set.
+
+</p>
+ <p>
+Once all the normal content references are expanded, WebMake runs through
+the deferred references, causing <strong>$[this.title]</strong> to
+be expanded.
 
 </p>
  <p>
@@ -434,8 +435,7 @@ If <strong>page_template</strong> had used a normal content reference to refer t
 Anyway, I digress.
 
 </p>
- <hr />
- <a name="Writing_The__lt_out_gt__Tags"><h3>Writing The &lt;out&gt; Tags</h3></a> <p>
+ <a name="Writing_The_lt_out_gt_Tags"><h3>Writing The &lt;out&gt; Tags</h3></a> <p>
 Each output URL needs an &lt;out&gt; tag, with a <em>name</em> and a <em>file</em>. The
 <em>name</em> provides a symbolic name which one can use to refer to the URL; the
 <em>file</em> names the file that the output should be written to.
@@ -501,8 +501,7 @@ Let's see how 2. does it:
 Simple.
 
 </p>
- <hr />
- <a name="Putting__lt_out_gt__Names_To_Work"><h3>Putting &lt;out&gt; Names To Work</h3></a> <p>
+ <a name="Putting_lt_out_gt_Names_To_Work"><h3>Putting &lt;out&gt; Names To Work</h3></a> <p>
 So you've named the output URLs. However all your content items contain
 static URLs in the HREFs! Let's fix that.
 
@@ -531,8 +530,7 @@ Now, even if "document1.html" is renamed to "blah/whatever/doc1.cgi", you
 won't have to do a search-and-replace again.
 
 </p>
- <hr />
- <a name="Getting_Advanced_-_Adding_Navigation_and_a_Sitemap"><h3>Getting Advanced - Adding Navigation and a Sitemap</h3></a> <p>
+ <a name="Getting_Advanced_Adding_Navigation_and_a_Sitemap"><h3>Getting Advanced - Adding Navigation and a Sitemap</h3></a> <p>
 This hasn't been written yet. Sorry! (TODO)
 
 </p>
@@ -556,7 +554,7 @@ This hasn't been written yet. Sorry! (TODO)
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">

@@ -2,17 +2,17 @@
 
 package HTML::WebMake::Contents;
 
-require Exporter;
+
 use HTML::WebMake::DataSource;
 use Carp;
 use strict;
 
 use vars	qw{
-  	@ISA @EXPORT
+  	@ISA
 };
 
 @ISA = qw(HTML::WebMake::DataSource);
-@EXPORT = qw();
+
 
 ###########################################################################
 
@@ -41,8 +41,7 @@ sub add_text {
     $self->{main}->add_content ($name, $wmkf, $self->{attrs}, $text);
 
   } else {
-    $self->{main}->add_fileless_content ($name, $text,
-    		$self->{attrs}->{up}, 1);
+    $self->{main}->set_mapped_content ($name, $text, $self->{attrs}->{up});
   }
 }
 

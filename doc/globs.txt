@@ -31,5 +31,7 @@ These are perl-style regular expressions. They are differentiated
 from glob patterns by prefixing them with **RE:**, for example:
 **##RE:^.*\.html&wmdollar;##**.
 
-For more details, check your perl documentation, or search the web.
+An introduction to regular expressions is beyond the scope of this
+documentation.  For more details, check your perl documentation, or search the
+web.
 

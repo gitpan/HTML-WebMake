@@ -2,17 +2,18 @@
 
 package HTML::WebMake::WmkFile;
 
-require Exporter;
+
 use HTML::WebMake::File;
+use HTML::WebMake::MetaTable;
 use Carp;
 use strict;
 
 use vars	qw{
-  	@ISA @EXPORT
+  	@ISA
 };
 
 @ISA = qw(HTML::WebMake::File);
-@EXPORT = qw();
+
 
 ###########################################################################
 
@@ -64,10 +65,11 @@ sub parse {
     1 while s/<\{!--.*?--\}>//gs;	# WebMake comments.
     1 while s/^<!--.*?-->//gs;		# XML-style comments.
 
+
     # Preprocessing.
-    $_ = $util->strip_first_tag ($_, "include",
+    $util->strip_first_tag (\$_, "include",
 				  $self, \&tag_include, qw(file));
-    $_ = $util->strip_first_tag ($_, "use",
+    $util->strip_first_tag (\$_, "use",
 				  $self, \&tag_use, qw(plugin));
 
     $self->{main}->eval_code_at_parse (\$_);
@@ -79,39 +81,39 @@ sub parse {
     if (defined $text) { $lasteval = $text; $lasttag = undef; }
 
     # Declarations.
-    $_ = $util->strip_first_tag ($_, "content",
+    $util->strip_first_tag (\$_, "content",
 				  $self, \&tag_content, qw(name));
-    $_ = $util->strip_first_tag ($_, "contents",
+    $util->strip_first_tag (\$_, "contents",
 				  $self, \&tag_contents, qw(src name));
-    $_ = $util->strip_first_tag ($_, "contenttable",
+    $util->strip_first_tag (\$_, "contenttable",
 				  $self, \&tag_contenttable, qw());
-    $_ = $util->strip_first_tag ($_, "media",
+    $util->strip_first_tag (\$_, "media",
 				  $self, \&tag_media, qw(src name));
-    $_ = $util->strip_first_tag ($_, "metadefault",
+    $util->strip_first_tag (\$_, "metadefault",
 				  $self, \&tag_metadefault, qw(name));
-    $_ = $util->strip_first_tag ($_, "attrdefault",
+    $util->strip_first_tag (\$_, "attrdefault",
 				  $self, \&tag_attrdefault, qw(name));
-    $_ = $util->strip_first_tag ($_, "metatable",
+    $util->strip_first_tag (\$_, "metatable",
 				  $self, \&tag_metatable, qw());
-    $_ = $util->strip_first_tag ($_, "sitemap",
+    $util->strip_first_tag (\$_, "sitemap",
 				  $self, \&tag_sitemap, qw(name node leaf));
-    $_ = $util->strip_first_tag ($_, "navlinks",
+    $util->strip_first_tag (\$_, "navlinks",
 				  $self, \&tag_navlinks,
 				  qw(name map up prev next));
-    $_ = $util->strip_first_tag ($_, "breadcrumbs",
+    $util->strip_first_tag (\$_, "breadcrumbs",
 				  $self, \&tag_breadcrumbs,
 				  qw(name map level));
 
     # Outputs.
-    $_ = $util->strip_first_tag ($_, "for",
+    $util->strip_first_tag (\$_, "for",
 				  $self, \&tag_for, qw(name values));
-    $_ = $util->strip_first_tag ($_, "out",
+    $util->strip_first_tag (\$_, "out",
 				  $self, \&tag_out, qw(file));
 
     # Misc.
-    $_ = $util->strip_first_tag ($_, "cache",
-				  $self, \&tag_cache, qw(file));
-    $_ = $util->strip_first_tag ($_, "option",
+    $util->strip_first_tag (\$_, "cache",
+				  $self, \&tag_cache, qw(dir));
+    $util->strip_first_tag (\$_, "option",
 				  $self, \&tag_option, qw(name value));
 
     $text = $util->{last_tag_text};
@@ -224,8 +226,8 @@ sub tag_cache {
   my ($self, $tag, $attrs, $text) = @_;
 
   $self->subst_attrs ("<cache>", $attrs);
-  my $file = $attrs->{file};
-  $self->{main}->setcachefile ($attrs->{file});
+  my $dir = $attrs->{dir};
+  $self->{main}->setcachefile ($dir);
   "";
 }
 
@@ -327,7 +329,20 @@ sub tag_metatable {
   my ($self, $tag, $attrs, $text) = @_;
 
   $self->subst_attrs ("<metatable>", $attrs);
-  $self->{main}->{metadata}->parse_metatable ($attrs, $text);
+
+  if (defined $attrs->{src}) {
+    my $fname = $attrs->{src};
+    if (open (IN, "<".$fname)) {
+      $text = join ('', <IN>);
+      close IN;
+
+    } else {
+      warn ("<metatable src=\"$attrs->{src}\"> could not be read: $@\n");
+    }
+  }
+
+  my $tbl = new HTML::WebMake::MetaTable ($self->{main});
+  $tbl->parse_metatable ($attrs, $text);
   "";
 }
 
@@ -388,7 +403,7 @@ sub tag_for ($$$$) {
 	@vals = map { eval $namesubst; $_; } @vals;
       }
       if ($#vals < 0) {
-	warn ("<for> tag \"$attrs->{name}\" namesubst failed: $@");
+	warn ("<for> tag \"$attrs->{name}\" namesubst failed: $@\n");
       }
 
     } else {

@@ -14,12 +14,18 @@ called **.vim** in your home directory, copy it there, and add the following
 lines to your **.vimrc**:
 
  au BufNewFile,BufReadPost *.wmk so &wmdollar;HOME/.vim/webmake.vim
- map ,wm :w!&lt;CR&gt;:! ~/ftp/webmake/webmake -R %&lt;CR&gt;
+ map ,wm :w!&lt;CR&gt;:! **/usr/local/bin/webmake** -R %&lt;CR&gt;
 
 	Auto: [vim]: http://www.vim.org/
 
+Change **/usr/local/bin/webmake** to whatever the real path to the ##webmake##
+command is.
+
 Once you do this, the macro sequence **,wm** will cause a rebuild of the site
-which contains the file you're currently editing.
+which contains the file you're currently editing.  In addition, opening a
+file called ##something.wmk## will automatically use WebMake syntax
+highlighting (if you have syntax highlighting enabled in VIM).
+
 
 The Button
 ~~~~~~~~~~

@@ -15,18 +15,24 @@ attribute to this character.
 Next, list a table of content names and their values, separated by a delimiter
 character, one name-value-pair per line.
 
-__Note:__ if you would prefer to load the content items from a separate
-file, the "&lt;contents&gt;" [$(contents)] tag is better suited.
+  __Note:__ if you would prefer to load the content items from a separate
+  file, the "&lt;contents&gt;" [$(contents)] tag is better suited.
+
+  __Another note:__ this is not the way to define data __about__ other content
+  items (in other words, **metadata**), such as titles, authorship, or brief
+  descriptions, as WebMake's built-in metadata support will not be available
+  in that case.  Embedding the metadata into the content item using
+  &lt;wmmeta&gt; tags, or loading them in bulk using &lt;metatable&gt; tags,
+  should be used instead.
 
 Example
 =======
 
 <safe>
   <contenttable delimiter="|">
-  index.title|The index
-  similar.title|Similar Projects
-  administrivia.title|Administrivia
-  reviews.title|Reviews
+  person1|Justin
+  person2|Catherine
+  person3|The cat
   </contenttable>
 </safe>
 

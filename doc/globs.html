@@ -7,7 +7,7 @@
  <title>
 WebMake: Documentation: Globs and Regexps
 </title>
- <meta name="generator" content="WebMake/1.1" />
+ <meta name="generator" content="WebMake/1.2" />
  <style>
 body {
  background-color: #ffffff; 
@@ -24,9 +24,9 @@ code, samp, pre
 {
  font-family: monospace;
 }
-H1 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
-H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; }
+H1 { font-size: x-large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFCC66; }
+H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; background: #FFDD77; }
+H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; background: #FFEE88; }
 H4 { font-size: small; font-family: Garamond,Book Antiqua,Times,serif; }
 H5 { font-size: x-small; font-family: Garamond,Book Antiqua,Times,serif; }
 H6 { font-size: xx-small; font-family: Garamond,Book Antiqua,Times,serif; }
@@ -57,7 +57,7 @@ A:active {
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">
@@ -85,7 +85,7 @@ A number of WebMake parameters and perl APIs support pattern matching.
 This is performed using glob patterns and regular expressions.
 
 </p>
- <a name="Glob_Patterns"><h2>Glob Patterns</h2></a> <p>
+ <a name="Glob_Patterns"><h1>Glob Patterns</h1></a> <p>
 These are more-or-less traditional shell- or MS-DOS-like globs, as follows:
 
 </p>
@@ -127,14 +127,16 @@ This is the default mode of matching. Example globs are:
 <strong>*.html</strong>, <strong>.../*.txt</strong>.
 
 </p>
- <a name="Regular_Expressions"><h2>Regular Expressions</h2></a> <p>
+ <a name="Regular_Expressions"><h1>Regular Expressions</h1></a> <p>
 These are perl-style regular expressions. They are differentiated
 from glob patterns by prefixing them with <strong>RE:</strong>, for example:
 <strong><code>RE:^.*\.html$</code></strong>.
 
 </p>
  <p>
-For more details, check your perl documentation, or search the web.
+An introduction to regular expressions is beyond the scope of this
+documentation. For more details, check your perl documentation, or search the
+web.
 
 </p>
  <p>
@@ -155,7 +157,7 @@ For more details, check your perl documentation, or search the web.
 <tr>
 <td valign="top">
  <strong><a href="http://webmake.taint.org/">WebMake</a>
- Documentation</strong> (version 1.1)
+ Documentation</strong> (version 1.2)
  
 </td>
 <td valign="top">

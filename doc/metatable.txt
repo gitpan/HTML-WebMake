@@ -8,12 +8,18 @@ Attach metadata to another content item
 Metadata is usually embedded inside a content item using the &lt;wmmeta&gt;
 tag.  However, sometimes you may want to tag a content item with metadata from
 outside, if the text of the content is not under your control; or you may want
-to tag metadata to an object that is not even a content item, such as an
-image.
+to tag metadata to an object that is not text-based, such as an image.
 
 The metatable tag allows you to do this, and in bulk.  You list a table of
 content names and the metadata you want to attach to each content item, in
-tab-, comma-, or pipe-separated-value format.
+tab-, comma-, pipe-separated-value, or XML format.
+
+By default, the table is read from between the &lt;metatable&gt; and
+&lt;/metatable&gt; tags.  However, if you set the __src__ attribute,
+the table will be read from the location specified, instead.
+
+Delimiter-Separated-Value Format
+--------------------------------
 
 Firstly, pick a delimiter character, such as ##|##.  Set the __delimiter__
 attribute to this character.
@@ -42,6 +48,26 @@ So, for example, consider this table, from the WebMake documentation:
 
 This will set **Main.pm.title** to **HTML::WebMake::Main**,
 **Main.pm.abstract** to **module documentation**, etc.
+
+XML Format
+----------
+
+The XML block is surrounded with a &lt;metaset&gt; tag, and contains
+&lt;target&gt; blocks naming the content items the enclosed metadata items are
+associated with.
+
+Inside the &lt;target&gt; blocks, &lt;meta&gt; tags name each metadatum, and
+enclose the metadatum's value.
+
+<safe>
+        <metaset>
+          <target id="foo.txt">
+            <meta name="title">
+              This is Foo.txt's title.
+            </meta>
+          </target>
+        </metaset>
+</safe>
 
 Using &lt;metatable&gt; To Tag Non-Content Items
 ------------------------------------------------

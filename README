@@ -20,6 +20,10 @@ plain text (using the Text::EtText module).
 
 WebMake is GNU software -- see the included file "LICENSE" for details.
 
+Name           DSLI  Description                                  Info
+-------------  ----  -------------------------------------------- -----
+HTML::WebMake  RmpO  a simple web site management system          JMASON
+
 ---------------------------------------------------------------------------
 
 INSTALLATION
@@ -38,6 +42,10 @@ Required to support the WebMake HTML cleaner filter, which will clean up
 your HTML for you.  Also provides the HTML::Entities module, required by
 Text::EtText.  So if you don't have this module, you won't be able to have
 your HTML beautified, or use the "text/et" format for content items.
+
+IO::String
+
+Required to use the <{perlout}> tag.
 
 Image::Size
 
@@ -69,6 +77,7 @@ To install the optional modules, do this:
 	install Text::EtText
 	install Image::Size
 	install HTML::Parser
+	install IO::String
 	quit
 
 ---------------------------------------------------------------------------
@@ -88,8 +97,8 @@ If this command fails, you probably do not have Perl installed, or the
 directory it's installed in is not in your PATH.  Check this and try
 again.
 
-Installing Text::EtText, Image::Size and HTML::Parser is a little more
-difficult; it'll depend on which version of Windows Perl you're using.
+Installing Text::EtText, Image::Size, IO::String and HTML::Parser is a little
+more difficult; it'll depend on which version of Windows Perl you're using.
 
 For ActivePerl, the Perl documentation on the "ActiveState website"
 [ActivePerl], provides information on how to use PPM to install Perl
@@ -168,6 +177,7 @@ modules installed:
 	File::Spec
 	Text::EtText	(optional)
 	Image::Size	(optional)
+	IO::String	(optional)
 
 
 

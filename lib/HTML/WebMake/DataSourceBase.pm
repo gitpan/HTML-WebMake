@@ -2,17 +2,17 @@
 
 package HTML::WebMake::DataSourceBase;
 
-require Exporter;
+
 use HTML::WebMake::DataSource;
 use Carp;
 use strict;
 
 use vars	qw{
-  	@ISA @EXPORT
+  	@ISA
 };
 
-@ISA = qw(Exporter);
-@EXPORT = qw();
+
+
 
 ###########################################################################
 

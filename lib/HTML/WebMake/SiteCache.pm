@@ -4,7 +4,7 @@ package HTML::WebMake::SiteCache;
 
 ###########################################################################
 
-require Exporter;
+
 use Carp;
 
 BEGIN { @AnyDBM_File::ISA = qw(DB_File GDBM_File NDBM_File SDBM_File); }
@@ -17,12 +17,14 @@ use strict;
 use HTML::WebMake::Main;
 
 use vars	qw{
-  	@ISA @EXPORT $DB_MODULE
+  	@ISA $DB_MODULE $UNDEF_SYMBOL
 };
 
 @ISA = qw();
-@EXPORT = qw();
+
 $DB_MODULE = undef;
+
+$UNDEF_SYMBOL = '!!UnDeF';
 
 ###########################################################################
 
@@ -134,14 +136,16 @@ sub get_content_deps {
 
 sub get_metadata {
   my ($self, $key) = @_;
-  return $self->{db}{'M#'.$key};
+  my $val = $self->{db}{'M#'.$key};
+  if (defined $val && $val eq $UNDEF_SYMBOL) { return undef; }
+  return $val;
 }
 
 sub put_metadata {
   my ($self, $key, $val) = @_;
-  if (!defined $key || !defined $val) {
-    return;
-  }
+  if (!defined $key) { return; }
+  if (!defined $val) { $val = $UNDEF_SYMBOL; }
+  dbg ("caching metadata '$key' = '$val'");
   $self->{db}{'M#'.$key} = $val;
 }
 

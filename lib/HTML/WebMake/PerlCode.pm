@@ -2,24 +2,18 @@
 
 package HTML::WebMake::PerlCode;
 
-require Exporter;
 use Carp;
 use strict;
-use IO::Handle;
 
 use HTML::WebMake::Main;
 use HTML::WebMake::PerlCodeLibrary;
 
 use vars	qw{
-  	@ISA @EXPORT 
-	$GlobalSelf @PrevSelves %SORT_SUBS $PipeDelimiter
+  	@ISA $CAN_USE_IO_STRING
+	$GlobalSelf @PrevSelves %SORT_SUBS
 };
 
-@ISA = qw(Exporter);
-@EXPORT = qw();
-
-# ho ho, what a kludge
-$PipeDelimiter = '!!!EnDoFwEBmAKEpipEOUtPut!!!';
+@ISA = qw();
 
 ###########################################################################
 
@@ -28,34 +22,40 @@ sub new ($$) {
   $class = ref($class) || $class;
   my ($main) = @_;
 
-  # Open a pipe, set autoflush on for the write 
-  # side and make the read side non-blocking
-  pipe(RP,WP);
-  WP->autoflush(1);
-  # RP->blocking(0);	# not supported on 5.00503 -- use delimiters instead.
-
   my $self = {
     'main'		=> $main,
-    'readpipe'          => *RP,
-    'writepipe'         => *WP
   };
   bless ($self, $class);
   $self;
 }
 
-sub finish {
-  close RP;
-  close WP;
+sub can_use_io_string {
+  if (defined $CAN_USE_IO_STRING) { return $CAN_USE_IO_STRING; }
+
+  $CAN_USE_IO_STRING = 0;
+  eval q{
+    require IO::String; $CAN_USE_IO_STRING = 1; 1;
+  };
+
+  return $CAN_USE_IO_STRING;
+}
+
+sub new_io_string {
+  eval q{
+    return new IO::String ();
+  };
 }
 
 sub dbg { HTML::WebMake::Main::dbg (@_); }
 
 # -------------------------------------------------------------------------
 
-sub interpret { 
-  my ($self, $type, $str) = @_;
+sub interpret {
+  my ($self, $type, $str, $defunderscoreval) = @_;
   my ($ret);
-  local ($_) = '';
+
+  local ($_) = $defunderscoreval;
+  if (!defined ($_)) { $_ = ''; }
 
   if ($self->{main}->{paranoid}) {
     return "\n(Paranoid mode on - perl code evaluation prohibited.)\n";
@@ -68,21 +68,23 @@ sub interpret {
 
   if ($type ne "perlout") {
     $ret = eval 'package main;'.$str;
-  }
-  else {
-    my ($readpipe, $writepipe) = ($self->{readpipe}, $self->{writepipe});
-    local(*STDOUT) = *$writepipe;
 
-    $ret = eval 'package main;'.$str;
+  } else {
+    if (!can_use_io_string()) {
+      warn "<{perlout}> code failed: IO::String module not available\n";
 
-    if (defined($ret)) {
-      print $writepipe "\n".$PipeDelimiter."\n";
-      $ret = '';
-      while (<$readpipe>) {
-	/^${PipeDelimiter}$/o and last;
-	$ret .= $_;
+    } else {
+      my $outhandle = new_io_string();
+
+      $ret = eval 'package main; select $outhandle; '.$str;
+
+      if (defined($ret)) {
+	$ret = ${$outhandle->string_ref()};
+	chomp $ret;
       }
-      chomp $ret;
+
+      select STDOUT;
+      $outhandle = undef;
     }
   }
 

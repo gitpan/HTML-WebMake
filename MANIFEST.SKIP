@@ -26,4 +26,6 @@ t/pod2html.*
 t/log/use.html
 t/log/use_2.html
 doc/PerlCodeLibrary.html
-lib/WebMakeCGI/Edit.pm
+t/log/metacache.html
+t/log/metacache_bar.html
+t/log/metacache_foo.html

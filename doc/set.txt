@@ -10,13 +10,13 @@ Small pieces of content can be set from within other content chunks or
 
 	&lt;{set __name__=''__value__''}&gt;
 
-This can be useful to set headlines or titles, by including a <a
-href=$(set)>&lt;{set}&gt;</a> directive in their text.
+This can be useful to set small chunks of text, by including a <a
+href=$(set)>&lt;{set}&gt;</a> directive in the content item that uses them.
 
-In addition, to insert some text into a template, set the text as
-variables beforehand:
+For example, a common use of &lt;{set}&gt; is to define, ahead of
+time, what text should be inserted into a template:
 
-	&lt;{set body="&wmdollar;{foo.txt}"}&gt;
+	&lt;{set template_body="&wmdollar;{foo.txt}"}&gt;
 	&wmdollar;{bar_template}
 
 Note: Order of Content Reference Processing
@@ -43,9 +43,10 @@ How &lt;{set}&gt; Relates To Meta-data
 The &lt;{set}&gt; directive was implemented before metadata was, and initially
 provided a way to do similar things, such as substitute page titles, etc.
 
-Now, however, it's probably better to use "&lt;wmmeta&gt; tags" [wmmeta] to do
-that kind of content-item metadata, as it means your pages will be able to
-take advantage of new features, like index and site-map generation.
+Now, however, it's probably better to use "&lt;wmmeta&gt; tags" [wmmeta] to
+handle data that is associated with a content-item.  Using &lt;wmmeta&gt; tags
+means your pages will be able to take advantage of new features, like index
+and site-map generation.
 
 The &lt;{set}&gt; directive is retained as a way of quickly setting content
 items from within other content, in case this feature proves useful for other
