@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+ <head>
+ <title>
+WebMake: Documentation: The &lt;wmmeta&gt; Tag
+</title>
+ <meta name="generator" content="WebMake/1.1" />
+ <style>
+body {
+ background-color: #ffffff; 
+ color: #000000; 
+ font-size: medium;
+ font-family: verdana,lucida,helvetica,sans-serif;
+}
+// OL,UL,P,BODY,TD,TR,TH,FORM {
+ // font-family: verdana,lucida,helvetica,sans-serif;
+ // font-size: medium;
+ // color: #000000;
+}
+code, samp, pre
+{
+ font-family: monospace;
+}
+H1 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
+H2 { font-size: large; font-family: Garamond,Book Antiqua,Times,serif; }
+H3 { font-size: medium; font-family: Garamond,Book Antiqua,Times,serif; }
+H4 { font-size: small; font-family: Garamond,Book Antiqua,Times,serif; }
+H5 { font-size: x-small; font-family: Garamond,Book Antiqua,Times,serif; }
+H6 { font-size: xx-small; font-family: Garamond,Book Antiqua,Times,serif; }
+A:link {
+ font-weight: bold;
+ color: #004000;
+ text-decoration: underline; 
+}
+A:visited {
+ font-weight: normal;
+ color: #008000;
+ text-decoration: underline; 
+}
+A:active {
+ font-weight: bold;
+ color: #800000;
+ text-decoration: underline; 
+}
+</style>
+ 
+</head>
+ <body bgcolor="#ffffff" text="#000000" link="#3300cc" vlink="#660066">
+ <font face="lucida,verdana,sans-serif">
+ <div align="center">
+ <img src="images/WebMakeTitle.png" width="500" height="122" />
+</div>
+ <table width="100%">
+<tr>
+<td valign="top">
+ <strong><a href="http://webmake.taint.org/">WebMake</a>
+ Documentation</strong> (version 1.1)
+ 
+</td>
+<td valign="top">
+ <div align="right">
+
+ [ <a href="deferred_content_refs.html">Back</a> | <a href="metadefault.html">Forward</a> | <a href="index.html">Index</a>
+ | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
+ 
+</div>
+ 
+</td>
+</tr>
+</table>
+   <table border="0" cellpadding="0" cellspacing="0" width="100%">
+ <tr>
+<td bgcolor="#aaaaaa">
+ <table border="0" cellspacing="4" cellpadding="4" width="100%">
+ <tr>
+<td bgcolor="#ffffff">
+ <table border="0" cellspacing="4" cellpadding="4" width="100%">
+ <tr>
+<td>
+ <h1>The &lt;wmmeta&gt; Tag</h1><p>
+WebMake can load <a href="wmmeta.html">metadata</a> embedded in any content chunk, and use this <a href="wmmeta.html">metadata</a>
+at any point in the site. In addition, <a href="wmmeta.html">metadata</a> can be set externally from
+the content using the <a href="metatable.html">&lt;metatable&gt;</a> and
+<a href="metadefault.html">&lt;metadefault&gt;</a> tags.
+
+</p>
+ <p>
+A <em>metadatum</em> is like a normal content item, except it is exposed to other
+pages in the <strong>index.wmk</strong> file. Normally, you cannot reliably read a dynamic
+content item that was set from another page; if one content item sets a
+variable like this:
+
+</p>
+ 
+</p>
+ <pre>
+&lt;{set foo="Value!"}&gt;
+</pre>
+ <p>
+Any content items evaluated after that variable is set can access
+<strong>${foo}</strong>, <em>as long as they occur on the same output page</em>.
+However if they occur on another output page, they may not be able to access
+<strong>${foo}</strong>.
+
+</p>
+ <p>
+To get around this, WebMake includes the <strong>&lt;wmmeta></strong> tag, which allows you
+to attach data to a content item. This data will then be accessible, both to
+other pages in the site (as
+<strong>$[<em>contentname</em>.<em>metaname</em>]</strong>), and to other content
+items within the same page (as <strong>$[this.<em>metaname</em>]</strong>).
+
+</p>
+ <p>
+Think of them as like size, modification time, owner etc. on files; or member
+variables in an object-oriented language. Another good way to think of it is
+as "catalog data", as opposed to "narrative data", which is what a normal
+content item is. (thanks to Vaibhav Arya, vaibhav /at/ mymcomm.com, for that
+analogy.)
+
+</p>
+ <p>
+Examples of <a href="wmmeta.html">metadata</a> that can be useful, and suggested names for that data,
+are as follows:
+
+</p>
+ <dl>
+<dt>
+<em>Title</em>
+</dt>
+<dd>
+<p>
+the title of a content item. The default title for
+ content items is <em>(Untitled)</em>. (built-in)
+
+</p>
+</dd>
+ <dt>
+<em>Score</em>
+</dt>
+<dd>
+<p>
+a number representing the "priority" of a content
+ item; used to affect how the item should be ranked in a list of
+ stories. The default value is <em>50</em>. (built-in)
+
+</p>
+</dd>
+ <dt>
+<em>Abstract</em>
+</dt>
+<dd>
+<p>
+a short summary of a content item. (optional)
+
+</p>
+</dd>
+ <dt>
+<em>Up</em>
+</dt>
+<dd>
+<p>
+used to map the site's content; this <a href="wmmeta.html">metadata</a> indicates the
+ content item that is the parent of the current content item. This
+ metadatum is used to generate dynamic sitemaps. (built-in)
+
+</p>
+</dd>
+ 
+</dl>
+<p>
+Here's some built-in "magic" items of <a href="wmmeta.html">metadata</a> that do not need to be tagged
+with the &lt;wmmeta&gt; tag. Instead, they are automatically inferred by
+WebMake itself:
+
+</p>
+ <dl>
+<dt>
+<em>declared</em>
+</dt>
+<dd>
+<p>
+the item's declaration order. This is a number
+ representing when the content item was first encountered in the
+ WebMake file; earlier content items have a lower declaration order.
+ Useful for sorting.
+
+</p>
+</dd>
+ <dt>
+<em>url</em>
+</dt>
+<dd>
+<p>
+the first &lt;out&gt; URL which contains that content
+ item (you should order your &lt;out&gt; tags to ensure each stories'
+ "primary" page is listed first, or set <em>ismainurl=false</em> on the
+ "alternative" output pages, if you plan to use this). See also the
+ <strong>get_url()</strong> method on the <a href="Content.pm.html">HTML::WebMake::Content</a> object.
+
+</p>
+</dd>
+ <dt>
+<em>is_generated</em>
+</dt>
+<dd>
+<p>
+0 for items loaded from a &lt;content&gt; or
+ &lt;contents&gt; tag, 1 for items created by Perl code using the
+ <em>add_content()</em> function.
+
+</p>
+</dd>
+ <dt>
+<em>mtime</em>
+</dt>
+<dd>
+<p>
+The modification date, in UNIX time_t
+ seconds-since-the-epoch format, of the file the content item was
+ loaded from. Handy for sorting.
+
+</p>
+</dd>
+ 
+</dl>
+<p>
+More suggested meta tags, and their formats, are listed at the end of this
+document.
+
+</p>
+ <p>
+Note that content items representing <a href="wmmeta.html">metadata</a> cannot, themselves, have
+<a href="wmmeta.html">metadata</a>.
+
+</p>
+ <a name="How_to_Use_It"><h3>How to Use It</h3></a> <p>
+Meta-data is set from within a content chunk using the <em>&lt;wmmeta&gt;</em> tag;
+this tag is automatically stripped from the content when the content is
+referenced. It can be used either as an XML-style empty tag, similar to the
+HTML &lt;meta&gt; tag, if it ends in <em>/&gt;</em>:
+
+</p>
+ <p>
+<pre>
+
+  &lt;wmmeta name="Title" value="Story 1, blah blah" /&gt;
+</pre>
+ 
+</p>
+ <p>
+or with start and end tags, for longer bits of content:
+
+</p>
+ <p>
+<pre>
+
+  &lt;wmmeta name="Abstract"&gt;
+    Story 1, just another story.
+  &lt;/wmmeta&gt;
+</pre>
+ 
+</p>
+ <p>
+As you can see, each item of <a href="wmmeta.html">metadata</a> needs a <em>name</em> and a <em>value</em>. The
+latter format reads the <em>value</em> from the text between the start and end tags.
+
+</p>
+ <p>
+For efficiency during subsequent site builds, <a href="wmmeta.html">metadata</a> is cached in the site
+cache file, so it will not need to be re-read from the original content chunk
+unless that content chunk is modified again.
+
+</p>
+ <p>
+Meta tag names are case-insensitive, for compatibility with HTML meta tags.
+
+</p>
+ <a name="Referring_to_Metadata"><h3>Referring to Metadata</h3></a> <p>
+Metadata is referred to using the <a href="deferred_content_refs.html">deferred content ref</a> format:
+
+</p>
+ <blockquote>
+<p>
+$[<em>content</em>.<em>metaname</em>]
+
+</p>
+</blockquote>
+ <p>
+Where <em>content</em> is the name of the content item, and <em>metaname</em> is the
+name of the metadatum. So, for example, <em>$[blurb.txt.title]</em>
+would return the <em>title</em> metadatum from the content item <em>blurb.txt</em>.
+
+</p>
+ <p>
+Any content chunk can access <a href="wmmeta.html">metadata</a> from other content chunks within the
+same <a href="out.html">&lt;out&gt;</a> tag, using <strong>this</strong> as the <em>content</em> name, i.e.
+<em>$[this.title]</em> . This is handy, for example, in setting the
+page title in the main content chunk, and accessing it from the header chunk.
+
+</p>
+ <p>
+If more than one content item sets the same item of <a href="wmmeta.html">metadata</a> inside the
+<a href="out.html">&lt;out&gt;</a> tag, the first one will take precedence.
+
+</p>
+ <p>
+The example files "news_site.wmk" and "news_site_with_sections.wmk"
+demonstrate how meta tags can be used to generate a SlashDot or Wired
+News-style news site. The index pages in those sites are generated
+dynamically, using the <a href="wmmeta.html">metadata</a> to decide which pages to link to, their
+ordering, and the titles and abstracts to use.
+
+</p>
+ <a name="Suggested_Metadata_Names"><h3>Suggested Metadata Names</h3></a> <p>
+The tags marked <em>(built-in)</em> are supported directly inside WebMake, and used
+internally for functionality like building site maps and indices. All the
+other suggested <a href="wmmeta.html">metadata</a> names here are just that, suggestions, which support
+commonly-required functionality.
+
+</p>
+ <p>
+Also note that tag names are case-insensitive, they're just capitalised here
+for presentation.
+
+</p>
+ <dl>
+<dt>
+<em>Title</em>
+</dt>
+<dd>
+<p>
+the title of a content item. The default title for
+ content items is <em>(Untitled)</em>. (built-in)
+
+</p>
+</dd>
+ <dt>
+<em>Score</em>
+</dt>
+<dd>
+<p>
+a number representing the "priority" of a content
+ item; used to affect how the item should be ranked in a list of
+ stories. The default value is <em>50</em>. Items with the same score will
+ be ranked alphabetically by title. (built-in)
+
+</p>
+</dd>
+ <dt>
+<em>Abstract</em>
+</dt>
+<dd>
+<p>
+a short summary of a content item.
+
+</p>
+</dd>
+ <dt>
+<em>Section</em>
+</dt>
+<dd>
+<p>
+the section of a site under which a story should be
+ filed.
+
+</p>
+</dd>
+ <dt>
+<em>Author</em>
+</dt>
+<dd>
+<p>
+who wrote the item. 
+
+</p>
+</dd>
+ <dt>
+<em>Approved</em>
+</dt>
+<dd>
+<p>
+has this item been approved by an editor; used to
+ support workflow, so that content items need to be approved before
+ they are displayed on the site. 
+
+</p>
+</dd>
+ <dt>
+<em>Visible_Start</em>
+</dt>
+<dd>
+<p>
+the start of an item's "visibility window",
+ ie. when it is listed on an index page. (TODO: define a recommended
+ format for this, or replace with DC.Coverage.temporal)
+
+</p>
+</dd>
+ <dt>
+<em>Visible_End</em>
+</dt>
+<dd>
+<p>
+the end of an item's "visibility window",
+ ie. when it is listed on an index page.
+
+</p>
+</dd>
+ <dt>
+<em>DC.Publisher</em>
+</dt>
+<dd>
+<p>
+a <a href="http://www.ietf.org/rfc/rfc2413.txt">Dublin Core</a> tag. The organisation or
+ individual that publishes the entire site.
+
+</p>
+</dd>
+ 
+</dl>
+<p>
+The <a href="http://www.ietf.org/rfc/rfc2413.txt">Dublin Core</a> is a whole load of suggested <a href="wmmeta.html">metadata</a> names and formats,
+which can be used either to replace or supplement the optional tags named
+above. Regardless of whether you replace or supplement the tags above
+internally, it is definitely recommended to use the DC tag names for <a href="wmmeta.html">metadata</a>
+that's made visible in the output HTML through conventional HTML &lt;meta&gt;
+tags.
+
+</p>
+ <a name="Why_Use_Metadata"><h3>Why Use Metadata</h3></a> <p>
+Support for <a href="wmmeta.html">metadata</a> is an important CMS feature.
+
+</p>
+ <p>
+It is used by <a href="http://www.midgard-project.org/manual/contentmgmt.topic-trees.html">Midgard</a> and Microsoft's <a href="http://www.microsoft.com/technet/ecommerce/contmgt.asp">SiteServer</a>, and is available as
+<a href="http://zelotes.ent.iastate.edu/metadata/">user-contributed code</a> for <a href="http://manila.userland.com/">Manila</a>. It provides copious benefits
+for flexible index and <a href="sitemap.html">sitemap</a> generation, and, with the addition of an
+<em>Approved</em> tag, adds initial support for workflow.
+
+</p>
+ <p>
+It allows the efficient generation of <a href="sitemap.html">site maps</a>, <a href="navlinks.html">back/forward
+navigation links</a>, and <a href="breadcrumbs.html">breadcrumb trails</a>, and
+enables index pages to be generated using Perl code easily and in a
+well-defined way.
+
+</p>
+ <a name="Example"><h1>Example</h1></a> <p>
+<pre>
+
+  &lt;content name="foo"&gt;
+    &lt; wmmeta name="Title" value="Foo" /&gt;
+    &lt; wmmeta name="Abstract"&gt;
+      Foo is all about fooing.
+    &lt;/ wmmeta&gt;
+
+    Foo foo foo foo bar. etc.
+  &lt;/content&gt;
+</pre>
+ 
+</p>
+ 
+</p>
+</td>
+</tr>
+</table>
+ 
+</td>
+</tr>
+</table>
+ 
+</td>
+</tr>
+</table>
+ <table width="100%">
+<tr>
+<td valign="top">
+ <strong><a href="http://webmake.taint.org/">WebMake</a>
+ Documentation</strong> (version 1.1)
+ 
+</td>
+<td valign="top">
+ <div align="right">
+
+ [ <a href="deferred_content_refs.html">Back</a> | <a href="metadefault.html">Forward</a> | <a href="index.html">Index</a>
+ | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
+ 
+</div>
+ 
+</td>
+</tr>
+</table>
+ <div align="right">
+ <a href="http://webmake.taint.org/"> <img src="images/BuiltWithWebMake.png" border="0" width="88" height="31" /></a> 
+</div>
+ 
+</font>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<wmmeta name="Title" value="The Order of Processing" />
+<wmmeta name="Section" value="03-proc_logic" />
+<wmmeta name="Score" value="10" />
+<wmmeta name="Abstract">
+the order of processing
+</wmmeta>
+
+In order to fully control the WebMake file processing using Perl code, it's
+important to know the order in which the tags and so on are parsed.
+
+Initially, WebMake used a set order of tag parsing, but this proved to be
+unwieldy and confusing.  Now, it uses the order in which the tags are defined
+in the .wmk file, so if you want tag A to be interpreted before tag B, put A
+before B and the right thing will happen.
+
+Once the file is fully parsed, the <a href=$(out)>&lt;out&gt;</a> tags are
+processed, one by one.  At this point, <a href=$(set)>&lt;{set}&gt;</a> and <a
+href=$(perl)>&lt;{perl}&gt;</a> processing directives will be interpreted, if
+they are found within content chunks.
+

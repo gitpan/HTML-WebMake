@@ -1,0 +1,230 @@
+<wmmeta name="Title" value="The &lt;wmmeta&gt; Tag" />
+<wmmeta name="Section" value="05-meta" />
+<wmmeta name="Score" value="10" />
+<wmmeta name="Abstract">
+meta-data for content items, and how to use it
+</wmmeta>
+
+WebMake can load metadata embedded in any content chunk, and use this metadata
+at any point in the site.  In addition, metadata can be set externally from
+the content using the "&lt;metatable&gt;" [metatable] and
+"&lt;metadefault&gt;" [metadefault] tags.
+
+	Auto: [metadefault]: $(metadefault)
+	Auto: [metatable]: $(metatable)
+
+A __metadatum__ is like a normal content item, except it is exposed to other
+pages in the **index.wmk** file.  Normally, you cannot reliably read a dynamic
+content item that was set from another page; if one content item sets a
+variable like this:
+
+:: &lt;{set foo=''Value!''}&gt;
+
+Any content items evaluated after that variable is set can access
+**&wmdollar;{foo}**, __as long as they occur on the same output page__.
+However if they occur on another output page, they may not be able to access
+**&wmdollar;{foo}**.
+
+To get around this, WebMake includes the **&lt;wmmeta>** tag, which allows you
+to attach data to a content item.  This data will then be accessible, both to
+other pages in the site (as
+**&wmdollar;&etsqi;__contentname__.__metaname__]**), and to other content
+items within the same page (as **&wmdollar;&etsqi;this.__metaname__]**).
+
+Think of them as like size, modification time, owner etc. on files; or member
+variables in an object-oriented language.  Another good way to think of it is
+as ''catalog data'', as opposed to ''narrative data'', which is what a normal
+content item is.  (thanks to Vaibhav Arya, vaibhav /at/ mymcomm.com, for that
+analogy.)
+
+Examples of metadata that can be useful, and suggested names for that data,
+are as follows:
+
+	__Title__:	the title of a content item. The default title for
+	content items is __(Untitled)__. (built-in)
+
+	__Score__:	a number representing the ''priority'' of a content
+	item; used to affect how the item should be ranked in a list of
+	stories.  The default value is __50__.  (built-in)
+
+	__Abstract__:	a short summary of a content item. (optional)
+
+	__Up__:	used to map the site's content; this metadata indicates the
+	content item that is the parent of the current content item. This
+	metadatum is used to generate dynamic sitemaps.  (built-in)
+
+Here's some built-in ''magic'' items of metadata that do not need to be tagged
+with the &lt;wmmeta&gt; tag.  Instead, they are automatically inferred by
+WebMake itself:
+
+	__declared__:	the item's declaration order.  This is a number
+	representing when the content item was first encountered in the
+	WebMake file; earlier content items have a lower declaration order.
+	Useful for sorting.
+
+	__url__:	the first &lt;out&gt; URL which contains that content
+	item (you should order your &lt;out&gt; tags to ensure each stories'
+	''primary'' page is listed first, or set __ismainurl=false__ on the
+	''alternative'' output pages, if you plan to use this).  See also the
+	**get_url()** method on the "HTML::WebMake::Content" [contobj] object.
+
+		[contobj]: $(Content.pm.html)
+
+	__is_generated__:	0 for items loaded from a &lt;content&gt; or
+	&lt;contents&gt; tag, 1 for items created by Perl code using the
+	__add_content()__ function.
+
+	__mtime__:	The modification date, in UNIX time_t
+	seconds-since-the-epoch format, of the file the content item was
+	loaded from. Handy for sorting.
+
+More suggested meta tags, and their formats, are listed at the end of this
+document.
+
+Note that content items representing metadata cannot, themselves, have
+metadata.
+
+How to Use It
+~~~~~~~~~~~~~
+
+Meta-data is set from within a content chunk using the __&lt;wmmeta&gt;__ tag;
+this tag is automatically stripped from the content when the content is
+referenced.  It can be used either as an XML-style empty tag, similar to the
+HTML &lt;meta&gt; tag, if it ends in __/&gt;__:
+
+<pre>
+  &lt;wmmeta name="Title" value="Story 1, blah blah" /&gt;
+</pre>
+
+or with start and end tags, for longer bits of content:
+
+<pre>
+  &lt;wmmeta name="Abstract"&gt;
+    Story 1, just another story.
+  &lt;/wmmeta&gt;
+</pre>
+
+As you can see, each item of metadata needs a __name__ and a __value__. The
+latter format reads the __value__ from the text between the start and end tags.
+
+For efficiency during subsequent site builds, metadata is cached in the site
+cache file, so it will not need to be re-read from the original content chunk
+unless that content chunk is modified again.
+
+Meta tag names are case-insensitive, for compatibility with HTML meta tags.
+
+Referring to Metadata
+~~~~~~~~~~~~~~~~~~~~~
+
+Metadata is referred to using the "deferred content ref"
+[deferred_content_refs] format:
+
+  &wmdollar;&etsqi;__content__.__metaname__]
+
+Where __content__ is the name of the content item, and __metaname__ is the
+name of the metadatum.  So, for example, __&wmdollar;&etsqi;blurb.txt.title]__
+would return the __title__ metadatum from the content item __blurb.txt__.
+
+Any content chunk can access metadata from other content chunks within the
+same "&lt;out&gt;" [out_tag] tag, using **this** as the __content__ name, i.e.
+__&wmdollar;&etsqi;this.title]__ .  This is handy, for example, in setting the
+page title in the main content chunk, and accessing it from the header chunk.
+
+If more than one content item sets the same item of metadata inside the
+"&lt;out&gt;" [out_tag] tag, the first one will take precedence.
+
+  Auto: [out_tag]: $(out)
+
+The example files ''news_site.wmk'' and ''news_site_with_sections.wmk''
+demonstrate how meta tags can be used to generate a SlashDot or Wired
+News-style news site.  The index pages in those sites are generated
+dynamically, using the metadata to decide which pages to link to, their
+ordering, and the titles and abstracts to use.
+
+Suggested Metadata Names
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The tags marked __(built-in)__ are supported directly inside WebMake, and used
+internally for functionality like building site maps and indices.  All the
+other suggested metadata names here are just that, suggestions, which support
+commonly-required functionality.
+
+Also note that tag names are case-insensitive, they're just capitalised here
+for presentation.
+
+  __Title__:	the title of a content item. The default title for
+  content items is __(Untitled)__. (built-in)
+
+  __Score__:	a number representing the ''priority'' of a content
+  item; used to affect how the item should be ranked in a list of
+  stories.  The default value is __50__.  Items with the same score will
+  be ranked alphabetically by title. (built-in)
+
+  __Abstract__:	a short summary of a content item.
+
+  __Section__:	the section of a site under which a story should be
+  filed.
+
+  __Author__:		who wrote the item. 
+
+  __Approved__:	has this item been approved by an editor; used to
+  support workflow, so that content items need to be approved before
+  they are displayed on the site. 
+
+  __Visible_Start__:	the start of an item's ''visibility window'',
+  ie. when it is listed on an index page. (TODO: define a recommended
+  format for this, or replace with DC.Coverage.temporal)
+
+  __Visible_End__:	the end of an item's ''visibility window'',
+  ie. when it is listed on an index page.
+
+  __DC.Publisher__:	a "Dublin Core" tag.  The organisation or
+  individual that publishes the entire site.
+
+The "Dublin Core" is a whole load of suggested metadata names and formats,
+which can be used either to replace or supplement the optional tags named
+above.  Regardless of whether you replace or supplement the tags above
+internally, it is definitely recommended to use the DC tag names for metadata
+that's made visible in the output HTML through conventional HTML &lt;meta&gt;
+tags.
+
+  Auto: [Dublin Core]: http://www.ietf.org/rfc/rfc2413.txt
+
+  Auto: [deferred_content_refs]: $(deferred_content_refs)
+
+Why Use Metadata
+~~~~~~~~~~~~~~~~
+
+Support for metadata is an important CMS feature.
+
+It is used by "Midgard" and Microsoft's "SiteServer", and is available as
+"user-contributed code" [mpatch] for "Manila".  It provides copious benefits
+for flexible index and sitemap generation, and, with the addition of an
+__Approved__ tag, adds initial support for workflow.
+
+It allows the efficient generation of "site maps" [sitemap], "back/forward
+navigation links" [navlinks], and "breadcrumb trails" [breadcrumbs], and
+enables index pages to be generated using Perl code easily and in a
+well-defined way.
+
+  [Midgard]: http://www.midgard-project.org/manual/contentmgmt.topic-trees.html
+  [SiteServer]: http://www.microsoft.com/technet/ecommerce/contmgt.asp
+  Auto: [Manila]: http://manila.userland.com/
+  [mpatch]: http://zelotes.ent.iastate.edu/metadata/
+  Auto: [navlinks]: $(navlinks)
+  Auto: [breadcrumbs]: $(breadcrumbs)
+  [sitemap]: $(sitemap)
+
+Example
+=======
+
+<safe>
+  <content name="foo">
+    < wmmeta name="Title" value="Foo" />
+    < wmmeta name="Abstract">
+      Foo is all about fooing.
+    </ wmmeta>
+
+    Foo foo foo foo bar. etc.
+  </content>
+</safe>

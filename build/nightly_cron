@@ -1,0 +1,8 @@
+#!/bin/sh
+
+cd /home/jm/ftp/webmake
+
+(
+  ./build/update_devel 
+  $HOME/lib/html_webmake_put.rsync
+) > cron.log 2>&1

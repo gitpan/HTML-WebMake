@@ -1,0 +1,50 @@
+<wmmeta name="Title" value="The &lt;metadefault&gt; Tag" />
+<wmmeta name="Section" value="05-meta" />
+<wmmeta name="Score" value="40" />
+<wmmeta name="Abstract">
+Specify default metadata to attach to content
+</wmmeta>
+
+Metadata is usually embedded inside a content item using the &lt;wmmeta&gt;
+tag.  However, this can be a chore for lots of content items, so to make
+things easier, you can specify a default metadata using the
+&lt;metadefault&gt; tag.
+
+Specify this tag before the content items in question, and those content items
+will all be tagged with the metadata you set.
+
+Like the attrdefault [attrdefault] tag, this tag can be used either in a
+__scoped__ mode, or in a __command__ mode.
+
+        [attrdefault]: $(attrdefault)
+
+Scoped Mode
+~~~~~~~~~~~
+
+''Scoped'' mode uses opening (**&lt;metadefault&gt;**) and closing
+(**&lt;/metadefault&gt;**) tags; the metadata is only set on content items
+between the two tags.
+
+  __Note!__ one warning about ''scoped'' mode: note that WebMake does not use
+  a fully-correct XML parser to parse the XML in the .wmk file, so if you nest
+  &lt;metadefault&gt; tags, it will not correctly parse them; instead, the
+  first closing **&lt;/metadefault&gt;** tag found will be used.
+
+Command Mode
+~~~~~~~~~~~~
+
+Command mode uses standalone tags (**&lt;metadefault ... /&gt;**); the
+metadata are set until the end of the WebMake file, or until you change
+them with another &lt;metadefault&gt; tag.
+
+Attributes
+==========
+
+	__name__:	the metadatum's name, e.g. __Title__, __Section__,
+	etc.  This is required.
+
+	__value__:	the metadatum's value.  This is optional.  If the
+	value is not specified, the metadatum will be removed from the list of
+	default metadata.
+
+

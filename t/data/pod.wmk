@@ -1,0 +1,27 @@
+
+<content name=foo format="text/pod">
+
+=head1 NAME
+
+Blah foo etc.
+
+=head1 DESCRIPTION
+
+argh etc.
+
+</content>
+
+<content name=bar format="text/pod" podargs="--noindex">
+
+=head1 BAR_NAME
+
+Blah bar etc.
+
+=head1 BAR_DESCRIPTION
+
+argh etc.
+
+</content>
+
+<out file=log/pod.html>${foo}${bar}</out>
+
