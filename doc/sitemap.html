@@ -7,7 +7,7 @@
     <title>
       WebMake: Documentation: The &lt;sitemap&gt; Tag
     </title>
-    <meta name="generator" content="WebMake/2.1" />
+    <meta name="generator" content="WebMake/2.2" />
     <style>
       body {
        background-color: #ffffff; 
@@ -58,7 +58,7 @@
         <tr>
           <td valign="top">
             <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
@@ -83,7 +83,7 @@
                     <tr>
                       <td>
                         <h1>The &lt;sitemap&gt; Tag</h1><p>
-                          The &lt;<a href="sitemap.html">sitemap</a>&gt; tag is used to generate a content item containing a map,
+                          The &lt;sitemap&gt; tag is used to generate a content item containing a map,
                           in a tree structure, of the current site.
                           
                         </p>
@@ -114,16 +114,16 @@
                         </p>
                         <blockquote>
                           <p>
-                            <em>Note:</em> if you wish to include external HTML pages into the <a href="sitemap.html">sitemap</a>, you
+                            <em>Note:</em> if you wish to include external HTML pages into the sitemap, you
                              will need to load them as URL references using the &lt;media&gt; tag and use
-                             the &lt;<a href="metatable.html">metatable</a>&gt; tag to associate <a href="metadata.html">metadata</a> with them.
+                             the &lt;metatable&gt; tag to associate <a href="metadata.html">metadata</a> with them.
                              <em>t/data/sitemap_with_metatable.wmk</em> in the WebMake test suite demonstrates
                              this. This needs more documentation (TODO).
                             
                           </p>
                         </blockquote>
                         <p>
-                          The &lt;<a href="sitemap.html">sitemap</a>&gt; tag takes the following required attributes:
+                          The &lt;sitemap&gt; tag takes the following required attributes:
                           
                         </p>
                         <dl>
@@ -132,7 +132,7 @@
                           </dt>
                           <dd>
                             <p>
-                              The name of the <a href="sitemap.html">sitemap</a> item, used to refer to it
+                              The name of the sitemap item, used to refer to it
                                later. Sitemaps are referred to, in other content items or in out
                                files, using the normal ${foo} style of <a href="content.html">content reference</a>.
                               
@@ -143,7 +143,7 @@
                           </dt>
                           <dd>
                             <p>
-                              The name of the content item to evaluate for each
+                              The name of the template item to evaluate for each
                                node with children in the tree. See <strong>Processing</strong>, below.
                               
                             </p>
@@ -153,7 +153,7 @@
                           </dt>
                           <dd>
                             <p>
-                              The name of the content item to evaluate for each leaf
+                              The name of the template item to evaluate for each leaf
                                node, ie. a node with no children, in the tree. See <strong>Processing</strong>,
                                below.
                               
@@ -192,7 +192,7 @@
                           </dt>
                           <dd>
                             <p>
-                              The name of the content item to evaluate for
+                              The name of the template item to evaluate for
                                dynamic content items, required if the <em>all</em> attribute is set
                                to <strong>true</strong>.
                               
@@ -225,18 +225,18 @@
                           
                         </p>
                         <p>
-                          The <a href="sitemap.html">sitemap</a> can be declared either as an empty element, with <strong>/&gt;</strong> at the
+                          The sitemap can be declared either as an empty element, with <strong>/&gt;</strong> at the
                           end, or with a pair of starting and ending tags and text between. If the
-                          <a href="sitemap.html">sitemap</a> is declared using the latter style, any text between the tags will be
+                          sitemap is declared using the latter style, any text between the tags will be
                           prepended to the generated site map. It's typically only useful if you wish
                           to set <a href="metadata.html">metadata</a> on the map itself.
                           
                         </p>
                         <a name="Processing"><h1>Processing</h1></a><p>
-                          Here's the key to <a href="sitemap.html">sitemap</a> generation. Once the internal tree structure of the
+                          Here's the key to sitemap generation. Once the internal tree structure of the
                           site has been determined, WebMake will run through each node from the root
                           down up to 20 levels deep, and for each node, evaluate one of the 3 content
-                          items named in the &lt;<a href="sitemap.html">sitemap</a>&gt; tag's attributes:
+                          items named in the &lt;sitemap&gt; tag's attributes:
                           
                         </p>
                         <ol>
@@ -262,7 +262,9 @@
                         </ol>
                         <p>
                           By changing the template content items you name in the tag's attributes, you
-                          have total control over the way the <a href="sitemap.html">sitemap</a> is rendered.
+                          have total control over the way the sitemap is rendered. For efficiency,
+                          these should be declared using the &lt;template&gt; tag instead of the
+                          &lt;content&gt; tag.
                           
                         </p>
                         <p>
@@ -344,7 +346,7 @@
                           
                         </p>
                         <p>
-                          The "grep" code is evaluated once for every node in the <a href="sitemap.html">sitemap</a>, and <code>$_</code>
+                          The "grep" code is evaluated once for every node in the sitemap, and <code>$_</code>
                           is the name of that node; you can then decide to display/not display it, as
                           follows.
                           
@@ -361,14 +363,14 @@
                           
                         </p>
                         <p>
-                          Firstly, two content items are necessary -- a template for a <a href="sitemap.html">sitemap</a> node, and
+                          Firstly, two content items are necessary -- a template for a sitemap node, and
                           a template for a leaf. Note the use of <strong>$(url)</strong>,
-                          <strong>${title}</strong>, etc., which are filled in by the <a href="sitemap.html">sitemap</a> code.
+                          <strong>${title}</strong>, etc., which are filled in by the sitemap code.
                           
                         </p>
                         <p>
                           <pre>
-                          
+
 	&lt;content name=sitemapnode map=false&gt;
 	  &lt;li&gt;
 	    &lt;a href=$(url)&gt;${title}&lt;/a&gt;: $[${name}.abstract]&lt;br&gt;
@@ -385,7 +387,7 @@
                       </p>
                       <p>
                         <pre>
-                        
+
 	&lt;content name=sitemapleaf map=false&gt;
 	  &lt;li&gt;
 	    &lt;a href=$(url)&gt;${title}&lt;/a&gt;: $[${name}.abstract]&lt;br&gt;
@@ -395,23 +397,23 @@
                       </pre>
                     </p>
                     <p>
-                      Finally, the <a href="sitemap.html">sitemap</a> itself is declared.
+                      Finally, the sitemap itself is declared.
                       
                     </p>
                     <p>
                       <pre>
-                      
+
 	&lt;sitemap name=mainsitemap node=sitemapnode leaf=sitemapleaf /&gt;
                     </pre>
                   </p>
                   <p>
-                    From then on, it's just a matter of including the <a href="sitemap.html">sitemap</a> content item in
+                    From then on, it's just a matter of including the sitemap content item in
                     an output file:
                     
                   </p>
                   <p>
                     <pre>
-                    
+
 	&lt;out name=map file=sitemap_html/map.html&gt;
 	  ${header}${mainsitemap}${footer}
 	&lt;/out&gt;
@@ -422,7 +424,7 @@
                   
                 </p>
                 <p>
-                  This documentation includes a <a href="sitemap.html">sitemap</a>, by the way. It's used to generate
+                  This documentation includes a sitemap, by the way. It's used to generate
                   the navigation links. Take a look <a href="docmap.html">here</a>.
                   
                 </p>
@@ -443,7 +445,7 @@
   <tr>
     <td valign="top">
       <strong><a href="http://webmake.taint.org/">WebMake</a>
-       Documentation</strong> (version 2.1)
+       Documentation</strong> (version 2.2)
        
     </td>
     <td valign="top">

@@ -1,4 +1,7 @@
 #!/bin/sh
+#
+# This is a simple cvs wrapper for an initial site import; it takes care
+# to tag binary files (images etc.) as binary (cvs arg "-kb").
 
 if [ "$#" -lt 2 ] ; then
   echo "

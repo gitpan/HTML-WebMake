@@ -12,8 +12,11 @@ Here's a list of people who've contributed to WebMake:
   - Mark McLoughlin &lt;mark /at/ skynet.ie&gt;: added ##perlout## directive,
     fixes to HTML cleaner
 
-  - Caolan McNamara &lt;caolan /at/ csn.ul.ie&gt;: EtText contributions; lists,
-    pre-formatted text, lots of suggestions
+  - Caolan McNamara &lt;caolan /at/ csn.ul.ie&gt;: EtText contributions;
+    lists, pre-formatted text, lots of suggestions; he's written a "nice
+    testimonial here" [ctest].
+
+    [ctest]: http://www.csn.ul.ie/~caolan/Personal/Design.html
 
   - Jan Hudec &lt;bulb /at/ ucw.cz&gt;: navtree plugin, patches to remove
     metadata from site mapping and control mapping of media items

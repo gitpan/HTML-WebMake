@@ -38,7 +38,10 @@ sub new ($$$) {
   my $self = {
     'main'		=> $main,
     'filename'		=> $fname,
+
+    'front_metadata_cache'	=> { }
   };
+
   bless ($self, $class);
 
   $self;
@@ -52,18 +55,14 @@ sub tie {
   my ($self) = @_;
 
   my $try = 0;
-
-  # use AnyDBM_File, but use the more efficient DB_File where supported
-  my $dbtype = 'AnyDBM_File';
-
   my %db;
   for ($try = 0; $try < 4; $try++)
   {
-    my $dbobj = tie (%db, $dbtype, $self->{filename},
+    my $dbobj = tie (%db, 'AnyDBM_File', $self->{filename},
 				  O_CREAT|O_RDWR, 0600)
 	  or die "Cannot open/create site cache: $self->{filename}\n";
 
-    if ($dbtype ne 'DB_File') {
+    if ($AnyDBM_File::ISA[0] ne 'DB_File') {
       dbg ("cannot do db ownership security check on this platform");
       goto all_ok;
     }
@@ -71,7 +70,7 @@ sub tie {
     # check the open db file for ownership, to make sure it really
     # is owned by us and we're not the victim of a race exploit.
     my $fd = $dbobj->fd(); undef $dbobj;
-    dbg ("checking ownership of site cache: $self->{filename} fd=$fd");
+    # dbg ("checking ownership of site cache: $self->{filename} fd=$fd");
     open (DB_FH, "+<&=$fd") || die "dup $!";
     if (-o DB_FH) { goto all_ok; }
 
@@ -106,6 +105,11 @@ sub get_modtime {
   return $self->{db}{'m#'.$file};
 }
 
+sub set_modtime {
+  my ($self, $fname, $mod) = @_;
+  $self->{db}{'m#'.$fname} = $mod;
+}
+
 # -------------------------------------------------------------------------
 
 sub set_content_deps {
@@ -136,6 +140,11 @@ sub get_content_deps {
 sub get_metadata {
   my ($self, $key) = @_;
   my $val = $self->{db}{'M#'.$key};
+
+  # we use an additional, in-memory cache to avoid writing metadata
+  # that matches what was already there
+  $self->{front_metadata_cache}->{$key} = $val;
+
   if (defined $val && $val eq $UNDEF_SYMBOL) { return undef; }
   return $val;
 }
@@ -144,6 +153,12 @@ sub put_metadata {
   my ($self, $key, $val) = @_;
   if (!defined $key) { return; }
   if (!defined $val) { $val = $UNDEF_SYMBOL; }
+
+  # we use an additional, in-memory cache to avoid writing metadata
+  # that matches what was already there
+  my $front = $self->{front_metadata_cache}->{$key};
+  if (defined $front && $front eq $val) { return; }
+
   dbg ("caching metadata '$key' = '$val'");
   $self->{db}{'M#'.$key} = $val;
 }

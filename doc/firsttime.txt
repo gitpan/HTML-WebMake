@@ -151,10 +151,10 @@ page titles into &lt;wmmeta&gt; tags like so:
 ::     &lt;/content&gt;
 ::     ...
 
-It's not required that metadata be stored in the content text; it can also be
-loaded en masse from another location, such as the WebMake file, or another
-file altogether, using the <a href=$(metatable)>&lt;metatable&gt;</a>
-directive.
+(BTW it's not required that metadata be stored in the content text; it can
+also be loaded en masse from another location, such as the WebMake file, or
+another file altogether, using the <a href=$(metatable)>&lt;metatable&gt;</a>
+directive.  Again, it's a matter of taste.)
 
 Sometimes, for example if you plan to generate index pages or a sitemap, you
 may wish to add a one-line summary of the content item as a metadatum called

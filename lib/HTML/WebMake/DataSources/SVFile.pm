@@ -50,6 +50,8 @@ sub add {
     @s = stat IN;
     @lines = (<IN>);
     close IN;
+
+    $self->{main}->add_source_files ($self->{src});
   }
 
   my $patt = $self->{main}->{util}->glob_to_re ($self->{name});

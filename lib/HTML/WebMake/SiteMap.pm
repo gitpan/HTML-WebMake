@@ -49,12 +49,14 @@ sub set_default_score {
 sub set_root {
   my ($self, $contobj) = @_;
 
-  if (defined $self->{root_content}) {
+  if (defined $self->{root_content} && $self->{root_content} != $contobj)
+  {
     warn "multiple root <content> items defined: ".
     	$self->{root_content}->as_string()." vs. ".
 	$contobj->as_string()."\n";
     return;
   }
+
   dbg ("set root content item: \${".$contobj->{name}."}");
   $self->{root_content} = $contobj;
 }
@@ -111,7 +113,12 @@ sub map_site {
   $self->{mapping_now} = 1;	# avoid re-entrance
   {
     $self->create_up_links();
-    if (!defined $top) { $top = $self->{root_content}; }
+    if (!defined $top) {
+      $top = $self->{root_content};
+    } else {
+      # from now on, this is the default root for breadcrumbs etc.
+      $self->set_root ($top);
+    }
 
     # can't make a sitemap from the root if no root content is defined!
     if (!defined $top) {
@@ -230,10 +237,10 @@ sub set_per_node_contents {
   my $score = $node->get_score();
   my $url = $node->get_url(); $url ||= '';
 
-  $self->{main}->set_unmapped_content ('title', $title);
-  $self->{main}->set_unmapped_content ('score', $score);
-  $self->{main}->set_unmapped_content ('name', $node->{name});
-  $self->{main}->set_unmapped_content ('is_node', $haskids);
+  $self->{main}->set_transient_content ('title', $title);
+  $self->{main}->set_transient_content ('score', $score);
+  $self->{main}->set_transient_content ('name', $node->{name});
+  $self->{main}->set_transient_content ('is_node', $haskids);
   $self->{main}->add_url ('url', $url);
 }
 
@@ -241,22 +248,22 @@ sub output_node {
   my ($self, $context, $node, $levnum, $leafitems) = @_;
 
   $self->set_per_node_contents ($context, $node, 1);
-  $self->{main}->set_unmapped_content ('list', $leafitems);
-  return $self->{main}->curly_subst ("(eval)", $context->{node});
+  $self->{main}->set_transient_content ('list', $leafitems);
+  return $self->{main}->curly_subst ($HTML::WebMake::Main::SUBST_EVAL, $context->{node});
 }
 
 sub output_leaf {
   my ($self, $context, $node, $levnum) = @_;
 
   $self->set_per_node_contents ($context, $node, 0);
-  return $self->{main}->curly_subst ("(eval)", $context->{leaf});
+  return $self->{main}->curly_subst ($HTML::WebMake::Main::SUBST_EVAL, $context->{leaf});
 }
 
 sub output_dynamic {
   my ($self, $context, $node, $levnum) = @_;
 
   $self->set_per_node_contents ($context, $node, 0);
-  return $self->{main}->curly_subst ("(eval)", $context->{dynamic});
+  return $self->{main}->curly_subst ($HTML::WebMake::Main::SUBST_EVAL, $context->{dynamic});
 }
 
 # -------------------------------------------------------------------------

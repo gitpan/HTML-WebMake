@@ -67,7 +67,7 @@ sub interpret {
   $self->enter_perl_call();
 
   if ($type ne "perlout") {
-    $ret = eval 'package main;'.$str;
+    $ret = eval 'package main; '.$str;
 
   } else {
     if (!can_use_io_string()) {

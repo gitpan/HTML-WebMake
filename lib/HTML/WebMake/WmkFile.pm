@@ -57,13 +57,49 @@ sub parse {
     $self->{cgi}->{fulltext} = $_;
   }
 
+  # We don't use a proper XML parser, because:
+  # (a) content blocks etc. can contain HTML tags which will not be
+  # scoped correctly;
+  # (b) we use <{perl }> blocks which are invalid XML;
+  # (c) we allow attributes without "quotes".
+  # So kludge it where required.  We're probably faster this way
+  # anyway ;)
+
   # trim off text before/after <webmake> chunk
   s/^.*?<webmake\b[^>]*?>//gis;
   s/<\/\s*webmake\s*>.*$//gis;
 
-  # Now, we can't use a real XML parser here, as some of the contents
-  # will contain HTML tags that are not necessarily in matched pairs.
-  # still, the strip_first_tag regexps seem to work well.
+  # handle scoped tags.  Since we don't use a proper XML parser, we have to
+  # rewrite them here.  We convert them to single-character markers (\001 or
+  # \002) indicating a start tag or end tag, then loop until all appearances of
+  # the tag have been converted. We then convert them back to text, with a
+  # scope number attached.  Until Perl can do a regexp like this:
+  #
+  # /<tag[^>]*>[^<tag]+<\/tag>/
+  #
+  # we're probably stuck doing it this way.  Hey, don't knock it, it works ;)
+
+  s/\001/<<001>>/gs;
+  s/\002/<<002>>/gs;
+  $self->{scopings} = { };
+  for my $tag (qw(for metadefault attrdefault)) {
+    if (!/<\/$tag>/) {
+      $self->{scopings}->{$tag} = 0; next;
+    }
+
+    s/<$tag(\b[^>]*[^\/]>)/\001$1/gs;
+    s/<\/$tag>/\002/gs;
+
+    my $count = 0;
+    while (s{\001([^>]+)>([^\001\002]+)\002}
+    		{<$tag$count$1>$2<\/$tag$count>}gis)
+    {
+      $count++;
+    }
+    $self->{scopings}->{$tag} = $count;
+  }
+  s/<<001>>/\001/gs;
+  s/<<002>>/\002/gs;
 
   my $util = $self->{main}->{util};
   if (!defined $util) { carp "no util defined in WmkFile::parse"; }
@@ -90,9 +126,9 @@ sub parse {
     1 while s/^<!--.*?-->//gs;		# XML-style comments.
 
     # Preprocessing.
-    $util->strip_first_tag (\$_, "include",
+    $util->strip_first_lone_tag (\$_, "include",
 				  $self, \&tag_include, qw(file));
-    $util->strip_first_tag (\$_, "use",
+    $util->strip_first_lone_tag (\$_, "use",
 				  $self, \&tag_use, qw(plugin));
 
     if (!$self->{parse_for_cgi}) {
@@ -111,22 +147,38 @@ sub parse {
     }
 
     # Declarations.
-    $util->strip_first_tag (\$_, "content",
+    $util->strip_first_tag_block (\$_, "content",
 				  $self, \&tag_content, qw(name));
-    $util->strip_first_tag (\$_, "contents",
+    $util->strip_first_lone_tag (\$_, "contents",
 				  $self, \&tag_contents, qw(src name));
-    $util->strip_first_tag (\$_, "template",
+    $util->strip_first_tag_block (\$_, "template",
 				  $self, \&tag_template, qw(name));
-    $util->strip_first_tag (\$_, "templates",
+    $util->strip_first_lone_tag (\$_, "templates",
 				  $self, \&tag_templates, qw(src name));
-    $util->strip_first_tag (\$_, "contenttable",
+    $util->strip_first_tag_block (\$_, "contenttable",
 				  $self, \&tag_contenttable, qw());
-    $util->strip_first_tag (\$_, "media",
+    $util->strip_first_lone_tag (\$_, "media",
 				  $self, \&tag_media, qw(src name));
-    $util->strip_first_tag (\$_, "metadefault",
-				  $self, \&tag_metadefault, qw(name));
-    $util->strip_first_tag (\$_, "attrdefault",
-				  $self, \&tag_attrdefault, qw(name));
+
+    if (/^<metadefault/i) {
+      $util->strip_first_lone_tag (\$_, "metadefault",
+				    $self, \&tag_metadefault, qw(name));
+      my $i;
+      for ($i = 0; $i < $self->{scopings}->{"metadefault"}; $i++) {
+	$util->strip_first_tag_block (\$_, "metadefault".$i,
+				    $self, \&tag_metadefault, qw(name));
+      }
+    }
+    if (/^<attrdefault/i) {
+      $util->strip_first_lone_tag (\$_, "attrdefault",
+				    $self, \&tag_attrdefault, qw(name));
+      my $i;
+      for ($i = 0; $i < $self->{scopings}->{"attrdefault"}; $i++) {
+	$util->strip_first_tag_block (\$_, "attrdefault".$i,
+				    $self, \&tag_attrdefault, qw(name));
+      }
+    }
+
     $util->strip_first_tag (\$_, "metatable",
 				  $self, \&tag_metatable, qw());
     $util->strip_first_tag (\$_, "sitemap",
@@ -134,21 +186,36 @@ sub parse {
     $util->strip_first_tag (\$_, "navlinks",
 				  $self, \&tag_navlinks,
 				  qw(name map up prev next));
-    $util->strip_first_tag (\$_, "breadcrumbs",
+    $util->strip_first_lone_tag (\$_, "breadcrumbs",
 				  $self, \&tag_breadcrumbs,
 				  qw(name map level));
 
+    # Loops
+    if (/^<for/i) {
+      my $i;
+      for ($i = 0; $i < $self->{scopings}->{"for"}; $i++) {
+	$util->strip_first_tag_block (\$_, "for".$i,
+				      $self, \&tag_for, qw(name values));
+      }
+    }
+
     # Outputs.
-    $util->strip_first_tag (\$_, "for",
-				  $self, \&tag_for, qw(name values));
-    $util->strip_first_tag (\$_, "out",
+    $util->strip_first_tag_block (\$_, "out",
 				  $self, \&tag_out, qw(file));
 
     # Misc.
-    $util->strip_first_tag (\$_, "cache",
+    $util->strip_first_lone_tag (\$_, "cache",
 				  $self, \&tag_cache, qw(dir));
-    $util->strip_first_tag (\$_, "option",
+    $util->strip_first_lone_tag (\$_, "option",
 				  $self, \&tag_option, qw(name value));
+
+    # CGIs and hrefs
+    $util->strip_first_lone_tag (\$_, "editcgi",
+				  $self, \&tag_editcgi, qw(href));
+    $util->strip_first_lone_tag (\$_, "viewcgi",
+				  $self, \&tag_viewcgi, qw(href));
+    $util->strip_first_lone_tag (\$_, "site",
+				  $self, \&tag_site, qw(href));
 
     # if we got some tags, store the text for error messages
     my $text = $util->{last_tag_text};
@@ -281,6 +348,36 @@ sub tag_option {
 
   $self->subst_attrs ("<option>", $attrs);
   $self->{main}->set_option ($attrs->{name}, $attrs->{value});
+  "";
+}
+
+# -------------------------------------------------------------------------
+
+sub tag_editcgi {
+  my ($self, $tag, $attrs, $text) = @_;
+
+  $self->subst_attrs ("<editcgi>", $attrs);
+  $self->{main}->add_url ("WebMake.EditCGI", $attrs->{href});
+  "";
+}
+
+# -------------------------------------------------------------------------
+
+sub tag_viewcgi {
+  my ($self, $tag, $attrs, $text) = @_;
+
+  $self->subst_attrs ("<viewcgi>", $attrs);
+  $self->{main}->add_url ("WebMake.ViewCGI", $attrs->{href});
+  "";
+}
+
+# -------------------------------------------------------------------------
+
+sub tag_site {
+  my ($self, $tag, $attrs, $text) = @_;
+
+  $self->subst_attrs ("<site>", $attrs);
+  $self->{main}->add_url ("WebMake.SiteHref", $attrs->{href});
   "";
 }
 

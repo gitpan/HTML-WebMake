@@ -34,6 +34,15 @@ sub new ($$$$$) {
 }
 
 sub dbg { HTML::WebMake::Main::dbg (@_); }
+sub dbg2 { HTML::WebMake::Main::dbg2 (@_); }
+
+# -------------------------------------------------------------------------
+
+sub set_name_sed_callback {
+  my ($self, $sedobj, $sedmethod) = @_;
+  $self->{sedobj} = $sedobj;
+  $self->{sedmethod} = $sedmethod;
+}
 
 # -------------------------------------------------------------------------
 
@@ -69,9 +78,16 @@ sub parse_metatable_csv {
       @metanames = @elems; next;
     }
 
+    $contname = $self->fixname ($contname);
+
     my $contobj = $self->{main}->{contents}->{$contname};
     if (!defined $contobj) {
       $self->{main}->fail ("<metatable>: cannot find content \${$contname}");
+      next;
+    }
+
+    if ($#metanames < 0) {
+      $self->{main}->fail ("<metatable>: no '.' line in file");
       next;
     }
 
@@ -81,6 +97,8 @@ sub parse_metatable_csv {
 
       $contobj->create_extra_metas_if_needed();
       $contobj->{extra_metas}->{$metaname} = $val;
+
+      dbg2 ("attaching metadata \"$metaname\"=\"$val\" to content \"$contname\"");
     }
   }
 }
@@ -115,6 +133,7 @@ sub parse_metatable_xml {
   # $text = '';
 
   foreach my $contname (keys %{$self->{targetblocks}}) {
+    $contname = $self->fixname ($contname);
     my $contobj = $self->{main}->{contents}->{$contname};
     $text = $self->{targetblocks}->{$contname};
     $self->{tagging_content} = $contobj;
@@ -160,9 +179,7 @@ sub parse_xml_block {
   my $util = $self->{main}->{util};
 
   $block =~ s/^\s+//gs;
-
-  1 while $block =~ s/<\{!--.*?--\}>//gs;       # WebMake comments.
-  1 while $block =~ s/^<!--.*?-->//gs;          # XML-style comments.
+  $block =~ s/^<!--.*?-->//gs;
 
   if ($subtags eq $TARGETS) {
     $block = $util->strip_tags ($block, "target", $self, \&tag_target, qw(id));
@@ -179,6 +196,16 @@ sub parse_xml_block {
   }
 
   1;
+}
+
+# -------------------------------------------------------------------------
+
+sub fixname {
+  my ($self, $contname) = @_;
+  if (defined $self->{sedobj}) {
+    $contname = &{$self->{sedmethod}} ($self->{sedobj}, $contname);
+  }
+  $contname;
 }
 
 # -------------------------------------------------------------------------

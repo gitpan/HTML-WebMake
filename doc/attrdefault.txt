@@ -26,11 +26,6 @@ Scoped Mode
 (**&lt;/attrdefault&gt;**) tags; the attributes are only set on content items
 or output files between the two tags.
 
-  __Note!__ one warning about ''scoped'' mode: note that WebMake does not use
-  a fully-correct XML parser to parse the XML in the .wmk file, so if you nest
-  &lt;attrdefault&gt; tags, it will not correctly parse them; instead, the
-  first closing **&lt;/attrdefault&gt;** tag found will be used.
-
 Command Mode
 ~~~~~~~~~~~~
 

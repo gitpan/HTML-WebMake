@@ -75,10 +75,13 @@ sitemapping, navigational aids, and (of course) embedded perl code. ;)
 
 But enough of the bulleted lists.  Here's where you should start:
 
-  - First of all, read <a href=$(making)>WebMake Operation</a> for an overview
+  - First of all, read <a href=$(concepts)>WebMake Concepts</a> for a quick
+    intro to the assumptions and concepts that are used in WebMake.
+
+  - Next, read <a href=$(making)>WebMake Operation</a> for an overview
     of how WebMake operates.
 
-  - Next, read <a href=$(firsttime)>How To Migrate to WebMake</a> for a guide
+  - Then, read <a href=$(firsttime)>How To Migrate to WebMake</a> for a guide
     to bringing an existing, simple web site into WebMake.
 
   - After that, you just need to read the rest of the manual, which is mostly

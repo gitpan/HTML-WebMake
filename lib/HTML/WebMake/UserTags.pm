@@ -36,6 +36,10 @@ sub new ($$$$$) {
     'tags_defined'	=> 0,
     'tag_names'		=> [ ],
 
+    'prefmt_tags'	=> { },
+    'prefmt_tags_defined' => 0,
+    'prefmt_tag_names'	=> [ ],
+
     'wmk_tags'		=> { },
     'wmk_tags_defined'	=> 0,
     'wmk_tag_names'	=> [ ],
@@ -51,7 +55,7 @@ sub dbg { HTML::WebMake::Main::dbg (@_); }
 # -------------------------------------------------------------------------
 
 sub def_tag {
-  my ($self, $is_empty, $is_wmk, $name, $fn, @reqd_attrs) = @_;
+  my ($self, $is_empty, $is_wmk, $is_prefmt, $name, $fn, @reqd_attrs) = @_;
 
   my $tag = { };
   if ($is_empty) {
@@ -72,6 +76,12 @@ sub def_tag {
     $self->{wmk_tags}->{$name} = $tag;
     dbg ("Defined new WebMake tag: <$name>");
 
+  } elsif ($is_prefmt) {
+    push (@{$self->{prefmt_tag_names}}, $name);
+    $self->{prefmt_tags_defined}++;
+    $self->{prefmt_tags}->{$name} = $tag;
+    dbg ("Defined new preformat content tag: <$name>");
+
   } else {
     push (@{$self->{tag_names}}, $name);
     $self->{tags_defined}++;
@@ -86,16 +96,21 @@ sub def_tag {
 
 sub subst_tags {
   my ($self, $from, $str) = @_;
-  return $self->_subst_tags($from, $str, 0);
+  return $self->_subst_tags($from, $str, 0, 0);
 }
 
 sub subst_wmk_tags {
   my ($self, $from, $str) = @_;
-  return $self->_subst_tags($from, $str, 1);
+  return $self->_subst_tags($from, $str, 1, 0);
+}
+
+sub subst_preformat_tags {
+  my ($self, $from, $str) = @_;
+  return $self->_subst_tags($from, $str, 0, 1);
 }
 
 sub _subst_tags {
-  my ($self, $from, $str, $is_wmk) = @_;
+  my ($self, $from, $str, $is_wmk, $is_prefmt) = @_;
   my @tags;
   my $tag;
 
@@ -103,24 +118,35 @@ sub _subst_tags {
     return unless ($self->{wmk_tags_defined});
     @tags = @{$self->{wmk_tag_names}};
 
+  } elsif ($is_prefmt) {
+    return unless ($self->{prefmt_tags_defined});
+    @tags = @{$self->{prefmt_tag_names}};
+
   } else {
     return unless ($self->{tags_defined});
     @tags = @{$self->{tag_names}};
   }
 
+  my $foundatag = 0;
   foreach my $tagname (@tags) {
     next unless (defined $tagname);
     if ($is_wmk) {
       $tag = $self->{wmk_tags}->{$tagname};
+    } elsif ($is_prefmt) {
+      $tag = $self->{prefmt_tags}->{$tagname};
     } else {
       $tag = $self->{tags}->{$tagname};
     }
 
-    next unless ($$str =~ /\<\{?${tagname}[\s>}]/is);
-    if ($$str =~ /\<\{${tagname}/is) {	#}
-      warn "$from: <{${tagname}}> deprecated, use <${tagname}> instead\n";
-    }
+    next unless ($$str =~ /\<${tagname}\b/is);
 
+    # been deprecated for a while. take it out
+    # next unless ($$str =~ /\<\{?${tagname}[\s>}]/is);
+    # if ($$str =~ /\<\{${tagname}/is) {	#}
+    # warn "$from: <{${tagname}}> deprecated, use <${tagname}> instead\n";
+    # }
+
+    $foundatag = 1;
     my $pat = $tag->{pattern};
     if ($tag->{is_empty}) {
       $$str =~ s/${pat}/ $self->call_tag ($tag, $from, $tagname, $1, ''); /gies;
@@ -128,6 +154,8 @@ sub _subst_tags {
       $$str =~ s/${pat}/ $self->call_tag ($tag, $from, $tagname, $1, $2); /gies;
     }
   }
+
+  return $foundatag;
 }
 
 # -------------------------------------------------------------------------

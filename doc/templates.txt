@@ -18,6 +18,10 @@ those semantic differences to be expressed at a high level; use
 It is implemented as a contents directive with the ##map## attribute set to
 ##false##.
 
+${datasource_attrs.inc} 
+${datasource_file_protocol.inc}
+${datasource_svfile_protocol.inc}
+
 Example
 =======
 

@@ -38,9 +38,8 @@ sub dbg { HTML::WebMake::Main::dbg (@_); }
 sub glob_to_re ($$) {
   my ($self, $patt) = @_;
 
-  if ($patt =~ s/^RE://) {
-    return $patt;
-  }
+  if (!defined $patt) { return $patt; }
+  if ($patt =~ s/^RE://) { return $patt; }
 
   $patt =~ s:([].+^\-\${}[|]):\\$1:g;
   $patt =~ s/\\\.\\\.\\\./.*/g;
@@ -102,42 +101,53 @@ sub set_filename ($$) {
 }
 
 sub strip_tags ($$$$$@) {
-  my ($self, $file, $tag, $taghandler, $tagfn, @reqd_attributes) = @_;
-  $self->{strip_tags_reqd_attrs} = \@reqd_attributes;
-  $self->{strip_tags_handler_obj} = $taghandler;
-  $self->{strip_tags_handler_method} = $tagfn;
-  $self->{last_tag_text} = undef;
+  my ($self, $file, $tag, $taghandler, $tagfn, @reqd_attrs) = @_;
 
-  $file =~ s{<${tag}\b([^>]*?)/>}{
-    $self->_found_tag ($tag, $1, '');
+  return unless $file =~ m{<${tag}\b}is;
+
+  $file =~ s{<${tag}([^>]*?)/>}{
+    $self->_found_tag ($tag, $1, '', 1, \@reqd_attrs, $taghandler, $tagfn);
   }gies;
 
-  $file =~ s{<${tag}\b([^>]*?)>(.*?)<\/\s*${tag}\s*>}{
-    $self->_found_tag ($tag, $1, $2);
+  $file =~ s{<${tag}([^>]*?)>(.*?)<\/\s*${tag}\s*>}{
+    $self->_found_tag ($tag, $1, $2, 0, \@reqd_attrs, $taghandler, $tagfn);
   }gies;
 
   $file;
 }
 
-sub strip_first_tag ($$$$$@) {
-  my ($self, $textref, $tag, $taghandler, $tagfn, @reqd_attributes) = @_;
-  $self->{strip_tags_reqd_attrs} = \@reqd_attributes;
-  $self->{strip_tags_handler_obj} = $taghandler;
-  $self->{strip_tags_handler_method} = $tagfn;
-  $self->{last_tag_text} = undef;
-  $self->{last_tag_regexp} = undef;
+sub _strip_first_tag ($$$$$$@) {
+  my ($self, $paired, $textref, $tag, $taghandler, $tagfn, @reqd_attrs) = @_;
 
-  $$textref =~ s{^\s*<${tag}\b([^>]*?)/>}{
-    $self->_found_tag ($tag, $1, '', 1);
-  }gies and return;
+  $self->{last_tag_text} = $self->{last_tag_regexp} = undef;
+  return unless $$textref =~ m{^\s*<${tag}\b}is;
 
-  $$textref =~ s{^\s*<${tag}\b([^>]*?)>(.*?)<\/\s*${tag}\s*>}{
-    $self->_found_tag ($tag, $1, $2, 0);
-  }gies;
+  if ($paired == 0 || $paired == 2) {
+    $$textref =~ s{^\s*<\S+([^>]*?)/>}{
+      $self->_found_tag ($tag, $1, '', 1, \@reqd_attrs, $taghandler, $tagfn);
+    }gies and return;
+  }
+
+  if ($paired == 1 || $paired == 2) {
+    $$textref =~ s{^\s*<\S+([^>]*?)>(.*?)<\/\s*${tag}\s*>}{
+      $self->_found_tag ($tag, $1, $2, 0, \@reqd_attrs, $taghandler, $tagfn);
+    }gies and return;
+  }
 }
 
-sub _found_tag ($$$$) {
-  my ($self, $tag, $origtxt, $text, $isempty) = @_;
+sub strip_first_tag ($$$$$@) {
+  return shift->_strip_first_tag (2, @_);
+}
+sub strip_first_lone_tag ($$$$$@) {
+  return shift->_strip_first_tag (0, @_);
+}
+sub strip_first_tag_block ($$$$$@) {
+  return shift->_strip_first_tag (1, @_);
+}
+
+sub _found_tag ($$$$$$$) {
+  my ($self, $tag, $origtxt, $text, $isempty,
+  	$reqd_attrs, $taghandler, $tagfn) = @_;
 
   $self->{last_tag_text} = '<'.$tag.$origtxt.'> ... </'.$tag.'>';
 
@@ -152,11 +162,10 @@ sub _found_tag ($$$$) {
   }
 
   my $attrs = $self->parse_xml_tag_attributes ($tag, $origtxt,
-  	$self->{filename}, @{$self->{strip_tags_reqd_attrs}});
+  			$self->{filename}, @{$reqd_attrs});
   if (!defined $attrs) { return; }
 
-  &{$self->{strip_tags_handler_method}}
-  		($self->{strip_tags_handler_obj}, $tag, $attrs, $text);
+  &{$tagfn} ($taghandler, $tag, $attrs, $text);
 }
 
 ###########################################################################

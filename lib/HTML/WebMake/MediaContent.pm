@@ -97,7 +97,7 @@ sub get_metadata {
   my $main = $self->{main};
 
   if (!defined $val) {
-    $val = $main->quiet_curly_meta_subst ("(meta)", $self->{name}.".".$key);
+    $val = $main->quiet_curly_meta_subst ($HTML::WebMake::Main::SUBST_META, $self->{name}.".".$key);
     $val ||= $main->{metadata}->get_default_value ($key);
 
     $val = $main->{metadata}->convert_to_type ($key, $val);
@@ -121,7 +121,11 @@ sub create_extra_metas_if_needed {
 sub load_metadata {
   my ($self) = @_;
 
-  $self->add_extra_metas ($self->{name});
+  if (!defined ($self->{parsed_metadata_tags})) {
+    $self->add_extra_metas ($self->{name});
+    $self->infer_implicit_metas();
+    $self->{parsed_metadata_tags} = 1;
+  }
 }
 
 # -------------------------------------------------------------------------
@@ -135,8 +139,34 @@ sub parse_metadata_tags {
 sub infer_implicit_metas {
   my ($self) = @_;
 
-  return;
-  # TODO? read titles from GIF comments etc? probably not.
+  if (defined $self->{main}->{metadatas}->{"this.title"}
+        && defined $self->{main}->{metadatas}->{$self->{name}.".title"})
+  {
+    return;             # no need to infer it, it's already defined
+  }
+
+  # TODO? read titles from GIF comments etc?
+
+  my $val = $self->{name};
+  $val =~ s,^.*[/\\],,g;
+  $val =~ s,\.(?:gif|jp[eg]+|mp[eg3]+|xpm|bmp|tif+|mov|ra|ram|png|mng)$,,ig;
+  $val =~ s/_/ /gs;
+  $self->add_inferred_metadata ("title", $val);
+}
+
+# -------------------------------------------------------------------------
+
+sub add_inferred_metadata {
+  my ($self, $name, $val) = @_;
+
+  my $attrs = { };
+
+  $val =~ s/<[^>]+>//g;         # trim wayward HTML tags
+  $val =~ s/^\s+//;
+  $val =~ s/\s+$//;
+
+  dbg ("inferring $name metadata from image: \"$val\"");
+  $self->{main}->add_metadata ($self->{name}, $name, $val, $attrs, 0);
 }
 
 # -------------------------------------------------------------------------
@@ -201,12 +231,11 @@ sub touch_last_used {
 
 sub add_ref_from_url {
   my ($self, $filename) = @_;
+
   return if ($filename =~ /^\(/);       # (eval), (dep_ignore) etc.
-  dbg2 ($self->as_string().": add ref from url $filename");
 
   if (!defined $self->{reffed_in_url}) {
     $self->{reffed_in_url} = $filename;
-    $self->{main}->getcache()->put_metadata ($self->{name}.".url", $filename);
   }
 }
 

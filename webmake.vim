@@ -1,8 +1,8 @@
 " Vim syntax file
 " Language:	WebMake (supporting embedded HTML)
 " Maintainer:	Justin Mason <jm@jmason.org>
-" URL:		http://jmason.org/vim/syntax/webmake.vim
-" Last Change:	Aug 16 2000 jm 
+" URL:		http://webmake.taint.org/vim/syntax/webmake.vim
+" Last Change:	Sep 27 2001 jm
 
 " For full WebMake support, copy this file to your $VIM/syntax
 " directory, and add these lines to your .vimrc:
@@ -50,9 +50,9 @@ syn keyword htmlTagName contained use contenttable template templates
 syn keyword htmlTagName contained etright etleft safe csvtable
 
 syn keyword htmlArg contained listname map format namefield
-syn keyword htmlArg contained namesubst nametr isroot
+syn keyword htmlArg contained namesubst nametr isroot metatable
 syn keyword htmlArg contained valuefield delimiter encoding
-syn keyword htmlArg contained file node leaf sortorder
+syn keyword htmlArg contained file node leaf sortorder skip
 syn keyword htmlArg contained values up next prev nonext noprev
 syn keyword htmlArg contained prefix suffix noup sitemap
 syn keyword htmlArg contained opennode closednode thispage leaf

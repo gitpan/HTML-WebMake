@@ -7,7 +7,7 @@
     <title>
       WebMake: Documentation: How to Migrate to WebMake
     </title>
-    <meta name="generator" content="WebMake/2.1" />
+    <meta name="generator" content="WebMake/2.2" />
     <style>
       body {
        background-color: #ffffff; 
@@ -58,7 +58,7 @@
         <tr>
           <td valign="top">
             <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
@@ -123,7 +123,7 @@
                         </p>
                       </p>
                       <pre>
-                          &lt;webmake&gt;
+    &lt;webmake&gt;
     &lt;content name=page_template&gt;
       &lt;html&gt;&lt;head&gt;&lt;title&gt;$[this.title]&lt;/title&gt;&lt;/head&gt;
       &lt;body bgcolor=#ffffff&gt;&lt;h1&gt;$[this.title]&lt;/h1&gt;
@@ -174,7 +174,7 @@
                     </p>
                   </p>
                   <pre>
-                      &lt;content name="document1.txt"&gt;
+    &lt;content name="document1.txt"&gt;
       ....your html here...
     &lt;/content&gt;
     &lt;content name="document2.txt"&gt;
@@ -195,7 +195,7 @@
                 </p>
               </p>
               <pre>
-                  &lt;content name="document1.txt" format="text/et"&gt;
+    &lt;content name="document1.txt" format="text/et"&gt;
       ....your ettext here...
     &lt;/content&gt;
     ...
@@ -229,7 +229,7 @@
               </p>
             </p>
             <pre>
-                &lt;{set foo="Value!"}&gt;
+    &lt;{set foo="Value!"}&gt;
           </pre>
           <p>
             Any content items evaluated after that variable is set can access
@@ -260,17 +260,17 @@
         </p>
       </p>
       <pre>
-          &lt;content name="document1.txt"&gt;
+    &lt;content name="document1.txt"&gt;
       &lt;wmmeta name="title"&gt;Your Title Here&lt;/wmmeta&gt;
       ....your ettext here...
     &lt;/content&gt;
     ...
     </pre>
     <p>
-      It's not required that metadata be stored in the content text; it can also be
-      loaded en masse from another location, such as the WebMake file, or another
-      file altogether, using the <a href="metatable.html">&lt;metatable&gt;</a>
-      directive.
+      (BTW it's not required that metadata be stored in the content text; it can
+      also be loaded en masse from another location, such as the WebMake file, or
+      another file altogether, using the <a href="metatable.html">&lt;metatable&gt;</a>
+      directive. Again, it's a matter of taste.)
       
     </p>
     <p>
@@ -355,7 +355,7 @@
     </p>
   </p>
   <pre>
-      &lt;content name=out_helper&gt;
+    &lt;content name=out_helper&gt;
        &lt;{set page_text="${${WebMake.OutName}.txt}" }&gt;
        ${page_template}
     &lt;/content&gt;
@@ -587,7 +587,7 @@
   <tr>
     <td valign="top">
       <strong><a href="http://webmake.taint.org/">WebMake</a>
-       Documentation</strong> (version 2.1)
+       Documentation</strong> (version 2.2)
        
     </td>
     <td valign="top">

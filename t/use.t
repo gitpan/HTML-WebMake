@@ -24,10 +24,15 @@ q{
 Content: <strong>"WebMake.GeneratorString"</strong>
 </li>}, 'seen_genstring',
 
-  q{ <li>
+  q{
   Content: <strong>"foo"</strong><br />
-  <blockquote> <pre> <!--etsafe--> Foo!<!--/etsafe--> </pre>
-  </blockquote> </li> }, 'seen_foo_value',
+  <blockquote>
+    <!--etsafe-->
+    <pre>
+Foo!  </pre>
+<!--/etsafe-->
+  </blockquote>
+}, 'seen_foo_value',
 
 
 );

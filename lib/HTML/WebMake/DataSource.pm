@@ -136,7 +136,7 @@ sub add {
   if (defined $lname) {
     # add onto any existing values already there.
     # the ? at the end means "return '' if not defined"
-    my $val = $self->{main}->curly_subst ("(eval)", $lname.'?');
+    my $val = $self->{main}->curly_subst ($HTML::WebMake::Main::SUBST_EVAL, $lname.'?');
     if ($val ne '') { $val .= ' '; }
     $val .= join (' ', @{$self->{file_list}});
 

@@ -25,11 +25,6 @@ Scoped Mode
 (**&lt;/metadefault&gt;**) tags; the metadata is only set on content items
 between the two tags.
 
-  __Note!__ one warning about ''scoped'' mode: note that WebMake does not use
-  a fully-correct XML parser to parse the XML in the .wmk file, so if you nest
-  &lt;metadefault&gt; tags, it may not correctly parse them; instead, the
-  first closing **&lt;/metadefault&gt;** tag found will be used.
-
 Command Mode
 ~~~~~~~~~~~~
 

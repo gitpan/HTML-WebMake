@@ -7,7 +7,7 @@
     <title>
       WebMake: Documentation: The &lt;{perl}&gt; Directives
     </title>
-    <meta name="generator" content="WebMake/2.1" />
+    <meta name="generator" content="WebMake/2.2" />
     <style>
       body {
        background-color: #ffffff; 
@@ -58,13 +58,13 @@
         <tr>
           <td valign="top">
             <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
             <div align="right">
               
-               [ <a href="set.html">Back</a> | <a href="globs.html">Forward</a> | <a href="index.html">Index</a>
+               [ <a href="set.html">Back</a> | <a href="sorting.html">Forward</a> | <a href="index.html">Index</a>
                | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
                
             </div>
@@ -128,7 +128,13 @@
                     </p>
                     <p>
                       Note that this is not STDOUT, it's a local filehandle called <code>$outhandle</code>.
-                      It <em>is</em> selected as the default output handle, however.
+                      It <em>is</em> selected as the default output handle, however, so just <code>print</code>
+                      without a filehandle name will work.
+                      
+                    </p>
+                    <p>
+                      Also, it should be noted that <code>perl</code> is a little more efficient than
+                      <code>perlout</code>, so if you're going all-out for speed, you should use that.
                       
                     </p>
                     <p>
@@ -174,13 +180,13 @@
     <tr>
       <td valign="top">
         <strong><a href="http://webmake.taint.org/">WebMake</a>
-         Documentation</strong> (version 2.1)
+         Documentation</strong> (version 2.2)
          
       </td>
       <td valign="top">
         <div align="right">
           
-           [ <a href="set.html">Back</a> | <a href="globs.html">Forward</a> | <a href="index.html">Index</a>
+           [ <a href="set.html">Back</a> | <a href="sorting.html">Forward</a> | <a href="index.html">Index</a>
            | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
            
         </div>

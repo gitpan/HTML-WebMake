@@ -7,7 +7,7 @@
     <title>
       WebMake: Documentation: The &lt;attrdefault&gt; Tag
     </title>
-    <meta name="generator" content="WebMake/2.1" />
+    <meta name="generator" content="WebMake/2.2" />
     <style>
       body {
        background-color: #ffffff; 
@@ -58,13 +58,13 @@
         <tr>
           <td valign="top">
             <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
             <div align="right">
               
-               [ <a href="metatable.html">Back</a> | <a href="index_06-magic_vars.html">Forward</a> | <a href="index.html">Index</a>
+               [ <a href="metadefault.html">Back</a> | <a href="index_06-magic_vars.html">Forward</a> | <a href="index.html">Index</a>
                | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
                
             </div>
@@ -105,15 +105,6 @@
                           or output files between the two tags.
                           
                         </p>
-                        <blockquote>
-                          <p>
-                            <em>Note!</em> one warning about "scoped" mode: note that WebMake does not use
-                             a fully-correct XML parser to parse the XML in the .wmk file, so if you nest
-                             &lt;attrdefault&gt; tags, it will not correctly parse them; instead, the
-                             first closing <strong>&lt;/attrdefault&gt;</strong> tag found will be used.
-                            
-                          </p>
-                        </blockquote>
                         <a name="Command_Mode"><h3>Command Mode</h3></a><p>
                           Command mode uses standalone tags (<strong>&lt;attrdefault ... /&gt;</strong>); the
                           attributes are set until the end of the WebMake file, or until you change
@@ -148,26 +139,26 @@
                           
                         </p>
                         <p>
-                          <pre>
                           <!--etsafe-->
-                          
+                          <pre>
+
   &lt;attrdefault name="format" value="text/html"&gt;
     &lt;content name="chunk_1.txt"&gt;...&lt;/content&gt;
     &lt;content name="chunk_2.txt"&gt;...&lt;/content&gt;
     &lt;content name="chunk_3.txt"&gt;...&lt;/content&gt;
     &lt;content name="chunk_4.txt"&gt;...&lt;/content&gt;
   &lt;/attrdefault&gt;
+                        </pre>
 <!--/etsafe-->
-                                                  </pre>
-                      </p>
+                                              </p>
                       <p>
                         Or, in the "command" style:
                         
                       </p>
                       <p>
-                        <pre>
                         <!--etsafe-->
-                        
+                        <pre>
+
   &lt;attrdefault name="format" value="text/html" /&gt;
 
   &lt;content name="chunk_1.txt"&gt;...&lt;/content&gt;
@@ -176,9 +167,9 @@
   &lt;content name="chunk_4.txt"&gt;...&lt;/content&gt;
 
   &lt;attrdefault name="format" /&gt;
+                      </pre>
 <!--/etsafe-->
-                                              </pre>
-                    </p>
+                                          </p>
                     <p>
                       
                     </p>
@@ -196,13 +187,13 @@
   <tr>
     <td valign="top">
       <strong><a href="http://webmake.taint.org/">WebMake</a>
-       Documentation</strong> (version 2.1)
+       Documentation</strong> (version 2.2)
        
     </td>
     <td valign="top">
       <div align="right">
         
-         [ <a href="metatable.html">Back</a> | <a href="index_06-magic_vars.html">Forward</a> | <a href="index.html">Index</a>
+         [ <a href="metadefault.html">Back</a> | <a href="index_06-magic_vars.html">Forward</a> | <a href="index.html">Index</a>
          | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
          
       </div>

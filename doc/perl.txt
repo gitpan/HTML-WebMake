@@ -38,7 +38,11 @@ so:
 </pre>
 
 Note that this is not STDOUT, it's a local filehandle called ##$outhandle##.
-It __is__ selected as the default output handle, however.
+It __is__ selected as the default output handle, however, so just ##print##
+without a filehandle name will work.
+
+Also, it should be noted that ##perl## is a little more efficient than
+##perlout##, so if you're going all-out for speed, you should use that.
 
 <a href=$(perl)>&lt;{perl}&gt;</a> sections found at the top level of the
 WebMake file will be evaluated during the file-parsing pass, as they

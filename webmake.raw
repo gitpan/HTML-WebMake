@@ -21,11 +21,9 @@ BEGIN {
     $slash = '\\';
   }
 
-  # first, find the common candidates: "lib" and "site_perl" in
+  # first, find the common candidates: "lib" in
   # the same dir as the script. These are likely on all platforms.
   $_ = $bin.$slash. "lib" . $dirtrailer;
-  push (@INC, $_);
-  $_ = $bin.$slash. "site_perl" . $dirtrailer;
   push (@INC, $_);
 
   # next, support UNIX-style /usr-based installation, where the
@@ -33,14 +31,10 @@ BEGIN {
   # or /usr/*/share. This only happens on UNIX afaik.
   if ($slash eq '/') {
     $_ = $bin . "/../lib/webmake";
-    if (-d $_) {
-      push (@INC, "$_/lib"); push (@INC, "$_/site_perl");
-    }
+    if (-d $_) { push (@INC, "$_/lib"); }
 
     $_ = $bin . "/../share/webmake";
-    if (-d $_) {
-      push (@INC, "$_/lib"); push (@INC, "$_/site_perl");
-    }
+    if (-d $_) { push (@INC, "$_/lib"); }
   }
 }
 
@@ -57,7 +51,7 @@ Usage: webmake [option ...]
 Options:
  
   [-b basehref] [-d basedir] [-p] [-D] [-L debuglevel]
-  [-C dir] [-R dir_or_file] [-V] [-F] [-r]
+  [-C dir] [-R dir_or_file] [-V] [-F] [-r] [-o] [-s]
 
 Version: $ver      Home: http://webmake.sourceforge.net/
 
@@ -69,10 +63,10 @@ require HTML::WebMake::Main;
 
 use vars qw{
   $opt_p $opt_b $opt_d $opt_F $opt_D $opt_L $opt_f $opt_R
-  $opt_V $opt_h $opt_r
+  $opt_V $opt_h $opt_r $opt_s $opt_o
 };
 
-getopts ('pFd:b:DL:R:C:f:hrV') or usage();
+getopts ('pFd:b:DL:R:C:f:hrVso') or usage();
 
 if (defined $opt_h) { usage(); }
 if (defined $opt_V) {
@@ -112,6 +106,16 @@ if (defined $opt_f) {
   $f->readfile ($opt_f);
 } else {
   search_for_files();
+}
+
+if ($opt_s || $opt_o) {
+  if ($opt_s) {
+    print join ("\n", $f->source_file_list()), "\n";
+  }
+  if ($opt_o) {
+    print join ("\n", $f->generated_file_list()), "\n";
+  }
+  exit;
 }
 
 $f->make(@ARGV);
@@ -230,6 +234,16 @@ Change to this directory before reading files or generating output.
 If B<dir_or_file> is a directory, change to that directory, or if it is a file,
 change to that file's parent directory, before starting.
 
+=item -s
+
+List source files that would be used to generate this site, one per line.
+
+=item -o
+
+List output files that would be generated to build this site, one per line.
+When you're using CVS to replicate a site, this comes in handy, as you know
+you can safely overwrite changes in these files when doing a C<cvs update>.
+
 =back
 
 =head1 INSTALLATION
@@ -245,9 +259,13 @@ be set.
 =head1 SEE ALSO
 
 C<webmake>
+
 C<ettext2html>
+
 C<ethtml2text>
+
 C<HTML::WebMake>
+
 C<Text::EtText>
 
 =head1 AUTHOR
@@ -257,10 +275,15 @@ Justin Mason E<lt>jm /at/ jmason.orgE<gt>
 =head1 PREREQUISITES
 
 C<HTML::Entities>
+
 C<File::Spec>
+
 C<File::Path>
+
 C<File::Basename>
+
 C<Carp>
+
 C<Cwd>
 
 =head1 COREQUISITES

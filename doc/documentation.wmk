@@ -20,12 +20,13 @@
 
 <!-- include the source EtText files -->
 <contents src="" name="*.txt" format="text/et" listname=all_files />
+<include file="include_datasources.wmk" />
 
 <!-- stylesheets -->
-<contents src="" name="*.css" map="false" />
+<templates src="" name="*.css" map="false" />
 
 <!-- the names and titles of all the sections -->
-<contents src="svfile:sections.tsv" name="*" format="text/html"
+<templates src="svfile:sections.tsv" name="*" format="text/html"
 	namefield=1 valuefield=2 delimiter="|"
 	listname=all_sections map=false
 />
@@ -73,6 +74,7 @@ dump_vars.wmk|dump_vars.wmk|dump all WebMake variables and content items
 sitetree.wmk|sitetree.wmk|WebMake tag to generate a per-page sitemap
 navtree.wmk|navtree.wmk|WebMake tag to generate an alternative per-page sitemap
 safe_tag.wmk|safe_tag.wmk|Tag to ''make safe'' WebMake, EtText or HTML data
+thumbnail_tag.wmk|thumbnail_tag.wmk|Tag to create ''thumbnail'' links for photo albums
 download_tag.wmk|download_tag.wmk|Tag for quick download links to files
 csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated values
 </metatable>
@@ -112,7 +114,7 @@ csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated valu
 
 <!-- Some static bits of HTML for headers and footers... -->
 
-<content name=header>
+<template name=header>
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -139,11 +141,11 @@ csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated valu
   <tr><td>
 
   <h1>$[this.title]</h1>
-</content>
+</template>
 
 <!-- ------------------------------------------------------------------------ -->
 
-<content name=navbar>
+<template name=navbar>
   <table width=100%><tr><td valign=top>
   <strong><a href=http://webmake.taint.org/>WebMake</a>
   Documentation</strong> (version ${WebMake.Version})
@@ -153,11 +155,11 @@ csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated valu
 	| <a href=$(allinone)>All&nbsp;In&nbsp;One</a> ]
   </div>
   </td></tr></table>
-</content>
+</template>
 
 <!-- ------------------------------------------------------------------------ -->
 
-<content name=footer>
+<template name=footer>
   </td></tr></table>
   </td></tr></table>
   </td></tr></table>
@@ -167,7 +169,7 @@ csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated valu
   <img src=$(TOP/)images/BuiltWithWebMake.png ${IMGSIZE} alt="Built With WebMake" border=0></a>
   </div>
   </font></body></html>
-</content>
+</template>
 
 <!-- ------------------------------------------------------------------------ -->
 
@@ -207,20 +209,20 @@ csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated valu
 
 <!-- Generate the index.html file dynamically. -->
 
-<content name=index_section_item>
+<template name=index_section_item>
 <li>
   <h2><a href=index_${section}.html>${section_title}</a></h2>
   <ul>
   ${section_list}
   </ul>
 </li>
-</content>
+</template>
 
-<content name=index_item>
+<template name=index_item>
 <li>
   <p><a href=$[${item}.url]>$[${item}.title]</a> - $[${item}.abstract]</p>
 </li>
-</content>
+</template>
 
 <!-- ------------------------------------------------------------------------ -->
 
@@ -283,18 +285,18 @@ csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated valu
 <!-- ------------------------------------------------------------------------ -->
 <!-- sitemap for navigation -->
 
-<content name=sitemapnode>
+<template name=sitemapnode>
   <li>
     <p>
       <a href=$(url)>${title}</a> - $[${name}.abstract]<br>
       <ul> ${list} </ul>
     </p>
   </li>
-</content>
+</template>
 
-<content name=sitemapleaf>
+<template name=sitemapleaf>
   <li><p><a href=$(url)>${title}</a> - $[${name}.abstract]<br></p></li>
-</content>
+</template>
 
 <out name=docmap file=docmap.html>
   ${header}${mainsitemap}${footer}
@@ -307,11 +309,11 @@ csvtable_tag.wmk|csvtable_tag.wmk|define a HTML table using comma-separated valu
   <wmmeta name=Section value="99-sitemap" />
 </sitemap>
 
-<content name=up></content>
-<content name=next><a href=${url}>Forward</a></content>
-<content name=prev><a href=${url}>Back</a></content>
-<content name=nonext>(Last Page)</content>
-<content name=noprev>(First Page)</content>
+<template name=up></template>
+<template name=next><a href=${url}>Forward</a></template>
+<template name=prev><a href=${url}>Back</a></template>
+<template name=nonext>(Last Page)</template>
+<template name=noprev>(First Page)</template>
 
 <navlinks name=navlinks map=mainsitemap up=up next=next prev=prev
 	nonext=nonext noprev=noprev>

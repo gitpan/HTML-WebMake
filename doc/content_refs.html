@@ -7,7 +7,7 @@
     <title>
       WebMake: Documentation: ${content_refs} - References to Content Chunks
     </title>
-    <meta name="generator" content="WebMake/2.1" />
+    <meta name="generator" content="WebMake/2.2" />
     <style>
       body {
        background-color: #ffffff; 
@@ -58,7 +58,7 @@
         <tr>
           <td valign="top">
             <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
@@ -97,7 +97,7 @@
                           up to 30 levels deep.
                           
                         </p>
-                        <p>
+                        <a name="Default_Values"><h3>Default Values</h3></a><p>
                           If you wish to refer to a content item or variable, but are not sure if it
                           exists, you can provide a default value by following the content name
                           with a question mark and the default value.
@@ -108,39 +108,111 @@
                             <strong>${<em>name</em>?<em>defaultvalue</em>}</strong>
                           </p>
                         </blockquote>
-                        <p>
+                        <a name="Parameterized_References"><h3>Parameterized References</h3></a><p>
+                          Content references can also be <em>parameterised</em> references; this means
+                          that they act like function calls, in a way, allowing you to pass
+                          in parameters. They look like this:
                           
                         </p>
+                        <blockquote>
+                          <p>
+                            <strong>${<em>name</em>: <em>parameter</em>="<em>value</em>" ...}</strong>
+                          </p>
+                        </blockquote>
+                        <p>
+                          The parameters are declared in the XML style.
+                          
+                        </p>
+                        <blockquote>
+                          <p>
+                            <strong>Note:</strong> the parameters' values must not contain further content
+                             references, due to a limitation in the way WebMake parses
+                             content refs. If you want to refer to a content item from
+                             within a template, pass in the <strong>name</strong> of the content item,
+                             and get the template to expand it; see the example below.
+                            
+                          </p>
+                        </blockquote>
+                        <p>
+                          For example, if you set up a template item like this:
+                          
+                        </p>
+                        <p>
+                          <!--etsafe-->
+                          <pre>
+
+	&lt;template name="mytemplate"&gt;
+		You passed in &#36;{name}, and its value is \"&#36;{&#36;{name}}\".
+	&lt;/template&gt;
+                        </pre>
+<!--/etsafe-->
+                                              </p>
+                      <p>
+                        and a content item like this:
+                        
                       </p>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-    <table width="100%">
-      <tr>
-        <td valign="top">
-          <strong><a href="http://webmake.taint.org/">WebMake</a>
-           Documentation</strong> (version 2.1)
-           
-        </td>
-        <td valign="top">
-          <div align="right">
-            
-             [ <a href="index_04-var_refs.html">Back</a> | <a href="url_refs.html">Forward</a> | <a href="index.html">Index</a>
-             | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
-             
-          </div>
-        </td>
-      </tr>
-    </table>
-    <div align="right">
-      <a href="http://webmake.taint.org/"><img src="images/BuiltWithWebMake.png" alt="Built With WebMake" border="0" width="88" height="31" /></a>
-    </div>
-  </font>
+                      <p>
+                        <!--etsafe-->
+                        <pre>
+
+	&lt;content name="foo"&gt;
+		Hi, I'm foo!
+	&lt;/content&gt;
+                      </pre>
+<!--/etsafe-->
+                                          </p>
+                    <p>
+                      Then a reference to:
+                      
+                    </p>
+                    <blockquote>
+                      <p>
+                        <strong>${mytemplate: name="foo"}</strong>
+                      </p>
+                    </blockquote>
+                    <p>
+                      will expand to:
+                      
+                    </p>
+                    <blockquote>
+                      <p>
+                        **You passed in foo, and its value is \"Hi, I'm foo!\".
+                        
+                      </p>
+                    </blockquote>
+                    <p>
+                      
+                    </p>
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <strong><a href="http://webmake.taint.org/">WebMake</a>
+       Documentation</strong> (version 2.2)
+       
+    </td>
+    <td valign="top">
+      <div align="right">
+        
+         [ <a href="index_04-var_refs.html">Back</a> | <a href="url_refs.html">Forward</a> | <a href="index.html">Index</a>
+         | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
+         
+      </div>
+    </td>
+  </tr>
+</table>
+<div align="right">
+  <a href="http://webmake.taint.org/"><img src="images/BuiltWithWebMake.png" alt="Built With WebMake" border="0" width="88" height="31" /></a>
+</div>
+</font>
 </body>
 </html>

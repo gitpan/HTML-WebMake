@@ -7,7 +7,7 @@
     <title>
       WebMake: Documentation: Setting up CVS and ssh for webmake.cgi HOWTO
     </title>
-    <meta name="generator" content="WebMake/2.1" />
+    <meta name="generator" content="WebMake/2.2" />
     <style>
       body {
        background-color: #ffffff; 
@@ -58,7 +58,7 @@
         <tr>
           <td valign="top">
             <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
@@ -103,7 +103,7 @@
                         </p>
                         <p>
                           The client machines need to be able to connect to the server machine over the
-                          network; and if you're planning to use <a href="cgi.html">webmake.cgi</a>, they need to be able to do
+                          network; and if you're planning to use <a href="cgistart.html">webmake.cgi</a>, they need to be able to do
                           this without passwords. To do this securely, you'll need to set up an SSH
                           server and clients, and generate public/private key pairs. I'll cover some of
                           this where possible, but you need to be familiar with SSH in general.
@@ -122,7 +122,7 @@
                           client machine to run cvs commands on the server machine. If an attacker
                           subverted the client machine, they may be able to use this to gain shell
                           access to your account on the server machine. If this is a problem, it would
-                          probably be better not to set up <a href="cgi.html">webmake.cgi</a>.
+                          probably be better not to set up <a href="cgistart.html">webmake.cgi</a>.
                           
                         </p>
                         <p>
@@ -138,7 +138,7 @@
                         </p>
                         <p>
                           <pre>
-                          <!--etsafe-->
+<!--etsafe-->
                           
 	mkdir /cvsroot;
 	cvs -d /cvsroot init
@@ -158,9 +158,9 @@
                       </p>
                       <p>
                         <pre>
-                        <!--etsafe-->
+<!--etsafe-->
                         
-	ssh-keygen -P '''' -N ''''
+	ssh-keygen -P "" -N ""
 <!--/etsafe-->
                                               </pre>
                     </p>
@@ -170,19 +170,19 @@
                       
                     </p>
                     <p>
-                      Any machines you plan to run <a href="cgi.html">webmake.cgi</a> on, you will also need to generate a
+                      Any machines you plan to run <a href="cgistart.html">webmake.cgi</a> on, you will also need to generate a
                       key-pair for, so that the user the web server runs CGI scripts as will be able
                       to communicate without passwords. Here's how (run these as root):
                       
                     </p>
                     <p>
                       <pre>
-                      <!--etsafe-->
+<!--etsafe-->
                       
 	mkdir ~apache/.ssh
 	chmod 700 ~apache/.ssh
 	chown apache ~apache/.ssh
-	su apache -s/bin/sh -c 'ssh-keygen -P '''' -N '''''
+	su apache -s/bin/sh -c 'ssh-keygen -P "" -N ""'
 <!--/etsafe-->
                                           </pre>
                   </p>
@@ -201,17 +201,17 @@
                   </p>
                   <a name="SETTING_UP_NO_PASSWORD_LOGINS"><h1>SETTING UP NO-PASSWORD LOGINS</h1></a><p>
                     This is optional for editing the site by hand using CVS, but if you're using
-                    <a href="cgi.html">webmake.cgi</a>, it will require that this works.
+                    <a href="cgistart.html">webmake.cgi</a>, it will require that this works.
                     
                   </p>
                   <p>
-                    Here's how to set it up for <a href="cgi.html">webmake.cgi</a>. Get the public key you just
+                    Here's how to set it up for <a href="cgistart.html">webmake.cgi</a>. Get the public key you just
                     generated for the web user (run this as root):
                     
                   </p>
                   <p>
                     <pre>
-                    <!--etsafe-->
+<!--etsafe-->
                     
   	cat ~apache/.ssh/identity.pub
 <!--/etsafe-->
@@ -224,7 +224,7 @@
                 </p>
                 <p>
                   <pre>
-                  <!--etsafe-->
+<!--etsafe-->
                   
 	1024 35
 	15059408357788156311432762154619731093579709369085525651528959
@@ -243,7 +243,7 @@
               </p>
               <p>
                 <pre>
-                <!--etsafe-->
+<!--etsafe-->
                 
 	vi ~/.ssh/authorized_keys
 <!--/etsafe-->
@@ -255,9 +255,9 @@
             </p>
             <p>
               <pre>
-              <!--etsafe-->
+<!--etsafe-->
               
-  	command=''cvs server'',no-port-forwarding,no-pty <em>...yourpublickey...</em>
+  	command="cvs server",no-port-forwarding,no-pty <em>...yourpublickey...</em>
 <!--/etsafe-->
                           </pre>
           </p>
@@ -274,7 +274,7 @@
           </p>
           <p>
             <pre>
-            <!--etsafe-->
+<!--etsafe-->
             
 	chmod 0600 ~/.ssh/authorized_keys
 <!--/etsafe-->
@@ -295,7 +295,7 @@
         </p>
         <p>
           <pre>
-          <!--etsafe-->
+<!--etsafe-->
           
 	echo test | su apache -s/bin/sh -c 'ssh <a href="mailto:jm@localhost">jm@localhost</a> cvs server'
 <!--/etsafe-->
@@ -308,7 +308,7 @@
       </p>
       <p>
         <pre>
-        <!--etsafe-->
+<!--etsafe-->
         
 error  unrecognized request `test'
 <!--/etsafe-->
@@ -326,7 +326,7 @@ error  unrecognized request `test'
     </p>
     <p>
       <pre>
-      <!--etsafe-->
+<!--etsafe-->
       
 	export CVS_RSH=ssh
 <!--/etsafe-->
@@ -340,7 +340,7 @@ error  unrecognized request `test'
   </p>
   <p>
     Create a WebMake XML configuration file for the site, if one is not already
-    present. <a href="cgi.html">webmake.cgi</a> will <em>require</em> that a site has a .wmk file.
+    present. <a href="cgistart.html">webmake.cgi</a> will <em>require</em> that a site has a .wmk file.
     
   </p>
   <p>
@@ -357,7 +357,7 @@ error  unrecognized request `test'
   </p>
   <p>
     <pre>
-    <!--etsafe-->
+<!--etsafe-->
     
 	webmake_cvs_import <a href="mailto:jm@localhost">jm@localhost</a>:/cvsroot jmason.org
 <!--/etsafe-->
@@ -369,30 +369,35 @@ error  unrecognized request `test'
   
 </p>
 <a name="CHECKING_OUT_THE_SITE"><h1>CHECKING OUT THE SITE</h1></a><p>
-  On the clients, create a directory for <a href="cgi.html">webmake.cgi</a> to work in, in the web
+  On the clients, create a directory for <a href="cgistart.html">webmake.cgi</a> to work in, in the web
   server's HTML tree, then check out the CVS tree:
   
 </p>
 <p>
   <pre>
-  <!--etsafe-->
+<!--etsafe-->
   
 	mkdir /var/www/html/jmason.org
-
 	cd /var/www/html/jmason.org
-
 	cvs -d :ext:<a href="mailto:jm@localhost">jm@localhost</a>:/cvsroot checkout jmason.org
 <!--/etsafe-->
   </pre>
 </p>
 <p>
-  For some reason, "cvs checkout" leaves the files in a subdir. We don't want
-  that, so move them nearer:
+  <em>Note:</em> cvs checkout has a few idiosyncrasies; notably, the directory you're
+  checking out must not exist in your filesystem, otherwise it will not populate
+  it with the CVS data files it requires to do check-ins and updates later.
+  
+</p>
+<p>
+  Also, this directory must have the same name it has in the CVS repository
+  (<strong>jmason.org</strong> in the example above). We don't want that, so move them
+  nearer:
   
 </p>
 <p>
   <pre>
-  <!--etsafe-->
+<!--etsafe-->
   
 	mv jmason.org/* . ; rmdir jmason.org
 <!--/etsafe-->
@@ -404,27 +409,27 @@ error  unrecognized request `test'
 </p>
 <p>
   <pre>
-  <!--etsafe-->
+<!--etsafe-->
   
 	chown -R apache /var/www/html/jmason.org
 <!--/etsafe-->
   </pre>
 </p>
 <p>
-  so that <a href="cgi.html">webmake.cgi</a> can read and write the files. (You could also chgrp them
+  so that <a href="cgistart.html">webmake.cgi</a> can read and write the files. (You could also chgrp them
   to <strong>www</strong> or whatever the web server user uses as its gid, and <strong>chmod -R
   g+w</strong> them.)
   
 </p>
 <p>
-  Next, copy the "<a href="cgi.html">webmake.cgi</a>" script to your web server's cgi-bin directory:
+  Next, copy the "<a href="cgistart.html">webmake.cgi</a>" script to your web server's cgi-bin directory:
   
 </p>
 <p>
   <pre>
-  <!--etsafe-->
+<!--etsafe-->
   
-	cp webmake.cgi /cgi-bin/editmodule.cgi
+	cp webmake.cgi /cgi-bin/editsite.cgi
 <!--/etsafe-->
   </pre>
 </p>
@@ -434,7 +439,7 @@ error  unrecognized request `test'
 </p>
 <p>
   <pre>
-  <!--etsafe-->
+<!--etsafe-->
   
 	&#36;FILE_BASE = '/var/www/html/jmason.org';
 <!--/etsafe-->
@@ -442,13 +447,15 @@ error  unrecognized request `test'
 </p>
 <p>
   Note that if you've adopted the same convention as I use for the module name,
-  you can use <strong><em>HOST</em></strong> as a shortcut in this line to mean the hostname of
-  the site being edited. This is handy so that you can use the same CGI script
-  to edit multiple sites in different virtual servers.
+  you can use <strong>_<!-- -->
+  _HOST_<!-- -->
+  _</strong> as a shortcut in this line to mean the
+  hostname of the site being edited. This is handy, as it allows you to use the
+  same CGI script to edit multiple sites, in different virtual servers.
   
 </p>
 <p>
-  Load up <strong><a href="http://localhost/cgi-bin/editmodule.cgi">http://localhost/cgi-bin/editmodule.cgi</a></strong> in a web browser, and it
+  Load up <strong><a href="http://localhost/cgi-bin/editsite.cgi">http://localhost/cgi-bin/editsite.cgi</a></strong> in a web browser, and it
   should have worked; you should see a list of "sites" (ie. .wmk files) to
   choose from.
   
@@ -485,7 +492,7 @@ error  unrecognized request `test'
   <tr>
     <td valign="top">
       <strong><a href="http://webmake.taint.org/">WebMake</a>
-       Documentation</strong> (version 2.1)
+       Documentation</strong> (version 2.2)
        
     </td>
     <td valign="top">

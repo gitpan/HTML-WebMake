@@ -76,6 +76,7 @@ use HTML::WebMake::WMLinkGlossary;
 use vars	qw{
   	@ISA $VERSION
 	$VERBOSE $DEBUG $DEFAULT_CLEAN_FEATURES $HTML_LOGGING
+	$SUBST_EVAL $SUBST_DEP_IGNORE $SUBST_META
 };
 
 @ISA = qw();
@@ -86,7 +87,11 @@ sub Version { $VERSION; }
 ###########################################################################
 
 $DEFAULT_CLEAN_FEATURES = "pack addimgsizes cleanattrs indent ".
-				"addxmlslashes fixcolors";
+				"addxmlslashes fixcolors fixhrefs";
+
+$SUBST_EVAL		= '(!E)';
+$SUBST_DEP_IGNORE	= '(!D)';
+$SUBST_META		= '(!M)';
 
 ###########################################################################
 
@@ -147,7 +152,7 @@ sub new {
   my $self = shift;
   $self->{paranoid}		||= 0;
   $self->{debug}		||= 0;
-  $self->{verbose}		||= 1;
+  if (!defined $self->{verbose}) { $self->{verbose} = 1; }
   $self->{base_href}		||= "";
   $self->{base_dir}		||= "";
   $self->{risky_fast_rebuild}	||= 0;
@@ -158,6 +163,8 @@ sub new {
 
   $self->{files}	= { };
   $self->{file_modtimes} = { };
+
+  $self->{source_files} = [ ];
 
   $self->{outs}		= { };
   $self->{out_order}	= [ ];
@@ -227,9 +234,9 @@ sub init_for_making {
   $self->{metadata} = new HTML::WebMake::Metadata ($self);
 
   $self->{ignore_for_dependencies} =
-  			new HTML::WebMake::File ($self, "(dep_ignore)");
+  			new HTML::WebMake::File ($self, $SUBST_DEP_IGNORE);
   $self->{meta_ignore_for_dependencies} =
-  			new HTML::WebMake::File ($self, "(meta)");
+  			new HTML::WebMake::File ($self, $SUBST_META);
 
   # define some builtin magic content items now.
   $self->set_unmapped_content ("WebMake.GeneratorString",
@@ -422,6 +429,8 @@ sub readfile {
 
   $wmkf->parse ($_);
   $self->{files}->{$fname} = $wmkf;
+
+  $self->add_source_files ($fname);
   1;
 }
 
@@ -509,7 +518,7 @@ sub add_out {
 
 # -------------------------------------------------------------------------
 
-sub _add_metadata_content_item ($$$$$) {
+sub set_metadata_content_item ($$$$$) {
   my ($self, $name, $file, $attrs, $text) = @_;
 
   if (!defined $self->{metadatas}->{$name}) {
@@ -568,6 +577,22 @@ sub set_unmapped_content ($$$) {
 
 # -------------------------------------------------------------------------
 
+sub set_transient_content ($$$) {
+  my ($self, $key, $val) = @_;
+  dbg2 ("set \"$key\" (transient)");
+
+  return new HTML::WebMake::NormalContent ($key,
+  	$self->{ignore_for_dependencies},
+	  {
+	    'format'		=> 'text/html',
+	    'map'		=> 'false',
+	    'up'		=> $HTML::WebMake::SiteMap::ROOTNAME,
+	  },
+	$val, undef);
+}
+
+# -------------------------------------------------------------------------
+
 sub set_mapped_content ($$$$) {
   my ($self, $key, $val, $upname) = @_;
   dbg2 ("set \"$key\" (up = \"$upname\")");
@@ -594,12 +619,12 @@ sub metadata_to_content {
   my $base = $basecont->{name};
   my $wmkf = new HTML::WebMake::File ($self, $basecont->get_filename());
 
-  dbg2 ("set metadata \"$key\": base content=\"$base\"");
+  dbg2 ("created metadata content \$\[$key\]: base content=\"$base\"");
   my $attrs = {
     'map'		=> 'false',
     'up'		=> $base,
   };
-  $self->_add_metadata_content_item ($key, $wmkf, $attrs, $val);
+  $self->set_metadata_content_item ($key, $wmkf, $attrs, $val);
   return $self->_curly_subst ($from, $key, 0);
 }
 
@@ -628,11 +653,11 @@ sub add_metadata {
   $attrs->{up} = $from;
 
   if ($setthisdotmetas) {
-    $self->_add_metadata_content_item ($thiskey, $wmkf, $attrs, $val);
+    $self->set_metadata_content_item ($thiskey, $wmkf, $attrs, $val);
     push (@{$self->{this_metas_added}}, $thiskey);
   }
 
-  $self->_add_metadata_content_item ($fullkey, $wmkf, $attrs, $val);
+  $self->set_metadata_content_item ($fullkey, $wmkf, $attrs, $val);
   $self->getcache()->put_metadata ($fullkey, $val);
 }
 
@@ -758,7 +783,7 @@ sub add_navlinks {
   # from now on.  Tell the sitemapper to generate the link
   # metadata on this run.
   $self->getmapper()->{set_navlinks} = 1;
-  $self->curly_subst ("(eval)", $map);
+  $self->curly_subst ($HTML::WebMake::Main::SUBST_EVAL, $map);
   $self->getmapper()->{set_navlinks} = 0;
 
 
@@ -781,7 +806,7 @@ sub add_breadcrumbs {
   my ($self, $name, $map, $file, $attrs, $text) = @_;
 
   # load the map so the "up" links will be present
-  $self->curly_subst ("(eval)", $map);
+  $self->curly_subst ($HTML::WebMake::Main::SUBST_EVAL, $map);
 
   $attrs->{is_breadcrumbs} = 1;
   $attrs->{breadcrumb_level_name} = $attrs->{level};
@@ -802,7 +827,7 @@ sub add_breadcrumbs {
 # -------------------------------------------------------------------------
 
 sub subst {
-  my ($self, $from, $str) = @_;
+  my ($self, $from, $str, $evaluatingtags) = @_;
 
   my $current_subst = $self->{current_subst};
   if (!defined $str) { return undef; }
@@ -819,6 +844,10 @@ sub subst {
   {
     $current_subst->{level}++;
     $self->eval_code_at_ref ($from, $str);
+
+    if ($evaluatingtags) {
+      $self->getusertags()->subst_tags ($from, $str);
+    }
 
     # profiling optimisation, quicker to check for one char than do
     # all the matches and subs below
@@ -1010,9 +1039,9 @@ sub _subst_open {
     }
   }
 
-  if (!defined $dotdots) { $dotdots = ""; }
-  if (!defined $filename) { $filename = "(eval)"; }
-  if (!defined $outname) { $outname = "(eval)"; }
+  # if (!defined $dotdots) { $dotdots = ""; }
+  if (!defined $filename) { $filename = $SUBST_EVAL; }
+  if (!defined $outname) { $outname = $SUBST_EVAL; }
   if (!defined $useurls) { $useurls = 1; }
 
   $self->{current_subst} = new HTML::WebMake::SubstCtx
@@ -1038,8 +1067,19 @@ sub _curly_subst {
   my $current_subst = $self->{current_subst};
   if ($current_subst->{inf_loop}) { $str = ""; goto ret; }
 
+  # default values: ${foo?Untitled}
   my $defval = undef;
   if ($key =~ s/\?([^\?]*)$//) { $defval = $1; }
+
+  # support ${templateName: parameter="foo"}
+  if ($key =~ s/: (.*)$//) {
+    my $attrs = $self->{util}->parse_xml_tag_attributes
+    		("\${$key}", $1, $from, qw());
+
+    foreach my $var (keys %{$attrs}) {
+      $self->_eval_set ($from, $var, $attrs->{$var});
+    }
+  }
 
   my $cont;
 
@@ -1098,8 +1138,11 @@ sub _curly_subst {
   if (defined $meta) { $str = $meta; goto ret; }
 
   # agh, I give up
-  if (defined $defval) { $str = $defval; goto ret; }
-  vrb ("no value defined for content \${$key} in \"$from\".");
+  if (defined $defval) {
+    $str = $defval;
+  } else {
+    vrb ("no value defined for content \${$key} in \"$from\".");
+  }
 
 ret:
   $str;
@@ -1132,7 +1175,7 @@ sub _round_subst {
     $str = $self->{locations}->{$key};
   }
 
-  if (!defined $str) {
+  if ((!defined $str || $str eq '') && $key ne 'TOP/') {
     if (defined $defval) { return $defval; }
     vrb ("no value defined for output URL \$($key) in \"$from\".");
     return "";
@@ -1142,14 +1185,25 @@ sub _round_subst {
 
   # make it a valid relative URL
   if ($str !~ /^\// && $str !~ /^[-_a-zA-Z0-9]:/) {
-    $str = $self->{current_subst}->{dotdots} . $str;
+    if (!defined $self->{current_subst}->{dotdots}) {
+      # carp "oops? need to defer URL ref here: \"$str\"";
+    } else {
+      $str = $self->{current_subst}->{dotdots} . $str;
+    }
   }
 
   if ($self->{base_href} ne '') {
-    $self->{base_href}.'/'.$str;
-  } else {
-    $str;
+    $str = $self->{base_href}.'/'.$str;
   }
+
+  # trim out foo/bar/../../
+  if ($str =~ m,/$,) {
+    $str = HTML::WebMake::Main::canon_path ($str).'/';
+  } else {
+    $str = HTML::WebMake::Main::canon_path ($str);
+  }
+  $str =~ s,\\,/,gs;		# urls always have / instead of \
+  $str;
 }
 
 # -------------------------------------------------------------------------
@@ -1198,6 +1252,8 @@ sub subst_metadata {
     # load the content it may be defined in; that may cause it
     # to be loaded.
     $cont->load_metadata ($base, $key);
+    $self->add_content_dependency ($cont);
+
     $meta = $self->getcache()->get_metadata ($key);
     if (defined $meta) {
       return $self->metadata_to_content ($from, $key, $meta, $cont);
@@ -1277,22 +1333,17 @@ sub get_deferred_builtin_content {
 
 sub source_file_list {
   my ($self) = @_;
-
-  my %uniq = ();
-  foreach my $deppair (@{$self->{content_deps_required}}) {
-    # $deppair looks like: [ $fname, $self->{cont_dependencies} ]
-    my $dephash = $deppair->[1];
-    foreach my $infile (keys %{$dephash}) {
-      $uniq{$infile} = 1;
-    }
-  }
-
-  return sort keys %uniq;
+  return @{$self->{source_files}};
 }
 
 sub generated_file_list {
   my ($self) = @_;
   return sort keys %{$self->{outs}};
+}
+
+sub add_source_files {
+  my $self = shift;
+  push (@{$self->{source_files}}, @_);
 }
 
 # -------------------------------------------------------------------------
@@ -1441,6 +1492,10 @@ sub add_image_size {
   my $fname = $attrs->{src};
   $self->subst ($from, \$fname);
 
+  if ($fname =~ /^!!/) {		# magic string indicating CGI use
+    goto failed;
+  }
+
   if ($self->{base_dir} ne '') {
     $fname = File::Spec->catfile ($self->{base_dir}, $fname);
   }
@@ -1497,38 +1552,55 @@ failed:
 
 sub erfcatdir {
   return $_[1] if (File::Spec->file_name_is_absolute ($_[1]));
+  return $_[1] if ($_[0] eq '');
   return File::Spec->catdir ($_[0], $_[1]);
 }
 
 sub erfcatfile {
   return $_[1] if (File::Spec->file_name_is_absolute ($_[1]));
+  return $_[1] if ($_[0] eq '');
   return File::Spec->catfile ($_[0], $_[1]);
 }
 
 sub canon_path {
   my ($fname, $reldir) = @_;
-  return $fname if ($fname =~ /^\//);	# absolute path
+  # return $fname if ($fname =~ /^\//);	# absolute path
 
   $fname = File::Spec->canonpath ($fname);
-  $fname =~ s,/\./,/,g;
-  $fname =~ s,^\./,,g;
+  1 while $fname =~ s,/\./,/,g;
+  1 while $fname =~ s,^\./,,g;
 
-  if ($reldir eq '') { return $fname; }
+  if (defined($reldir) && $reldir ne '') {
+    # next, try trimming "../../d1/d2/foo" down to "foo" for links
+    # in the "d1/d2" directory. tricky!  I should really have gone
+    # for previous code that does this.
 
-  # next, try trimming "../../d1/d2/foo" down to "foo" for links
-  # in the "d1/d2" directory. tricky!  I should really have gone
-  # for previous code that does this.
+    my $dotdots = '../';
+    $dotdots .= '../' while ($reldir =~ m,[\/\\],g);
+    $dotdots .= $reldir;		# "../../d1/d2"
 
-  my $dotdots = '../';
-  $dotdots .= '../' while ($reldir =~ m,[\/\\],g);
-  $dotdots .= $reldir;		# "../../d1/d2"
-
-  my $rhs = '';
-  while ($dotdots ne '') {
-    last if ($fname =~ s,^\Q${dotdots}\E[\/\\],${rhs},);
-    last unless ($dotdots =~ s,[\/\\]([^\/\\]+)$,,);
-    $rhs .= '../';
+    my $rhs = '';
+    while ($dotdots ne '') {
+      last if ($fname =~ s,^\Q${dotdots}\E[\/\\],${rhs},);
+      last unless ($dotdots =~ s,[\/\\]([^\/\\]+)$,,);
+      $rhs .= '../';
+    }
   }
+
+  # and now trim off useless dir navigation like "foo/bar/../../baz"
+  # down to "baz".
+
+  # first, deal with "foo/bar/../../[whatever]"
+  1 while $fname =~ s,^[^/][^\./]*?/+\.\./,,g;
+
+  # then "[whatever]/foo/bar/../../[whatever]"
+  1 while $fname =~ s,/[^/][^\./]*?/+\.\./,/,g;
+
+  # then "[whatever]/foo/bar/../.."
+  1 while $fname =~ s,/[^/][^\./]*?/+\.\.$,,g;
+
+  # and finally tidy up bonus slashes
+  $fname =~ s,//+,/,gs;
 
   return $fname;
 }
@@ -1561,13 +1633,20 @@ sub expand_relative_filename {
 
     foreach my $dir (@searchpath) {
       my $reldir = shift @relsearchpath;
-      my $relfname = erfcatfile ($topdir, erfcatfile ($reldir, $fname));
       my $realfname = erfcatfile ($topdir, erfcatfile ($dir, $fname));
+      my $relfname = erfcatfile ($topdir, erfcatfile ($reldir, $fname));
+
+      # canonicalise the path BEFORE checking for its existence. This
+      # is necessary, because a file path that contains "data/foo/../../blah"
+      # will fail if "data/foo" dirs do not exist, but will pass if
+      # it's canon'ed down to just "blah".
+      #
+      # warn "JMD searching $reldir $realfname $relfname";
+      $realfname = canon_path ($realfname, $outdir);
+      $relfname = canon_path ($relfname, $outdir);
+      # warn "JMD post-searching $realfname $realfname";
 
       if (-e $realfname) {
-	$realfname = canon_path ($realfname, $outdir);
-	$relfname = canon_path ($relfname, $outdir);
-
 	return ($realfname, $relfname);
       }
     }
@@ -1586,7 +1665,7 @@ sub add_content_dependency {
 
   my $fname = $cont->get_filename();
 
-  if ($fname eq '(eval)') {
+  if ($fname eq $SUBST_EVAL) {
     if ($self->{risky_fast_rebuild}) {
       dbg2 ("dependency: ". $cont->{name}.": [perl code, ignored]");
     } else {
@@ -1595,12 +1674,12 @@ sub add_content_dependency {
     }
     return;
   }
-  elsif ($fname eq '(dep_ignore)') {
-    dbg2 ("dependency: ". $cont->{name}.": [ignored as a dependency]");
+  elsif ($fname eq $SUBST_DEP_IGNORE) {
+    # dbg2 ("dependency: ". $cont->{name}.": [ignored as a dependency]");
     return;
   }
-  elsif ($fname eq '(meta)') {
-    dbg2 ("dependency: ". $cont->{name}.": [metadata, not tracked]");
+  elsif ($fname eq $SUBST_META) {
+    # dbg2 ("dependency: ". $cont->{name}.": [metadata, not tracked]");
     return;
   }
 
@@ -1609,7 +1688,7 @@ sub add_content_dependency {
       die "$fname has no modtime recorded for dependencies";
     }
     if ($fname =~ m{\Q$self->{perl_lib_dir}\E}o) {
-      dbg2 ("dependency: ". $cont->{name}.": [perl lib, not tracked]");
+      # dbg2 ("dependency: ". $cont->{name}.": [perl lib, not tracked]");
       return;
     }
     dbg2 ("dependency: ". $cont->{name}.": $fname");
@@ -1664,29 +1743,28 @@ sub cached_get_location_modtime {
 
 # -------------------------------------------------------------------------
 
-=item $f->make ()
+=item $f->make (@fnames)
 
-Make all outputs, based on the WebMake files read earlier.
+Make either the files named by $fnames (or all outputs if $fname is not
+supplied), based on the WebMake files read earlier.
 
 =cut
 
 sub make {
-  my ($self, $fname) = @_;
+  my ($self, @fnames) = @_;
 
   $self->{renames_required} = [ ];
   $self->{content_deps_required} = [ ];
 
-  if (!defined $fname || $fname eq '') {
-    foreach my $outf (@{$self->{out_order}}) {
-      $self->make_file ($outf);
+  if ($#fnames < 0) {
+    @fnames = @{$self->{out_order}};
+  }
 
-      $self->{current_tick}++;
-      if ($self->{current_tick} % 50 == 0) {
-	$self->gc_contents();
-      }
-    }
-  } else {
-    $self->make_file ($fname);
+  foreach my $outf (@fnames) {
+    $self->make_file ($outf);
+
+    $self->{current_tick}++;
+    if ($self->{current_tick} % 50 == 0) { $self->gc_contents(); }
   }
 
   my $tries = 0;
@@ -1725,6 +1803,30 @@ sub make {
     $self->getcache()->set_content_deps ($fname, %{$deps});
   }
 }
+
+# -------------------------------------------------------------------------
+
+=item $pagetext = $f->make_to_string ($fname)
+
+Make the file named by $fname, and output its text to STDOUT, based on the
+WebMake files read earlier.
+
+=cut
+
+sub make_to_string {
+  my ($self, $fname) = @_;
+
+  $self->{making_to_string} = 1;
+  $self->{making_to_string_output} = '';
+
+  $self->make_file ($fname);
+
+  my $out = $self->{making_to_string_output};
+  delete $self->{making_to_string_output};
+  return $out;
+}
+
+# -------------------------------------------------------------------------
 
 sub make_file ($$) {
   my ($self, $fname) = @_;
@@ -1773,15 +1875,19 @@ sub make_file ($$) {
   my $txt = $out->get_text();
   $self->strip_metadata ($fname, \$txt);
   $self->subst_deferred_refs ($fname, \$txt);
-  $self->_subst_close();				#}
 
   if ($txt =~ /{!!WMDEFER/) {
     $self->make_file_defer ($fname, $out, $outfname, $txt);
   } else {
     $self->make_file_finish ($fname, $out, $outfname, $txt);
   }
+
+  $self->_subst_close();				#}
+
   1;
 }
+
+# -------------------------------------------------------------------------
 
 sub make_file_finish ($$$) {
   my ($self, $fname, $out, $outfname, $txt) = @_;
@@ -1814,7 +1920,8 @@ sub make_file_finish ($$$) {
     $self->fail ("bad filename: $outfname"); return;
   }
 
-  if ($self->{force_output} == 0 && -f $outfname) {
+  if (!$self->{making_to_string} && $self->{force_output} == 0 && -f $outfname)
+  {
     my $curtxt;
     if ((-s $outfname == length($txt))
       	&& (open (IN, "<$outfname"))
@@ -1831,22 +1938,27 @@ sub make_file_finish ($$$) {
   vrb ("making: $outfname");
   my $newfname = $outfname.".new";
 
-  if (!open (OUT, ">$newfname")) {
-    # make the dir, just in case that was the problem
-    (-f $newfname) or mkpath (dirname ($newfname));
-    # and try again...
+  if ($self->{making_to_string}) {
+    $self->{making_to_string_output} = $txt;
+
+  } else {
     if (!open (OUT, ">$newfname")) {
+      # make the dir, just in case that was the problem
+      (-f $newfname) or mkpath (dirname ($newfname));
+      # and try again...
+      if (!open (OUT, ">$newfname")) {
+	$self->fail ("Cannot write: $newfname"); return;
+      }
+    }
+    print OUT $txt;
+    if (!close (OUT)) {
       $self->fail ("Cannot write: $newfname"); return;
     }
-  }
-  print OUT $txt;
-  if (!close (OUT)) {
-    $self->fail ("Cannot write: $newfname"); return;
-  }
 
-  push (@{$self->{renames_required}}, [ $newfname, $outfname ]);
-  push (@{$self->{content_deps_required}}, [ $fname,
-				    $self->{cont_dependencies} ]);
+    push (@{$self->{renames_required}}, [ $newfname, $outfname ]);
+    push (@{$self->{content_deps_required}}, [ $fname,
+				      $self->{cont_dependencies} ]);
+  }
   1;
 }
 
@@ -1854,8 +1966,14 @@ sub make_file_finish ($$$) {
 
 sub make_file_defer {
   my ($self, $fname, $out, $outfname, $txt) = @_;
+
+  if ($self->{making_to_string}) {
+    die "cannot defer writes when making to string!";
+  }
+
   dbg ("making (deferring write, some URLs are still unknown): $outfname");
   $self->{need_rewrite_for_deferred_urls}->{$fname} = $txt;
+  $self->{need_rewrite_subst_context}->{$fname} = $self->{current_subst};
 }
 
 sub finish_deferred_files {
@@ -1868,11 +1986,18 @@ sub finish_deferred_files {
   {
     dbg ("fixing URLs in deferred out file: $fname");
     my $txt = $self->{need_rewrite_for_deferred_urls}->{$fname};
+    my $ctx = $self->{need_rewrite_subst_context}->{$fname};
+
+    $self->_subst_open($ctx->{filename}, $ctx->{outname},
+    		$ctx->{dotdots}, $ctx->{format}, $ctx->{useurls});
 
     #{
+    $txt =~ s/{!!WMDEFER_dotdots}/$ctx->{dotdots}/gs;
     $txt =~ s/{!!WMDEFER_content_url:([^}]+)}/
       $self->rewrite_a_deferred_url($1, $give_up_if_still_deferred);
     /ges;
+
+    $self->_subst_close();
 
     #{
     if ($txt =~ /{!!WMDEFER_content_url:[^}]+}/) {
@@ -1958,28 +2083,32 @@ sub depend_check ($$$) {
 sub check_content_dep ($$$$) {
   my ($self, $dep, $fname, $outmod) = @_;
 
-  if ($dep eq '(eval)') {
+  if ($fname eq $SUBST_EVAL) {
+    dbg ("subst from eval code (always rebuilt)");
+    return 0;
+  }
+  if ($fname eq $SUBST_DEP_IGNORE) { return 1; }
+
+  if ($dep eq $SUBST_EVAL) {
     dbg ("$fname depends on eval code (always rebuilt)");
     return 0;
   }
-  if ($dep eq '(dep_ignore)') {
-    return 1;
-  }
+  if ($dep eq $SUBST_DEP_IGNORE) { return 1; }
 
   my $prevmod = $self->getcache()->get_modtime ($dep);
+  if (!defined $prevmod) { return 0; }
   $prevmod ||= 0;
 
   my $nowmod = $self->cached_get_location_modtime ($dep);
+  if (!defined $nowmod) { return 0; }
 
-  if ($DEBUG > 1 && $dep ne '(dep_ignore)') {
+  if ($DEBUG > 1 && $dep ne $SUBST_DEP_IGNORE) {
     my $prevsecs = $self->{now} - $prevmod;
     my $nowsecs = $self->{now} - $nowmod;
     dbg ("$fname depends on $dep ($nowsecs secs old, previous: $prevsecs)");
   }
 
-  if (!defined $nowmod || !defined $prevmod || $nowmod > $prevmod) {
-    return 0;
-  }
+  if ($nowmod > $prevmod) { return 0; }
 
   # if the dependency file is newer than the output file,
   # we always need to rebuild. This is really a sanity check
@@ -2010,6 +2139,20 @@ sub clean_html {
 
   $self->{htmlcleaner}->select_features ($features);
   $self->{htmlcleaner}->clean ($txtptr, $fname);
+}
+
+# -------------------------------------------------------------------------
+
+=item $ok = $f->can_build($fname);
+
+Returns 1 if WebMake can build the named file, 0 otherwise.
+
+=cut
+
+sub can_build {
+  my ($self, $fname) = @_;
+
+  return (defined $self->{outs}->{$fname});
 }
 
 # -------------------------------------------------------------------------
@@ -2048,14 +2191,18 @@ sub quicktxt2html {
 
 sub dbg {
   if ($DEBUG > 0) {
-    print STDOUT "debug: ".quicktxt2html(@_, "\n");
+    my @now = localtime(time);
+    if ($DEBUG > 1) {
+      printf STDOUT ("%02d:%02d:%02d debug: %s\n",
+		  $now[2], $now[1], $now[0], quicktxt2html(@_));
+    } else {
+      printf STDOUT ("debug: %s\n", quicktxt2html(@_));
+    }
   }
 }
 
 sub dbg2 {
-  if ($DEBUG > 1) {
-    print STDOUT "debug: ".quicktxt2html(@_, "\n");
-  }
+  if ($DEBUG > 1) { dbg(@_); }
 }
 
 sub vrb {

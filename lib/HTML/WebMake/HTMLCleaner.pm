@@ -19,7 +19,7 @@ use vars	qw{
 
 @ALLFEATURES =		qw{
     pack nocomments addimgsizes addxmlslashes fixcolors cleanattrs
-    indent
+    indent fixhrefs
 };
 
 $KEEP_FORMAT_TAGS =	qr{(?:xmp|listing|pre|plaintext)};
@@ -96,6 +96,9 @@ sub clean {
   $self->{indent_str} = '';
   $self->{indent_depth} = 2;
 
+  $self->{last_was_noninline_close_tag} = 0;
+  $self->{last_text_was_whitespace} = 0;
+
   $self->parse ($$txt); $self->eof();
 
   if ($self->{indent_level} > 0) {
@@ -114,21 +117,35 @@ sub start {
     $self->{in_pre}++;
   }
   
+  my $is_inline_tag;
+  if ($tagname =~ /^${INLINE_TAGS}$/) {
+    $is_inline_tag = 1;
+    if ($self->{last_text_was_whitespace}) {
+      $self->add_text (" ");
+    }
+
+  } else {
+    $is_inline_tag = 0;
+  }
+
   if (!$self->{cleanattrs}) {
     $self->add_text ($origtext);
   } else {
     $self->clean_attrs_at_start ($tagname, $attr, $attrseq, $origtext);
   }
 
-  if ($tagname !~ /^${INLINE_TAGS}$/) {
+  if (!$is_inline_tag && !$self->{in_pre}) {
     $self->add_text ("\n");
-    if (!$self->{in_pre} && $tagname !~ /^${EMPTY_ELEMENT_TAGS}$/) {
-      $self->open_indent();
-    } else {
-      $self->add_current_indent();
+    if (!$self->{in_pre}) {
+      if ($tagname !~ /^${EMPTY_ELEMENT_TAGS}$/) {
+	$self->open_indent();
+      } else {
+	$self->add_current_indent();
+      }
     }
   }
   $self->{last_was_noninline_close_tag} = 0;
+  $self->{last_text_was_whitespace} = 0;
 }
 
 sub clean_attrs_at_start {
@@ -150,15 +167,22 @@ sub clean_attrs_at_start {
       $imgsrc = $val;
     }
 
+    if ($self->{fixhrefs} && ($name eq 'src' || $name eq 'href')) {
+      if ($val !~ /^[a-z0-9A-Z]+:/) {
+	$val = HTML::WebMake::Main::canon_path ($val);
+	$val =~ s,\\,/,g;
+      }
+    }
+
     if (defined $BOOL_ATTR_VALUE && $val eq $BOOL_ATTR_VALUE) {
       $attrs .= " ".$name;
     } elsif (!defined $BOOL_ATTR_VALUE && $val eq $name) {
       $attrs .= " ".$name;
     } elsif ($val =~ /\"/) {
-      $attr->{$name} =~ s/\'/&#039;/g;
-      $attrs .= " ".$name ."=\'".$attr->{$name}."\'";
+      $val =~ s/\'/&#039;/g;
+      $attrs .= " ".$name ."=\'".$val."\'";
     } else {
-      $attrs .= " ".$name ."=\"".$attr->{$name}."\"";
+      $attrs .= " ".$name ."=\"".$val."\"";
     }
   }
 
@@ -194,8 +218,8 @@ sub end {
   my $exiting_pre = ($tagname =~ /^${KEEP_FORMAT_TAGS}$/);
   if ($exiting_pre) { $self->{in_pre}--; }
 
-  if ($tagname !~ /^${INLINE_TAGS}$/) {
-    if (!$self->{last_was_noninline_close_tag} && !$exiting_pre) {
+  if ($tagname !~ /^${INLINE_TAGS}$/ && !$exiting_pre) {
+    if (!$self->{last_was_noninline_close_tag}) {
       $self->add_text ("\n");
     }
     $self->close_indent();
@@ -207,6 +231,7 @@ sub end {
     $self->add_text ("</$tagname>");
     $self->{last_was_noninline_close_tag} = 0;
   }
+  $self->{last_text_was_whitespace} = 0;
 }
 
 # --------------------------------------------------------------------------
@@ -216,25 +241,21 @@ sub text {
 
   if ($self->{in_pre} > 0) {
     $self->{last_was_noninline_close_tag} = 0;
+    $self->{last_text_was_whitespace} = 0;
     $self->add_text ($origtext);
     return;
 
   } elsif ($origtext =~ /^\s*$/s) {
+    $self->{last_text_was_whitespace} = 1;
     return;
   }
 
   $self->{last_was_noninline_close_tag} = 0;
+  $self->{last_text_was_whitespace} = 0;
   $self->pack_text (\$origtext);
 
-  # to preserve all whitespace:
-  # $self->add_text ($origtext);
-
   # or, to tidy up whitespace:
-  if ($origtext =~ /\S/) {
-    $self->add_text ($origtext);
-  } else {
-    $self->add_text (' ');
-  }
+  $self->add_text ($origtext);
 }
 
 # --------------------------------------------------------------------------
@@ -268,7 +289,7 @@ sub declaration {
 
 sub pack_text {
   my($self, $txt) = @_;
-  if ($self->{pack} && !$self->{in_pre} > 0) {
+  if ($self->{pack} && !($self->{in_pre} > 0)) {
     $$txt =~ s/\n\n+/\n/gm;
     $$txt =~ s/[ \t]+/ /gm;
     $$txt =~ s/^ / /gm;

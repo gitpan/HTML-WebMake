@@ -30,6 +30,9 @@ sub set_converters {
 
   $self->add_converter ('text/pod', 'text/html',
   			'Pod::Html', \&pod_to_html);
+
+  $self->add_converter ('text/html', 'text/plain',
+  			undef, \&html_to_plain);
 }
 
 ###########################################################################
@@ -173,6 +176,7 @@ sub et_to_html {
     die "FormatConvert: cannot create Text::EtText::EtText2HTML object: $!";
 
     $self->{ettext}->{glossary} = $self->{main}->getglossary();
+    $self->{ettext}->set_option ('EtTextHrefsRelativeToTop', '1');
     $self->{ettext}->set_options (%{$self->{main}->{options}});
   }
 
@@ -230,6 +234,17 @@ sub pod_to_html {
   s/<p>\s*<\/p>//gis;
 
   $_;
+}
+
+# -------------------------------------------------------------------------
+
+sub html_to_plain {
+  my ($self, $contobj, $txt) = @_;
+
+  # keep it (very) simple
+  $txt =~ s/<p>/\n/gis;
+  $txt =~ s/<[^>]+>//gs;
+  $txt;
 }
 
 # -------------------------------------------------------------------------

@@ -66,7 +66,7 @@ Next, if you haven't done this before, generate an ssh key pair for yourself
 on all machines:
 
 <safe>
-	ssh-keygen -P '''' -N ''''
+	ssh-keygen -P "" -N ""
 </safe>
 
 When it asks for the filenames to save the keys in, hit Enter to accept the
@@ -80,7 +80,7 @@ to communicate without passwords. Here's how (run these as root):
 	mkdir ~apache/.ssh
 	chmod 700 ~apache/.ssh
 	chown apache ~apache/.ssh
-	su apache -s/bin/sh -c 'ssh-keygen -P '''' -N '''''
+	su apache -s/bin/sh -c 'ssh-keygen -P "" -N ""'
 </safe>
 
 This will generate a public/private key-pair for the web server user. Note
@@ -129,7 +129,7 @@ directory:
 and add this line to to it:
 
 <safe>
-  	command=''cvs server'',no-port-forwarding,no-pty __...yourpublickey...__
+  	command="cvs server",no-port-forwarding,no-pty __...yourpublickey...__
 </safe>
 
 This will allow CGI scripts on the client machine to access cvs on the server
@@ -208,14 +208,17 @@ server's HTML tree, then check out the CVS tree:
 
 <safe>
 	mkdir /var/www/html/jmason.org
-
 	cd /var/www/html/jmason.org
-
 	cvs -d :ext:jm@localhost:/cvsroot checkout jmason.org
 </safe>
 
-For some reason, ''cvs checkout'' leaves the files in a subdir. We don't want
-that, so move them nearer:
+__Note:__ cvs checkout has a few idiosyncrasies; notably, the directory you're
+checking out must not exist in your filesystem, otherwise it will not populate
+it with the CVS data files it requires to do check-ins and updates later.
+
+Also, this directory must have the same name it has in the CVS repository
+(**jmason.org** in the example above).  We don't want that, so move them
+nearer:
 
 <safe>
 	mv jmason.org/* . ; rmdir jmason.org
@@ -234,7 +237,7 @@ g+w** them.)
 Next, copy the ''webmake.cgi'' script to your web server's cgi-bin directory:
 
 <safe>
-	cp webmake.cgi /cgi-bin/editmodule.cgi
+	cp webmake.cgi /cgi-bin/editsite.cgi
 </safe>
 
 and edit the top of the script.  You need to set these variables:
@@ -244,11 +247,11 @@ and edit the top of the script.  You need to set these variables:
 </safe>
 
 Note that if you've adopted the same convention as I use for the module name,
-you can use **__HOST__** as a shortcut in this line to mean the hostname of
-the site being edited.  This is handy so that you can use the same CGI script
-to edit multiple sites in different virtual servers.
+you can use **_<!-- -->_HOST_<!-- -->_** as a shortcut in this line to mean the
+hostname of the site being edited.  This is handy, as it allows you to use the
+same CGI script to edit multiple sites, in different virtual servers.
 
-Load up **http://localhost/cgi-bin/editmodule.cgi** in a web browser, and it
+Load up **http://localhost/cgi-bin/editsite.cgi** in a web browser, and it
 should have worked; you should see a list of ''sites'' (ie. .wmk files) to
 choose from.
 

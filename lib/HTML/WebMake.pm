@@ -43,7 +43,7 @@ use vars	qw{
 
 @ISA = qw();
 
-$VERSION = "2.1";
+$VERSION = "2.2";
 sub Version { $VERSION; }
 
 ###########################################################################
@@ -60,7 +60,9 @@ See also http://webmake.taint.org/ for more information.
 =head1 SEE ALSO
 
 L<HTML::WebMake::Main>
+
 L<webmake>
+
 L<Text::EtText>
 
 =head1 AUTHOR

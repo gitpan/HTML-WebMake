@@ -7,7 +7,7 @@
     <title>
       WebMake: Documentation: The &lt;metadefault&gt; Tag
     </title>
-    <meta name="generator" content="WebMake/2.1" />
+    <meta name="generator" content="WebMake/2.2" />
     <style>
       body {
        background-color: #ffffff; 
@@ -58,13 +58,13 @@
         <tr>
           <td valign="top">
             <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
             <div align="right">
               
-               [ <a href="wmmeta.html">Back</a> | <a href="metatable.html">Forward</a> | <a href="index.html">Index</a>
+               [ <a href="metatable.html">Back</a> | <a href="attrdefault.html">Forward</a> | <a href="index.html">Index</a>
                | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
                
             </div>
@@ -85,13 +85,13 @@
                         <h1>The &lt;metadefault&gt; Tag</h1><p>
                           Metadata is usually embedded inside a content item using the &lt;wmmeta&gt;
                           tag. However, this can be a chore for lots of content items, so to make
-                          things easier, you can specify default <a href="metadata.html">metadata</a> settings, using the
-                          &lt;<a href="metadefault.html">metadefault</a>&gt; tag.
+                          things easier, you can specify default metadata settings, using the
+                          &lt;metadefault&gt; tag.
                           
                         </p>
                         <p>
                           Specify this tag before the content items in question, and those content items
-                          will all be tagged with the <a href="metadata.html">metadata</a> you set.
+                          will all be tagged with the metadata you set.
                           
                         </p>
                         <p>
@@ -100,24 +100,15 @@
                           
                         </p>
                         <a name="Scoped_Mode"><h3>Scoped Mode</h3></a><p>
-                          "Scoped" mode uses opening (<strong>&lt;<a href="metadefault.html">metadefault</a>&gt;</strong>) and closing
-                          (<strong>&lt;/metadefault&gt;</strong>) tags; the <a href="metadata.html">metadata</a> is only set on content items
+                          "Scoped" mode uses opening (<strong>&lt;metadefault&gt;</strong>) and closing
+                          (<strong>&lt;/metadefault&gt;</strong>) tags; the metadata is only set on content items
                           between the two tags.
                           
                         </p>
-                        <blockquote>
-                          <p>
-                            <em>Note!</em> one warning about "scoped" mode: note that WebMake does not use
-                             a fully-correct XML parser to parse the XML in the .wmk file, so if you nest
-                             &lt;<a href="metadefault.html">metadefault</a>&gt; tags, it may not correctly parse them; instead, the
-                             first closing <strong>&lt;/metadefault&gt;</strong> tag found will be used.
-                            
-                          </p>
-                        </blockquote>
                         <a name="Command_Mode"><h3>Command Mode</h3></a><p>
-                          Command mode uses standalone tags (<strong>&lt;<a href="metadefault.html">metadefault</a> ... /&gt;</strong>); the
-                          <a href="metadata.html">metadata</a> are set until the end of the WebMake file, or until you change
-                          them with another &lt;<a href="metadefault.html">metadefault</a>&gt; tag.
+                          Command mode uses standalone tags (<strong>&lt;metadefault ... /&gt;</strong>); the
+                          metadata are set until the end of the WebMake file, or until you change
+                          them with another &lt;metadefault&gt; tag.
                           
                         </p>
                         <a name="Attributes"><h2>Attributes</h2></a><dl>
@@ -138,7 +129,7 @@
                             <p>
                               the metadatum's value. This is optional. If the
                                value is not specified, the metadatum will be removed from the list of
-                               default <a href="metadata.html">metadata</a>.
+                               default metadata.
                               
                             </p>
                           </dd>
@@ -148,9 +139,9 @@
                           
                         </p>
                         <p>
-                          <pre>
                           <!--etsafe-->
-                          
+                          <pre>
+
   &lt;metadefault name="section" value="tags_and_attributes"&gt;
 
     &lt;content name="chunk_1.txt"&gt;...&lt;/content&gt;
@@ -159,17 +150,17 @@
     &lt;content name="chunk_4.txt"&gt;...&lt;/content&gt;
 
   &lt;/metadefault&gt;
+                        </pre>
 <!--/etsafe-->
-                                                  </pre>
-                      </p>
+                                              </p>
                       <p>
                         Or, in the "command" style:
                         
                       </p>
                       <p>
-                        <pre>
                         <!--etsafe-->
-                        
+                        <pre>
+
   &lt;metadefault name="section" value="tags_and_attributes" /&gt;
 
   &lt;content name="chunk_1.txt"&gt;...&lt;/content&gt;
@@ -178,9 +169,9 @@
   &lt;content name="chunk_4.txt"&gt;...&lt;/content&gt;
 
   &lt;metadefault name="section" /&gt;
+                      </pre>
 <!--/etsafe-->
-                                              </pre>
-                    </p>
+                                          </p>
                     <p>
                       
                     </p>
@@ -198,13 +189,13 @@
   <tr>
     <td valign="top">
       <strong><a href="http://webmake.taint.org/">WebMake</a>
-       Documentation</strong> (version 2.1)
+       Documentation</strong> (version 2.2)
        
     </td>
     <td valign="top">
       <div align="right">
         
-         [ <a href="wmmeta.html">Back</a> | <a href="metatable.html">Forward</a> | <a href="index.html">Index</a>
+         [ <a href="metatable.html">Back</a> | <a href="attrdefault.html">Forward</a> | <a href="index.html">Index</a>
          | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
          
       </div>

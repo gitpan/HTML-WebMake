@@ -128,12 +128,6 @@ sub get_text_as {
   my $txt = $self->{text};
   if (!defined $txt) { die "undefined text for $self->{name}"; }
 
-  # subst tags before conversion
-  # TODO: should we subst tags for metadata?
-  $self->{main}->getusertags()->subst_tags ($self->{name}, \$txt);
-
-  # reformat before substs; this way we can cache the reformat
-  # results for next time.
   if ($fmt ne $format) {
     $txt = $self->{main}->{format_conv}->convert
 	  ($self, $fmt, $format, $txt, 1);
@@ -142,7 +136,7 @@ sub get_text_as {
   $self->{main}->subst ($self->{name}, \$txt);
 
   # always remove leading & trailing whitespace from HTML content.
-  if ($format =~ /^text\/html$/i) {
+  if ($format eq 'text/html') {
     $txt =~ s/^\s+//s;$txt =~ s/\s+$//s;
   }
 

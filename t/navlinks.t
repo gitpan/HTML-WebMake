@@ -18,14 +18,12 @@ href="../log/navlinks_story_2.html">Story 2, blah blah</a><br /> <p> Story 2,
 just another story.}, 'index_top',
 
 
-q{ <a href="../log/navlinks_map.html">Site Map</a> <hr /> <a
+q{ <a href="../log/navlinks_map.html">Site Map</a><hr /> <a
 href="../log/navlinks_story_3.html">Previous</a> | <a
 href="../log/navlinks.html">Up</a> | <a
-href="../log/navlinks_story_2.html">Next</a> <hr /> <p> This is story
+href="../log/navlinks_story_2.html">Next</a><hr /> <p> This is story
 1.
 
-</p>
- <p>
 </p>
 <hr />
 }, 'story1',
@@ -45,10 +43,10 @@ q{ <a href="../log/navlinks_map.html">Site Map</a> <hr /> <a
 href="../log/navlinks.html">Previous</a> | <a
 href="../log/navlinks.html">Up</a> | <a
 href="../log/navlinks_story_1.html">Next</a> <hr /> <p> Breaking news!  this is
-story 3. </p> <p> </p> <hr /> }, 'story3',
+story 3. </p> <hr /> }, 'story3',
 
 q{<a href="../log/navlinks.html">Index</a> | <a
-href="../log/navlinks_map.html">Site Map</a> <hr /> <a
+href="../log/navlinks_map.html">Site Map</a><hr /> <a
 href="../log/navlinks_map.html">Previous</a> | <a
 href="../log/navlinks.html">Up</a> | <hr /> <p> This is story 4},
 'story4',

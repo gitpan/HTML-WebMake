@@ -28,8 +28,6 @@ href="../log/navlinks_warning_story_2.html">Next</a> <hr /> <p> This is story
 1.
 
 </p>
-<p>
-</p>
 <hr />
 }, 'story1',
 
@@ -48,7 +46,7 @@ q{ <a href="../log/navlinks_warning_map.html">Site Map</a> <hr /> <a
 href="../log/navlinks_warning.html">Previous</a> | <a
 href="../log/navlinks_warning.html">Up</a> | <a
 href="../log/navlinks_warning_story_1.html">Next</a> <hr /> <p> Breaking news!
-this is story 3. </p> <p> </p> <hr /> }, 'story3',
+this is story 3. </p> <hr /> }, 'story3',
 
 q{<a href="../log/navlinks_warning.html">Index</a> | <a
 href="../log/navlinks_warning_map.html">Site Map</a> <hr /> <a
@@ -84,6 +82,7 @@ is_node: 0]</em> </p> }, 'sitemap',
 
 # ---------------------------------------------------------------------------
 
+warn "should get a 'content should only be used etc.' warning here...\n";
 ok (!wmrun ("-F -f data/$testname.wmk", \&patterns_run_cb));
 checkfile ($testname.".html", \&patterns_run_cb);
 checkfile ($testname."_map.html", \&patterns_run_cb);

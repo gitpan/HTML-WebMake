@@ -9,14 +9,16 @@ Content can be searched for using the &lt;contents&gt; tag, which allows you
 to search a "data source" [ds] (directory, delimiter-separated-values file,
 database etc.) for a pattern.
 
-The attributes supported are listed on the "data source" [ds] page.
-
 Apart from the fact that it loads many contents instead of one, it's otherwise
 identical to the "content tag" [content]; see that tag's documentation
 for details on what attributes are supported.
 
 	[ds]: $(datasources)
 	[content]: $(content)
+
+${datasource_attrs.inc} 
+${datasource_file_protocol.inc}
+${datasource_svfile_protocol.inc}
 
 Example
 =======

@@ -42,10 +42,10 @@ The &lt;sitemap&gt; tag takes the following required attributes:
 
 		[ref]: $(content)
 
-	__node__:	The name of the content item to evaluate for each
+	__node__:	The name of the template item to evaluate for each
 	node with children in the tree. See **Processing**, below.
 
-	__leaf__:	The name of the content item to evaluate for each leaf
+	__leaf__:	The name of the template item to evaluate for each leaf
 	node, ie. a node with no children, in the tree. See **Processing**,
 	below.
 
@@ -59,7 +59,7 @@ And the following optional attributes:
 	Normally dynamic content, such as "metadata" and perl-code-defined
 	content items, are not included. (default: false)
 
-	__dynamic__:	The name of the content item to evaluate for
+	__dynamic__:	The name of the template item to evaluate for
 	dynamic content items, required if the __all__ attribute is set
 	to **true**.
 
@@ -95,7 +95,9 @@ items named in the &lt;sitemap&gt; tag's attributes:
 	or "metadata".
 
 By changing the template content items you name in the tag's attributes, you
-have total control over the way the sitemap is rendered.
+have total control over the way the sitemap is rendered.  For efficiency,
+these should be declared using the &lt;template&gt; tag instead of the
+&lt;content&gt; tag.
 
 The following variables (ie. content items) are set for each node:
 

@@ -7,7 +7,7 @@
     <title>
       WebMake: Documentation: Installing webmake.cgi
     </title>
-    <meta name="generator" content="WebMake/2.1" />
+    <meta name="generator" content="WebMake/2.2" />
     <style>
       body {
        background-color: #ffffff; 
@@ -58,7 +58,7 @@
         <tr>
           <td valign="top">
             <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
@@ -83,14 +83,14 @@
                     <tr>
                       <td>
                         <h1>Installing webmake.cgi</h1><p>
-                          To use this, copy or link <code><a href="cgi.html">webmake.cgi</a></code> to your web server's <code>cgi-bin</code>
+                          To use this, copy or link <code><a href="cgistart.html">webmake.cgi</a></code> to your web server's <code>cgi-bin</code>
                           directory, and set it up as a password-protected area. Here's how this is
                           done with Apache:
                           
                         </p>
                         <p>
                           <pre>
-                          <!--etsafe-->
+<!--etsafe-->
                           
   &lt;Location /cgi-bin/webmake.cgi&gt;
       &lt;Limit GET PUT POST&gt;
@@ -109,7 +109,7 @@
                       </p>
                       <p>
                         <pre>
-                        
+
   htpasswd -c /etc/httpd/conf/webmake.passwd jm
   New password: <em>(type a password here)</em>
   Re-type new password: <em>(again)</em>
@@ -117,32 +117,32 @@
                       </pre>
                     </p>
                     <p>
-                      And edit the <code><a href="cgi.html">webmake.cgi</a></code> script, changing the value for
+                      And edit the <code><a href="cgistart.html">webmake.cgi</a></code> script, changing the value for
                       <strong>$FILE_BASE</strong>. Only files and sites below this directory will be
                       editable.
                       
                     </p>
                     <p>
-                      Note that <code><a href="cgi.html">webmake.cgi</a></code> runs with the web server's username and password,
+                      Note that <code><a href="cgistart.html">webmake.cgi</a></code> runs with the web server's username and password,
                       so you may have to <code>chown</code> or <code>chmod</code> files for it to work.
                       
                     </p>
                     <a name="Supporting_Metadata_On_Media"><h1>Supporting Metadata On Media</h1></a><p>
                       If you attach <a href="metadata.html">metadata</a> (e.g. titles) to images or other media items using
-                      <code><a href="cgi.html">webmake.cgi</a></code>, it will write that <a href="metadata.html">metadata</a> to a file called <code><a href="metadata.html">metadata</a>.xml</code>
+                      <code><a href="cgistart.html">webmake.cgi</a></code>, it will write that <a href="metadata.html">metadata</a> to a file called <code><a href="metadata.html">metadata</a>.xml</code>
                       in the top-level directory of the site. To pick this up, you will need to add
                       the following &lt;<a href="metatable.html">metatable</a>&gt; directive to your site:
                       
                     </p>
                     <p>
                       <pre>
-                      <!--etsafe-->
+<!--etsafe-->
                       
 	&lt;metatable format=xml src=<a href="metadata.html">metadata</a>.xml /&gt;
 <!--/etsafe-->
                                           </pre>
                   </p>
-                  <a name="Using_CVS_With_a_href_cgi_webmake_cgi_a"><h1>Using CVS With <a href="cgi.html">webmake.cgi</a></h1></a><p>
+                  <a name="Using_CVS_With_a_href_cgistart_webmake_cgi_a"><h1>Using CVS With <a href="cgistart.html">webmake.cgi</a></h1></a><p>
                     Tt can be tricky setting up a CVS server. To make things a little easier, a
                     step-by-step guide is provided in the <a href="cvshowto.html">Setting up CVS and
                     ssh for webmake.cgi HOWTO</a>.
@@ -164,7 +164,7 @@
   <tr>
     <td valign="top">
       <strong><a href="http://webmake.taint.org/">WebMake</a>
-       Documentation</strong> (version 2.1)
+       Documentation</strong> (version 2.2)
        
     </td>
     <td valign="top">

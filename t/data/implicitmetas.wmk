@@ -54,6 +54,14 @@ This is boo
 
 Should be titled boo
 </content>
+<content name=floo format="text/et">
+<wmmeta name="title" value="This is floo" />
+
+This should not appear
+-----------
+
+Should be titled floo
+</content>
 
 
 <out file=log/implicitmetas.html>
@@ -70,6 +78,8 @@ The winners are:
 	- $[gab.title]
 
 	- $[boo.title]
+
+	- $[floo.title]
 </out>
 
 <out file=log/implicitmetas_1.html> Title: $[this.title] // ${foo}</out>
@@ -80,4 +90,5 @@ The winners are:
 
 <out file=log/implicitmetas_6.html format=text/plain>
 Title: $[this.title] // ${boo}</out>
+<out file=log/implicitmetas_7.html> Title: $[this.title] // ${floo}</out>
 

@@ -21,15 +21,15 @@ define these content items:
 
 =over 4
 
-=item ${DumpVars_names}
+=item $ {DumpVars_names}
 
 This content contains a list of the names of all content items defined.
 
-=item ${DumpVars_full}
+=item $ {DumpVars_full}
 
 This content contains a dump of all content items defined, including their
-names and their values.  It excludes ${DumpVars_full} and
-${DumpVars_names}.
+names and their values.  It excludes $ {DumpVars_full} and
+$ {DumpVars_names}.
 
 =back
 

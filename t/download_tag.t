@@ -2,7 +2,7 @@
 
 use lib '.'; use lib '../lib'; use lib 't';
 use WMTest; webmake_t_init("download_tag");
-use Test; BEGIN { plan tests => 26 };
+use Test; BEGIN { plan tests => 28 };
 
 system ("mkdir -p log/d1/d1 log/d2 log/d3");
 
@@ -115,6 +115,7 @@ sub chkcanon {
 
   my $out = HTML::WebMake::Main::canon_path ($fname, $reldir);
   print "\tcanon_path ($fname, $reldir) => $out\n";
+  if ($out ne $expected) { print "\tNOPE: should be \"$expected\"\n"; }
   ($out eq $expected);
 }
 
@@ -125,6 +126,10 @@ ok (chkcanon ("d1/d2/foo", "d1/d2", "d1/d2/foo"));
 ok (chkcanon ("../../d1/d3/d4/foo", "d1/d2", "../d3/d4/foo"));
 ok (chkcanon ("../../foo", "d1/d2", "../../foo"));
 ok (chkcanon ("d2/foo", "d1/d2", "d2/foo"));
+ok (chkcanon ("./log/../data/test.gif", ".", "data/test.gif"));
+
+# some canon_path tests for CGI use
+ok (chkcanon ("!!WMVIEWCGI!!/d2/foo/../../index.html", "", "!!WMVIEWCGI!!/index.html"));
 
 wmfile ($file);
 ok (wmrun ("-F -f log/test.wmk", \&patterns_run_cb));

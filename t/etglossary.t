@@ -40,6 +40,7 @@ use Test; BEGIN { plan tests => 17 };
 
 # ---------------------------------------------------------------------------
 
+warn "IMGSIZE warning can be ignored here\n";
 ok (wmrun ("-F -f data/$testname.wmk", \&patterns_run_cb));
 ok_all_patterns();
 

@@ -2,7 +2,7 @@
 
 use lib '.'; use lib 't';
 use WMTest; webmake_t_init("implicitmetas");
-use Test; BEGIN { plan tests => 30 };
+use Test; BEGIN { plan tests => 34 };
 
 clear_cache_dir();
 
@@ -16,7 +16,9 @@ q{The winners are:
  - this is baz
  - This is blag
  - This is gab
- - This is boo}, 'winners',
+ - This is boo
+ - This is floo
+ }, 'winners',
 
 q{Title: This is foo // }, 'title_foo',
 
@@ -30,6 +32,9 @@ q{Title: This is gab // }, 'title_gab',
 
 q{Title: This is boo //}, 'title_boo',
 
+q{Title: This is floo // <a name=},
+	'title_floo',
+
 );
 
 # ---------------------------------------------------------------------------
@@ -41,6 +46,7 @@ checkfile ($testname."_3.html", \&patterns_run_cb);
 checkfile ($testname."_4.html", \&patterns_run_cb);
 checkfile ($testname."_5.html", \&patterns_run_cb);
 checkfile ($testname."_6.html", \&patterns_run_cb);
+checkfile ($testname."_7.html", \&patterns_run_cb);
 # etc.
 ok_all_patterns();
 
@@ -53,6 +59,7 @@ checkfile ($testname."_3.html", \&patterns_run_cb);
 checkfile ($testname."_4.html", \&patterns_run_cb);
 checkfile ($testname."_5.html", \&patterns_run_cb);
 checkfile ($testname."_6.html", \&patterns_run_cb);
+checkfile ($testname."_7.html", \&patterns_run_cb);
 # etc.
 ok_all_patterns();
 

@@ -7,7 +7,7 @@
     <title>
       WebMake: Documentation: download_tag.wmk
     </title>
-    <meta name="generator" content="WebMake/2.1" />
+    <meta name="generator" content="WebMake/2.2" />
     <style>
       body {
        background-color: #ffffff; 
@@ -58,7 +58,7 @@
         <tr>
           <td valign="top">
             <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
@@ -94,12 +94,12 @@
                                                                 <hr />
                                 <h1><a name="LOADING">LOADING</a></h1><p>
                                   <pre>
-                                    &lt; use plugin=&quot;download_tag&quot; /&gt;
+  &lt; use plugin=&quot;download_tag&quot; /&gt;
                                 </pre>
                                 <hr />
                                 <h1><a name="HTML_TAGS">HTML TAGS</a></h1><p>
                                   <pre>
-                                    &lt; download file=&quot;filename.dat&quot; [text=&quot;template&quot;] /&gt;
+  &lt; download file=&quot;filename.dat&quot; [text=&quot;template&quot;] /&gt;
                                 </pre>
                                 <hr />
                                 <h1><a name="DESCRIPTION">DESCRIPTION</a></h1><p>
@@ -249,48 +249,53 @@
                                                                 </dd>
                                                               </dl>
                                                               <p>
-                                                                <code>template</code> can be a $ {content_reference}. The default template is:
+                                                                <code>template</code> can be, and should often be, a $ {content_reference}. The default template
+                                                                is:
                                                                 <p>
                                                                   <pre>
-                                                                    &lt; a href=&quot;$ {download.href}&quot; $ {download.tag_attrs}&gt;$ {download.name}
+  &lt; a href=&quot;$ {download.href}&quot; $ {download.tag_attrs}&gt;$ {download.name}
   ($ {download.size_in_k}k)&lt; /a&gt;
                                                                 </pre>
                                                                 <p>
                                                                   
                                                                   Note that this means that any unrecognised attributes of the download tag
                                                                   itself will become attributes of the A tag.
-                                                                  <hr />
-                                                                  <h1><a name="OPTIONS_WHICH_AFFECT_THIS_TAG">OPTIONS WHICH AFFECT THIS TAG</a></h1><p>
-                                                                    <code>FileSearchPath</code> - WebMake option
-                                                                  </td>
-                                                                </tr>
-                                                              </table>
-                                                            </td>
-                                                          </tr>
-                                                        </table>
-                                                      </td>
-                                                    </tr>
-                                                  </table>
-                                                  <table width="100%">
-                                                    <tr>
-                                                      <td valign="top">
-                                                        <strong><a href="http://webmake.taint.org/">WebMake</a>
-                                                         Documentation</strong> (version 2.1)
-                                                         
-                                                      </td>
-                                                      <td valign="top">
-                                                        <div align="right">
-                                                          
-                                                           [ <a href="csvtable_tag.wmk.html">Back</a> | <a href="dump_vars.wmk.html">Forward</a> | <a href="index.html">Index</a>
-                                                           | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
+                                                                  <p>
+                                                                    
+                                                                    The default template can be overridden by setting the template content item
+                                                                    <code>download.template</code>.
+                                                                    <hr />
+                                                                    <h1><a name="OPTIONS_WHICH_AFFECT_THIS_TAG">OPTIONS WHICH AFFECT THIS TAG</a></h1><p>
+                                                                      <code>FileSearchPath</code> - WebMake option
+                                                                    </td>
+                                                                  </tr>
+                                                                </table>
+                                                              </td>
+                                                            </tr>
+                                                          </table>
+                                                        </td>
+                                                      </tr>
+                                                    </table>
+                                                    <table width="100%">
+                                                      <tr>
+                                                        <td valign="top">
+                                                          <strong><a href="http://webmake.taint.org/">WebMake</a>
+                                                           Documentation</strong> (version 2.2)
                                                            
-                                                        </div>
-                                                      </td>
-                                                    </tr>
-                                                  </table>
-                                                  <div align="right">
-                                                    <a href="http://webmake.taint.org/"><img src="images/BuiltWithWebMake.png" alt="Built With WebMake" border="0" width="88" height="31" /></a>
-                                                  </div>
-                                                </font>
-                                              </body>
-                                            </html>
+                                                        </td>
+                                                        <td valign="top">
+                                                          <div align="right">
+                                                            
+                                                             [ <a href="csvtable_tag.wmk.html">Back</a> | <a href="dump_vars.wmk.html">Forward</a> | <a href="index.html">Index</a>
+                                                             | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
+                                                             
+                                                          </div>
+                                                        </td>
+                                                      </tr>
+                                                    </table>
+                                                    <div align="right">
+                                                      <a href="http://webmake.taint.org/"><img src="images/BuiltWithWebMake.png" alt="Built With WebMake" border="0" width="88" height="31" /></a>
+                                                    </div>
+                                                  </font>
+                                                </body>
+                                              </html>

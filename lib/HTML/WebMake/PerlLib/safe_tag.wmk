@@ -43,10 +43,10 @@ EtText links or HTML tags are not interpreted.
     $text =~ s/\[/\&#91;/gs;
     $text =~ s/\]/\&#93;/gs;
 
-    '<pre><!--etsafe-->'.$text.'<!--/etsafe--></pre>';
+    '<!--etsafe--><pre>'.$text.'</pre><!--/etsafe-->';
   }
 
-  define_tag ("safe", \&handle_safe_tag, qw());
+  define_preformat_tag ("safe", \&handle_safe_tag, qw());
 
   sub handle_safe_tag {
     my ($tagname, $attrs, $text) = @_;

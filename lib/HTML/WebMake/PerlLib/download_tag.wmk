@@ -88,7 +88,8 @@ The remaining attributes of the download tag.
 
 =back
 
-C<template> can be a $ {content_reference}.  The default template is:
+C<template> can be, and should often be, a $ {content_reference}.  The default
+template is:
 
 =over 4
 
@@ -99,6 +100,9 @@ C<template> can be a $ {content_reference}.  The default template is:
 
 Note that this means that any unrecognised attributes of the download tag
 itself will become attributes of the A tag.
+
+The default template can be overridden by setting the template content item
+C<download.template>.
 
 =back
 
@@ -120,4 +124,9 @@ C<FileSearchPath> - WebMake option
 
   ''
 }>
+
+<template name=download.template>
+  <a href="${download.href}"
+      ${download.tag_attrs}>${download.name} (${download.size_in_k}k)</a>
+</template>
 

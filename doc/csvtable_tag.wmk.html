@@ -7,7 +7,7 @@
     <title>
       WebMake: Documentation: csvtable_tag.wmk
     </title>
-    <meta name="generator" content="WebMake/2.1" />
+    <meta name="generator" content="WebMake/2.2" />
     <style>
       body {
        background-color: #ffffff; 
@@ -58,7 +58,7 @@
         <tr>
           <td valign="top">
             <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
@@ -95,12 +95,12 @@
                                                                     <hr />
                                   <h1><a name="LOADING">LOADING</a></h1><p>
                                     <pre>
-                                      &lt; use plugin=&quot;csvtable_tag&quot; /&gt;
+  &lt; use plugin=&quot;csvtable_tag&quot; /&gt;
                                   </pre>
                                   <hr />
                                   <h1><a name="HTML_TAGS">HTML TAGS</a></h1><p>
                                     <pre>
-                                      &lt; csvtable [delimiter=&quot;char&quot;] [HTML table attributes] &gt;
+  &lt; csvtable [delimiter=&quot;char&quot;] [HTML table attributes] &gt;
   [...cells...]
   &lt; /csvtable &gt;
                                   </pre>
@@ -161,14 +161,14 @@
                                                           numbered cells (counting from 1). For example:
                                                           <p>
                                                             <pre>
-                                                              &lt; csvfmt &gt;&lt; tr &gt;&lt; td &gt;$1&lt; /td &gt;&lt; td &gt;$2&lt; /td &gt;&lt; td &gt;$3&lt; /td &gt;&lt; /tr &gt;&lt; /csvfmt &gt;
+  &lt; csvfmt &gt;&lt; tr &gt;&lt; td &gt;$1&lt; /td &gt;&lt; td &gt;$2&lt; /td &gt;&lt; td &gt;$3&lt; /td &gt;&lt; /tr &gt;&lt; /csvfmt &gt;
                                                           </pre>
                                                         </dd>
                                                       </dl>
                                                       <hr />
                                                       <h1><a name="EXAMPLE">EXAMPLE</a></h1><p>
                                                         <pre>
-                                                          &lt; csvtable delimiter=&quot;|&quot; &gt;
+  &lt; csvtable delimiter=&quot;|&quot; &gt;
   &lt; !-- heading -- &gt;
   &lt; csvfmt &gt;&lt; tr &gt;&lt; th &gt;$1&lt; /th &gt;&lt; th &gt;$2&lt; /th &gt;&lt; th &gt;$3&lt; /th &gt;&lt; /tr &gt;&lt;/ csvfmt &gt;
   First Name|Surname|Title
@@ -195,7 +195,7 @@
                                         <tr>
                                           <td valign="top">
                                             <strong><a href="http://webmake.taint.org/">WebMake</a>
-                                             Documentation</strong> (version 2.1)
+                                             Documentation</strong> (version 2.2)
                                              
                                           </td>
                                           <td valign="top">

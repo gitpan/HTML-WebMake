@@ -31,3 +31,9 @@ doc/pod2html.*
 t/pod2html.*
 doc/pod2htmi.*
 t/pod2htmi.*
+examples/data/.*
+examples/thumbnails.html
+webmake
+webmake.cgi
+wmview.cgi
+XPlib

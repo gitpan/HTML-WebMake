@@ -7,7 +7,7 @@
     <title>
       WebMake: Documentation: Using webmake.cgi
     </title>
-    <meta name="generator" content="WebMake/2.1" />
+    <meta name="generator" content="WebMake/2.2" />
     <style>
       body {
        background-color: #ffffff; 
@@ -52,13 +52,13 @@
   <body bgcolor="#ffffff" text="#000000" link="#3300cc" vlink="#660066">
     <font face="lucida,verdana,sans-serif">
       <div align="center">
-        <img src="images/WebMakeTitle.png" alt="WebMake" width="500" height="122" />
+         <img src="images/WebMakeTitle.png" alt="WebMake" width="500" height="122" />
       </div>
       <table width="100%">
         <tr>
           <td valign="top">
-            <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             <strong><a href="http://webmake.taint.org/">WebMake</a>
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
@@ -82,12 +82,12 @@
                   <table border="0" cellspacing="4" cellpadding="4" width="100%">
                     <tr>
                       <td>
-                        <h1>Using webmake.cgi</h1><p>
-                          First of all, after typing the <code><a href="cgi.html">webmake.cgi</a></code> URL, you'll see a login dialog:
+                         <h1>Using webmake.cgi</h1><p>
+                          First of all, after typing the <code><a href="cgistart.html">webmake.cgi</a></code> URL, you'll see a login dialog:
                           
                         </p>
                         <div align="center">
-                          <img src="shots/login.png" width="323" height="228" />
+                           <img src="shots/login.png" width="323" height="228" />
                         </div>
                         <p>
                           Type your username and password, and (assuming they're right) you'll see
@@ -104,7 +104,7 @@
                                     <table border="0" cellpadding="2" cellspacing="2">
                                       <tr>
                                         <td>
-                                          <img src="shots/choose_site.png" width="411" height="189" />
+                                           <img src="shots/choose_site.png" width="411" height="189" />
                                         </td>
                                       </tr>
                                     </table>
@@ -127,7 +127,7 @@
                                     <table border="0" cellpadding="2" cellspacing="2">
                                       <tr>
                                         <td>
-                                          <img src="shots/edit_site.png" width="469" height="431" />
+                                           <img src="shots/edit_site.png" width="469" height="431" />
                                         </td>
                                       </tr>
                                     </table>
@@ -152,7 +152,7 @@
                                     <table border="0" cellpadding="2" cellspacing="2">
                                       <tr>
                                         <td>
-                                          <img src="shots/cvs_update.png" width="473" height="423" />
+                                           <img src="shots/cvs_update.png" width="473" height="423" />
                                         </td>
                                       </tr>
                                     </table>
@@ -167,7 +167,7 @@
                           the <em>Edit Site</em> page.
                           
                         </p>
-                        <a name="Editing_Content_Items"><h1>Editing Content Items</h1></a><p>
+                         <a name="Editing_Content_Items"><h1>Editing Content Items</h1></a><p>
                           If you have any items that contain text, such as &lt;content&gt; items, an
                           <strong>Edit</strong> button will appear beside them. If you click this, you can edit the
                           text of that item, and any embedded <a href="metadata.html">metadata</a>, in a textbox like so:
@@ -182,7 +182,7 @@
                                     <table border="0" cellpadding="2" cellspacing="2">
                                       <tr>
                                         <td>
-                                          <img src="shots/edit_item_page.png" width="474" height="376" />
+                                           <img src="shots/edit_item_page.png" width="474" height="376" />
                                         </td>
                                       </tr>
                                     </table>
@@ -214,7 +214,7 @@
                                     <table border="0" cellpadding="2" cellspacing="2">
                                       <tr>
                                         <td>
-                                          <img src="shots/edit_page.png" width="470" height="541" />
+                                           <img src="shots/edit_page.png" width="470" height="541" />
                                         </td>
                                       </tr>
                                     </table>
@@ -224,7 +224,7 @@
                             </td>
                           </tr>
                         </table>
-                        <a name="Editing_Directories"><h1>Editing Directories</h1></a><p>
+                         <a name="Editing_Directories"><h1>Editing Directories</h1></a><p>
                           WebMake tags that load content from directories, such as the &lt;contents&gt;
                           tag, appear with a link beside them reading <strong>Browse Source Dir</strong>. If you
                           click this, you'll be presented with the <em>Edit Directory</em> file browser
@@ -240,7 +240,7 @@
                                     <table border="0" cellpadding="2" cellspacing="2">
                                       <tr>
                                         <td>
-                                          <img src="shots/edit_dir.png" width="376" height="417" />
+                                           <img src="shots/edit_dir.png" width="376" height="417" />
                                         </td>
                                       </tr>
                                     </table>
@@ -253,7 +253,7 @@
                         <p>
                           This allows you to navigate about the directory tree (although you cannot
                           go above the directory you've named as <strong>$FILE_BASE</strong> in the
-                          <code><a href="cgi.html">webmake.cgi</a></code> script), and perform some other operations, such as
+                          <code><a href="cgistart.html">webmake.cgi</a></code> script), and perform some other operations, such as
                           editing files in the <em>Edit Page</em>, create new files, and delete files:
                           
                         </p>
@@ -266,7 +266,7 @@
                                     <table border="0" cellpadding="2" cellspacing="2">
                                       <tr>
                                         <td>
-                                          <img src="shots/delete_file.png" width="296" height="227" />
+                                           <img src="shots/delete_file.png" width="296" height="227" />
                                         </td>
                                       </tr>
                                     </table>
@@ -276,7 +276,7 @@
                             </td>
                           </tr>
                         </table>
-                        <a name="Building_The_Site"><h1>Building The Site</h1></a><p>
+                         <a name="Building_The_Site"><h1>Building The Site</h1></a><p>
                           If you click the <strong>Build Site</strong> or <strong>Build Fully</strong> links on any of the
                           pages, WebMake will build the site and present you with what was built
                           (and what went wrong, if anything did!):
@@ -291,7 +291,7 @@
                                     <table border="0" cellpadding="2" cellspacing="2">
                                       <tr>
                                         <td>
-                                          <img src="shots/built_site.png" width="427" height="416" />
+                                           <img src="shots/built_site.png" width="427" height="416" />
                                         </td>
                                       </tr>
                                     </table>
@@ -301,7 +301,7 @@
                             </td>
                           </tr>
                         </table>
-                        <a name="Committing_Your_Changes_To_CVS"><h1>Committing Your Changes To CVS</h1></a><p>
+                         <a name="Committing_Your_Changes_To_CVS"><h1>Committing Your Changes To CVS</h1></a><p>
                           Once you're satisfied with the changes, hit the <strong>Commit Changes To CVS</strong>
                           link. This will, firstly, ask you for a message describing your changes:
                           
@@ -315,7 +315,7 @@
                                     <table border="0" cellpadding="2" cellspacing="2">
                                       <tr>
                                         <td>
-                                          <img src="shots/cvs_commit_msg.png" width="394" height="321" />
+                                           <img src="shots/cvs_commit_msg.png" width="394" height="321" />
                                         </td>
                                       </tr>
                                     </table>
@@ -339,7 +339,7 @@
                                     <table border="0" cellpadding="2" cellspacing="2">
                                       <tr>
                                         <td>
-                                          <img src="shots/cvs_commit.png" width="471" height="432" />
+                                           <img src="shots/cvs_commit.png" width="471" height="432" />
                                         </td>
                                       </tr>
                                     </table>
@@ -371,8 +371,8 @@
       <table width="100%">
         <tr>
           <td valign="top">
-            <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             <strong><a href="http://webmake.taint.org/">WebMake</a>
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
@@ -386,7 +386,7 @@
         </tr>
       </table>
       <div align="right">
-        <a href="http://webmake.taint.org/"><img src="images/BuiltWithWebMake.png" alt="Built With WebMake" border="0" width="88" height="31" /></a>
+         <a href="http://webmake.taint.org/"> <img src="images/BuiltWithWebMake.png" alt="Built With WebMake" border="0" width="88" height="31" /></a>
       </div>
     </font>
   </body>

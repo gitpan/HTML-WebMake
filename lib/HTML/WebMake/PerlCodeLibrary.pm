@@ -43,6 +43,20 @@ use strict;
 
 ###########################################################################
 
+=item $expandedtext = expand ($text);
+
+Expand a block of text, interpreting any references, user tags, or
+any other WebMake markup contained within.
+
+=cut
+
+sub expand {
+  my ($self, $text) = @_;
+  return $self->{main}->fileless_subst ($HTML::WebMake::Main::SUBST_EVAL, $text);
+}
+
+# -------------------------------------------------------------------------
+
 =item @names = content_matching ($pattern);
 
 Find all items of content that match the glob pattern C<$pattern>.  If
@@ -64,7 +78,7 @@ sub content_matching {
 =item @objs = content_names_to_objects (@names);
 
 Given a list of content names, convert to the corresponding list of content
-objects, ie. objects of type L<HTML::WebMake::Content>.
+objects, ie. objects of type C<HTML::WebMake::Content>.
 
 =cut
 
@@ -87,7 +101,7 @@ sub content_names_to_objects {
 =item $obj = get_content_object ($name);
 
 Given a content name, convert to the corresponding content object, ie. objects
-of type L<HTML::WebMake::Content>.
+of type C<HTML::WebMake::Content>.
 
 =cut
 
@@ -104,7 +118,7 @@ sub get_content_object {
 
 =item @names = content_objects_to_names (@objs);
 
-Given a list of objects of type L<HTML::WebMake::Content>, convert to
+Given a list of objects of type C<HTML::WebMake::Content>, convert to
 the corresponding list of content name strings.
 
 =cut
@@ -171,7 +185,7 @@ Get the item of content named C<$name>.  Equivalent to a $ {content_reference}.
 sub get_content {
   my ($self, $key) = @_;
   if (!defined $key) { croak ("get_content with undef key"); }
-  my $str = $self->{main}->curly_or_meta_subst ("(eval)", $key);
+  my $str = $self->{main}->curly_or_meta_subst ($HTML::WebMake::Main::SUBST_EVAL, $key);
   $str;
 }
 
@@ -185,7 +199,7 @@ list is stored in the content item in whitespace-separated format.
 sub get_list {
   my ($self, $key) = @_;
   if (!defined $key) { croak ("get_list with undef key"); }
-  my $str = $self->{main}->curly_or_meta_subst ("(eval)", $key);
+  my $str = $self->{main}->curly_or_meta_subst ($HTML::WebMake::Main::SUBST_EVAL, $key);
   split (' ', $str);
 }
 
@@ -281,7 +295,7 @@ Get a named URL. Equivalent to an $ (url_reference).
 sub get_url {
   my ($self, $key) = @_;
   if (!defined $key) { croak ("get_url with undef key"); }
-  $self->{main}->round_subst ("(eval)", $key);
+  $self->{main}->round_subst ($HTML::WebMake::Main::SUBST_EVAL, $key);
 }
 
 =item set_url ($name, $url);
@@ -389,7 +403,7 @@ This function returns an empty string.
 
 sub define_tag {
   my ($self, $name, $fnname, @reqdattrs) = @_;
-  $self->{main}->getusertags()->def_tag (0,0, $name, $fnname, @reqdattrs);
+  $self->{main}->getusertags()->def_tag (0,0,0, $name, $fnname, @reqdattrs);
 }
 
 =item define_empty_tag ($tagname, \&handlerfn, @required_attributes);
@@ -405,7 +419,33 @@ argument.
 
 sub define_empty_tag {
   my ($self, $name, $fnname, @reqdattrs) = @_;
-  $self->{main}->getusertags()->def_tag (1,0, $name, $fnname, @reqdattrs);
+  $self->{main}->getusertags()->def_tag (1,0,0, $name, $fnname, @reqdattrs);
+}
+
+# -------------------------------------------------------------------------
+
+=item define_preformat_tag ($tagname, \&handlerfn, @required_attributes);
+
+Identical to L<define_tag>, above, with one difference; these tags will
+be interpreted B<before> the content undergoes any format conversion.
+
+=cut
+
+sub define_preformat_tag {
+  my ($self, $name, $fnname, @reqdattrs) = @_;
+  $self->{main}->getusertags()->def_tag (0,0,1, $name, $fnname, @reqdattrs);
+}
+
+=item define_empty_preformat_tag ($tagname, \&handlerfn, @required_attributes);
+
+Identical to L<define_empty_tag>, above, with one difference; these tags will
+be interpreted B<before> the content undergoes any format conversion.
+
+=cut
+
+sub define_empty_preformat_tag {
+  my ($self, $name, $fnname, @reqdattrs) = @_;
+  $self->{main}->getusertags()->def_tag (1,0,1, $name, $fnname, @reqdattrs);
 }
 
 # -------------------------------------------------------------------------
@@ -421,7 +461,7 @@ is otherwise identical to define_tag above,
 
 sub define_wmk_tag {
   my ($self, $name, $fnname, @reqdattrs) = @_;
-  $self->{main}->getusertags()->def_tag (0,1, $name, $fnname, @reqdattrs);
+  $self->{main}->getusertags()->def_tag (0,1,0, $name, $fnname, @reqdattrs);
 }
 
 =item define_empty_wmk_tag ($tagname, \&handlerfn, @required_attributes);
@@ -435,7 +475,7 @@ is otherwise identical to define_tag above,
 
 sub define_empty_wmk_tag {
   my ($self, $name, $fnname, @reqdattrs) = @_;
-  $self->{main}->getusertags()->def_tag (1,1, $name, $fnname, @reqdattrs);
+  $self->{main}->getusertags()->def_tag (1,1,0, $name, $fnname, @reqdattrs);
 }
 
 # -------------------------------------------------------------------------
@@ -472,7 +512,7 @@ C<undef> is returned if no main content item has been referenced.
 
 sub get_current_main_content {
   my ($self) = @_;
-  $self->{main}->curly_subst ("(eval)", "__MainContentName");
+  $self->{main}->curly_subst ($HTML::WebMake::Main::SUBST_EVAL, "__MainContentName");
 }
 
 # -------------------------------------------------------------------------
@@ -531,6 +571,10 @@ sub define_tag
 { $HTML::WebMake::PerlCode::GlobalSelf->define_tag(@_); }
 sub define_empty_tag
 { $HTML::WebMake::PerlCode::GlobalSelf->define_empty_tag(@_); }
+sub define_preformat_tag
+{ $HTML::WebMake::PerlCode::GlobalSelf->define_preformat_tag(@_); }
+sub define_empty_preformat_tag
+{ $HTML::WebMake::PerlCode::GlobalSelf->define_empty_preformat_tag(@_); }
 sub define_wmk_tag
 { $HTML::WebMake::PerlCode::GlobalSelf->define_wmk_tag(@_); }
 sub define_empty_wmk_tag
@@ -541,5 +585,7 @@ sub get_current_main_content
 { $HTML::WebMake::PerlCode::GlobalSelf->get_current_main_content(@_); }
 sub get_webmake_main_object
 { $HTML::WebMake::PerlCode::GlobalSelf->get_webmake_main_object(@_); }
+sub expand
+{ $HTML::WebMake::PerlCode::GlobalSelf->expand(@_); }
 
 1;

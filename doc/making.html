@@ -7,7 +7,7 @@
     <title>
       WebMake: Documentation: WebMake Operation
     </title>
-    <meta name="generator" content="WebMake/2.1" />
+    <meta name="generator" content="WebMake/2.2" />
     <style>
       body {
        background-color: #ffffff; 
@@ -52,19 +52,19 @@
   <body bgcolor="#ffffff" text="#000000" link="#3300cc" vlink="#660066">
     <font face="lucida,verdana,sans-serif">
       <div align="center">
-        <img src="images/WebMakeTitle.png" alt="WebMake" width="500" height="122" />
+         <img src="images/WebMakeTitle.png" alt="WebMake" width="500" height="122" />
       </div>
       <table width="100%">
         <tr>
           <td valign="top">
-            <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             <strong><a href="http://webmake.taint.org/">WebMake</a>
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
             <div align="right">
               
-               [ <a href="blurb.html">Back</a> | <a href="firsttime.html">Forward</a> | <a href="index.html">Index</a>
+               [ <a href="concepts.html">Back</a> | <a href="firsttime.html">Forward</a> | <a href="index.html">Index</a>
                | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
                
             </div>
@@ -82,13 +82,13 @@
                   <table border="0" cellspacing="4" cellpadding="4" width="100%">
                     <tr>
                       <td>
-                        <h1>WebMake Operation</h1><p>
+                         <h1>WebMake Operation</h1><p>
                           First of all, WebMake relies on a <strong>WebMake file</strong>. This is an XML file, with
                           a filename ending in <strong>.wmk</strong>, containing most of the important data on the
                           structure, inputs and files that make up your site.
                           
                         </p>
-                        <a name="Finding_The_WebMake_File"><h3>Finding The WebMake File</h3></a><p>
+                         <a name="Finding_The_WebMake_File"><h3>Finding The WebMake File</h3></a><p>
                           If you run WebMake without a <strong>-f</strong> or <strong>-R</strong> switch on its command-line,
                           it'll first search for a file ending with <strong>.wmk</strong> in the current directory,
                           then in the parent directory, and so on 'til it hits the root directory.
@@ -103,7 +103,7 @@
                           you're working on.
                           
                         </p>
-                        <a name="The_WebMake_File_Structure"><h3>The WebMake File Structure</h3></a><p>
+                         <a name="The_WebMake_File_Structure"><h3>The WebMake File Structure</h3></a><p>
                           A WebMake file is made up of several conceptual chunks, as follows:
                           
                         </p>
@@ -125,7 +125,7 @@
                             
                           </li>
                           <li>
-                            metadata (optional)
+                            <a href="metadata.html">metadata</a> (optional)
                             
                           </li>
                           <li>
@@ -167,13 +167,13 @@
                           <strong>Metadata</strong>: If you want your site to contain pages which list details about,
                           or links to, other pages, generated on-the-fly, <a href="metadata.html">metadata</a> is
                           the way to do it. WebMake supports several ways of tagging your content with
-                          metadata to provide this. Metadata can be <a href="wmmeta.html">embedded into the
+                          <a href="metadata.html">metadata</a> to provide this. Metadata can be <a href="wmmeta.html">embedded into the
                           content text</a>, or <a href="metatable.html"> tagged onto the content</a> after
                           its already been declared.
                           
                         </p>
                         <p>
-                          <strong>Catalog generation</strong>: once you've tagged your content text with metadata,
+                          <strong>Catalog generation</strong>: once you've tagged your content text with <a href="metadata.html">metadata</a>,
                           WebMake can generate catalogs -- indexes, sitemaps, and the like -- from this.
                           Built-in catalog types include <a href="sitemap.html">a site map</a>, <a href="navlinks.html">back and forward navigation links</a>, and <a href="breadcrumbs.html">"breadcrumb trails"</a>. You can also write your own <a href="perl.html">Perl</a> code to generate custom indexes using the <a href="PerlCodeLibrary.pm.html">library functions</a>, if you prefer.
                           
@@ -193,13 +193,13 @@
                           <a href="format.html"><strong>&lt;/webmake&gt;</strong></a> tag.
                           
                         </p>
-                        <a name="Which_Outputs_Are_Created"><h3>Which Outputs Are Created?</h3></a><p>
+                         <a name="Which_Outputs_Are_Created"><h3>Which Outputs Are Created?</h3></a><p>
                           Normally, all outputs named in the WebMake file are scanned, and possibly
                           re-generated. However, if a target has been specified on the command line,
                           only that file will be "made".
                           
                         </p>
-                        <a name="Dependencies_And_Other_Optimisations"><h3>Dependencies And Other Optimisations</h3></a><p>
+                         <a name="Dependencies_And_Other_Optimisations"><h3>Dependencies And Other Optimisations</h3></a><p>
                           "Making" the target is not the end of it -- strictly speaking, the target
                           may or may not be updated. WebMake tracks the dependencies of each file, and
                           if these have not changed, the file will not be rebuilt.
@@ -227,7 +227,7 @@
                           changed.
                           
                         </p>
-                        <a name="Ensuring_A_Seamless_Transition"><h3>Ensuring A Seamless Transition</h3></a><p>
+                         <a name="Ensuring_A_Seamless_Transition"><h3>Ensuring A Seamless Transition</h3></a><p>
                           A very large (or very complicated) WebMake site can take a while to update.
                           To avoid broken links while updating the site, WebMake generates all output
                           into temporary files called <strong><em>filename</em>.new</strong>; once all the output
@@ -235,9 +235,9 @@
                           time during which there may be inconsistencies in the site.
                           
                         </p>
-                        <a name="Caching"><h3>Caching</h3></a><p>
+                         <a name="Caching"><h3>Caching</h3></a><p>
                           Since WebMake uses dependencies to avoid rebuilding the entire site
-                          every time, it needs to cache metadata and dependency information
+                          every time, it needs to cache <a href="metadata.html">metadata</a> and dependency information
                           somewhere.
                           
                         </p>
@@ -263,14 +263,14 @@
     <table width="100%">
       <tr>
         <td valign="top">
-          <strong><a href="http://webmake.taint.org/">WebMake</a>
-           Documentation</strong> (version 2.1)
+           <strong><a href="http://webmake.taint.org/">WebMake</a>
+           Documentation</strong> (version 2.2)
            
         </td>
         <td valign="top">
           <div align="right">
             
-             [ <a href="blurb.html">Back</a> | <a href="firsttime.html">Forward</a> | <a href="index.html">Index</a>
+             [ <a href="concepts.html">Back</a> | <a href="firsttime.html">Forward</a> | <a href="index.html">Index</a>
              | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
              
           </div>
@@ -278,7 +278,7 @@
       </tr>
     </table>
     <div align="right">
-      <a href="http://webmake.taint.org/"><img src="images/BuiltWithWebMake.png" alt="Built With WebMake" border="0" width="88" height="31" /></a>
+       <a href="http://webmake.taint.org/"> <img src="images/BuiltWithWebMake.png" alt="Built With WebMake" border="0" width="88" height="31" /></a>
     </div>
   </font>
 </body>

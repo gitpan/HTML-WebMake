@@ -102,7 +102,7 @@ sub new {
     $self->{no_map}		= 1;
   }
 
-  if (!$self->is_generated_content()) {
+  if (!$self->{no_map}) {
     $metadata->add_metadefaults ($self);
   }
 
@@ -158,7 +158,8 @@ sub get_metadata {
   my $main = $self->{main};
 
   if (!defined $val) {
-    $val = $main->quiet_curly_meta_subst ("(meta)", $self->{name}.".".$key);
+    $val = $main->quiet_curly_meta_subst
+    		($HTML::WebMake::Main::SUBST_META, $self->{name}.".".$key);
     if (!defined $val) {
       $val ||= $main->{metadata}->get_default_value ($key);
     }
@@ -189,6 +190,9 @@ sub load_metadata {
   if ($key =~ /^this\./i) {
     warn "oops! wasn't expecting a this. metaref in load_metadata: $key";
   }
+
+  # unmapped content can't have metadata
+  if ($self->{no_map}) { return; }
 
   if (defined $self->{extra_metas}->{$key}) {
     $self->add_extra_metas ($name);
@@ -303,6 +307,9 @@ sub find_implicit_title_in_text {
 sub add_inferred_metadata {
   my ($self, $name, $val, $fmt) = @_;
 
+  my $existingmeta = $self->{main}->{metadatas}->{$self->{name}.".".$name};
+  return if (defined $existingmeta);
+
   my $attrs = { };
 
   if ($fmt ne 'text/html') {
@@ -321,6 +328,9 @@ sub add_inferred_metadata {
   dbg ("inferring $name metadata from text: \"$val\"");
   $self->{main}->add_metadata ($self->{name}, $name, $val, $attrs,
     		$self->{set_thisdot_metadata_items});
+
+  $self->create_extra_metas_if_needed();
+  $self->{extra_metas}->{$name} = $val;
 }
 
 # -------------------------------------------------------------------------
@@ -422,27 +432,25 @@ sub get_text_as {
     elsif (length ($txt) < $MIN_FMT_CACHE_LEN) { $ignore_reformat_cache = 1; }
   }
 
+  # preformat user tags
+  $main->getusertags()->subst_preformat_tags ($self->{name}, \$txt);
+
   # reformat before substs; this way we can cache the reformat
   # results for next time.
   if ($fmt ne $format) {
     # strip metadata before conversion
     $main->strip_metadata ($self->{name}, \$txt);
 
-    # and subst tags (note: just tags, not refs etc.) before conversion
-    $main->getusertags()->subst_tags ($self->{name}, \$txt);
-
     $txt = $main->{format_conv}->convert
 	  ($self, $fmt, $format, $txt, $ignore_reformat_cache);
-
-  } else {
-    $main->getusertags()->subst_tags ($self->{name}, \$txt);
   }
 
-  $main->subst ($self->{name}, \$txt);
+  # subst refs and perl code
+  $main->subst ($self->{name}, \$txt, 1);
 
   # always remove leading & trailing whitespace from HTML or XML
   # content.
-  if ($format =~ /^text\/(?:html|xml)$/i) {
+  if ($format eq 'text/html' || $format eq 'text/xml') {
     $txt =~ s/^\s+//s;$txt =~ s/\s+$//s;
   }
 
@@ -463,16 +471,15 @@ sub get_navlinks_text {
 sub get_as_is_text {
   my ($self) = @_;
 
-  $self->add_navigation_metadata();
-  $self->add_extra_metas ($self->{name});
-  $self->infer_implicit_metas();
+  if (!$self->{no_map}) {
+    $self->add_navigation_metadata();
+    $self->add_extra_metas ($self->{name});
+    $self->infer_implicit_metas();
 
-  # if this content item is mapped, set a var called "__MainContentName"
-  # so it'll be used as the "main" content item for the current page
-  # while drawing the breadcrumb trail.
-  if (!$self->{no_map} && !$self->is_generated_content())
-  {
-    $self->{main}->set_unmapped_content ("__MainContentName", $self->{name});
+    # if this content item is mapped, set a var called "__MainContentName"
+    # so it'll be used as the "main" content item for the current page
+    # while drawing the breadcrumb trail.
+    $self->{main}->set_transient_content ("__MainContentName", $self->{name});
   }
 
   $self->touch_last_used();
@@ -484,21 +491,20 @@ sub get_as_is_text {
 sub get_normal_content_text {
   my ($self) = @_;
 
-  $self->add_navigation_metadata();
-  my $name = $self->{name};
+  if (!$self->{no_map}) {
+    $self->add_navigation_metadata();
 
-  dbg ("parsing metadata in \"$name\"");
-  $self->parse_metadata_tags ($name, $self->{text});
+    my $name = $self->{name};
+    dbg ("parsing metadata in \"$name\"");
+    $self->parse_metadata_tags ($name, $self->{text});
 
-  $self->add_extra_metas ($name);
-  $self->infer_implicit_metas();
+    $self->add_extra_metas ($name);
+    $self->infer_implicit_metas();
 
-  # if this content item is mapped, set a var called "__MainContentName"
-  # so it'll be used as the "main" content item for the current page
-  # while drawing the breadcrumb trail.
-  if (!$self->{no_map} && !$self->is_generated_content())
-  {
-    $self->{main}->set_unmapped_content ("__MainContentName", $name);
+    # if this content item is mapped, set a var called "__MainContentName"
+    # so it'll be used as the "main" content item for the current page
+    # while drawing the breadcrumb trail.
+    $self->{main}->set_transient_content ("__MainContentName", $name);
   }
 
   $self->touch_last_used();
@@ -548,10 +554,11 @@ sub touch_last_used {
 
 sub add_ref_from_url {
   my ($self, $filename) = @_;
-  return if ($filename =~ /^\(/);       # (eval), (dep_ignore) etc.
-  dbg2 ($self->as_string().": add ref from url $filename");
 
-  if (!defined $self->{reffed_in_url}) {
+  return if ($filename =~ /^\(/);       # (eval), (dep_ignore) etc.
+
+  if (!$self->{no_map} && !defined $self->{reffed_in_url}) {
+    dbg2 ($self->as_string().": add ref from url $filename");
     $self->{reffed_in_url} = $filename;
     $self->{main}->getcache()->put_metadata ($self->{name}.".url", $filename);
   }
@@ -559,6 +566,11 @@ sub add_ref_from_url {
 
 sub get_url {
   my ($self) = @_;
+
+  if ($self->{no_map}) {
+    warn "cannot get URLs for unmapped content \${$self->{name}}\n";
+    return '';
+  }
 
   my $url = $self->{reffed_in_url};
   if (defined $url) { return $url; }
@@ -570,6 +582,7 @@ sub get_url {
     return $url;
   }
   
+defer:
   $url = $self->{main}->make_deferred_url ($self->{name});
   return $url;
 }
@@ -607,7 +620,7 @@ sub set_navlinks_vars {
 
   foreach my $dir (qw{up prev next}) {
     my $contname = $self->{main}->curly_meta_subst
-				  ("(eval)", "this.nav_".$dir."?");
+				  ($HTML::WebMake::Main::SUBST_EVAL, "this.nav_".$dir."?");
     my ($obj, $url);
 
     if ($contname ne '') {
@@ -629,17 +642,17 @@ sub set_navlinks_vars {
 	next;
       }
 
-      $self->{main}->set_unmapped_content ("url", $url);
-      $self->{main}->set_unmapped_content ("name", $contname);
-      $self->{main}->set_unmapped_content ($dir."text",
+      $self->{main}->set_transient_content ("url", $url);
+      $self->{main}->set_transient_content ("name", $contname);
+      $self->{main}->set_transient_content ($dir."text",
 	      $self->navlinks_subst ($self->{'nav_'.$dir}));
 
     } elsif (defined $self->{'no_nav_'.$dir}) {		# optional attribute
-      $self->{main}->set_unmapped_content ($dir."text",
+      $self->{main}->set_transient_content ($dir."text",
 	      $self->navlinks_subst ($self->{'no_nav_'.$dir}));
 
     } else {
-      $self->{main}->set_unmapped_content ($dir."text", '');
+      $self->{main}->set_transient_content ($dir."text", '');
     }
   }
 
@@ -649,7 +662,7 @@ sub set_navlinks_vars {
 
 sub navlinks_subst {
   my ($self, $var) = @_;
-  $self->{main}->curly_subst ("(eval)", $var);
+  $self->{main}->curly_subst ($HTML::WebMake::Main::SUBST_EVAL, $var);
 }
 
 # -------------------------------------------------------------------------
@@ -668,7 +681,7 @@ sub get_breadcrumbs_text {
   # $self is TAILPAGE at this point.
 
   my @uplist = ();
-  my $contname = $self->{main}->curly_subst ("(eval)", "__MainContentName");
+  my $contname = $self->{main}->curly_subst ($HTML::WebMake::Main::SUBST_EVAL, "__MainContentName");
   if (!defined $contname) {
     dbg ($self->as_string().": no mapped content on page");
     return "";
@@ -720,16 +733,19 @@ sub cook_a_breadcrumb {
   # cache, and it hasn't been evaluated, use a symbolic one
   # which the make() mechanism will fix later.
   my $url;
-  if (!defined ($url = $obj->get_url()) || $url eq '') {
+  my $dotdots = $self->{main}->{current_subst}->{dotdots};
+  if (!defined $dotdots
+  	|| !defined ($url = $obj->get_url())
+	|| $url eq '')
+  {
     $url = $self->{main}->make_deferred_url ($obj->{name});
+  } else {
+    $url = $dotdots.$url;
   }
 
-  # relativise it.
-  $url = '$(TOP/)'.$url;
-
-  $self->{main}->set_unmapped_content ("url", $url);
-  $self->{main}->set_unmapped_content ("name", $obj->{name});
-  return $self->{main}->curly_subst ("(eval)", $linktmpl);
+  $self->{main}->set_transient_content ("url", $url);
+  $self->{main}->set_transient_content ("name", $obj->{name});
+  return $self->{main}->curly_subst ($HTML::WebMake::Main::SUBST_EVAL, $linktmpl);
 }
 
 # -------------------------------------------------------------------------

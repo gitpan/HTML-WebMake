@@ -154,8 +154,8 @@ sub mk_deps {
   my @compressed = ();
 
   foreach my $dep (@{$deps}) {
-    if ($dep eq '(dep_ignore)') { next; }
-    elsif ($dep eq '(meta)') { next; }
+    if ($dep eq $HTML::WebMake::Main::SUBST_DEP_IGNORE) { next; }
+    elsif ($dep eq $HTML::WebMake::Main::SUBST_META) { next; }
     elsif ($dep eq $self->{location}) { push (@compressed, "\001"); next; }
     push (@compressed, $dep);
   }
@@ -456,7 +456,7 @@ sub get_up_content {
   # see if we have an "up" metadatum.
   if (!$self->is_generated_content()) {
     my $meta = $self->{main}->quiet_curly_meta_subst
-			  ("(meta)", $self->{name}.".up");
+			  ($HTML::WebMake::Main::SUBST_META, $self->{name}.".up");
     if (defined $meta && $meta ne '') {
       $cont = $self->up_name_to_content ($meta);
       if (defined $cont) {

@@ -21,15 +21,15 @@ search a "data source" [ds] (directory, etc.) for a pattern.
 
 	[ds]: $(datasources)
 
-The attributes supported are listed on the "data source" [ds] page.
+    Note that data sources which do not map to files in a filesystem, or other
+    methods accessible to a web browser browsing your site, do not make sense
+    for the &lt;media&gt; tag; so, for example, the __svfile:__ protocol is
+    not supported, as a web browser cannot load an image from a CSV file.
+    As a result, currently only one data source protocol can be used with
+    the &lt;media&gt; tag, namely __file:__.
 
-Note that data sources which do not map to files in a filesystem, or other
-methods accessible to a web browser browsing your site, do not make sense for
-the &lt;media&gt; tag; so, for example, the __svfile:__ protocol is not
-supported, as a web browser cannot load an image from a CSV file.
-
-As a result, currently only one data source protocol can be used with the
-&lt;media&gt; tag, namely __file:__.
+${datasource_attrs.inc}
+${datasource_file_protocol.inc}
 
 Example
 =======

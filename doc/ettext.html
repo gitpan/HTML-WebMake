@@ -7,7 +7,7 @@
     <title>
       WebMake: Documentation: The Text::EtText Format Converter
     </title>
-    <meta name="generator" content="WebMake/2.1" />
+    <meta name="generator" content="WebMake/2.2" />
     <style>
       body {
        background-color: #ffffff; 
@@ -58,7 +58,7 @@
         <tr>
           <td valign="top">
             <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
@@ -84,437 +84,49 @@
                       <td>
                         <h1>The Text::EtText Format Converter</h1><p>
                           This converter converts from Text::EtText, a simple plain-text format, to
-                          HTML. Like most simple text markup formats (POD, <a href="http://www.bsdi.com/setext/">setext</a>, etc.), EtText markup
-                          handles the usual things: insertion of <em>&lt;P&gt;</em> tags, header recognition
-                          and markup. However it adds a powerful link markup system.
+                          HTML. Like most simple text markup formats (POD, setext, etc.), EtText markup
+                          handles the usual things: insertion of <em>&lt;P&gt;</em> tags, header recognition,
+                          list recognition, and markup. However it adds a powerful link markup system.
                           
                         </p>
                         <p>
                           EtText is no longer included in WebMake; instead it must be downloaded
-                          separately from <a href="http://ettext.taint.org/">http://ettext.taint.org/</a>, where there is also a more
-                          detailed set of documentation. However, this page is retained in WebMake
-                          for quick reference.
-                          
-                        </p>
-                        <a name="Basic_Text_Markup"><h3>Basic Text Markup</h3></a><p>
-                          If you leave blank lines between paragraphs, <strong>&lt;p&gt;</strong> and
-                          <strong>&lt;/p&gt;</strong> tags will be inserted in the correct places.
-                          EtText does quite a good job of this.
+                          separately from <a href="http://ettext.taint.org/">http://ettext.taint.org/</a>, where there is also a more detailed
+                          set of documentation.
                           
                         </p>
                         <p>
-                          Words wrap and fill automatically, so there's no need to worry about wrapping
-                          before 80 characters. (It's good form to do so anyway, in case other people
-                          ever need to edit your text, though.)
                           
                         </p>
-                        <p>
-                          A paragraph consisting of a line of 10 or more consecutive - or _ signs will
-                          be converted to a HR tag.
-                          
-                        </p>
-                        <p>
-                          Sections of text between pairs of certain characters will be turned into
-                          markup, as follows:
-                          
-                        </p>
-                        <blockquote>
-                          <p>
-                            <table>
-                              <tr>
-                                <th width="30%">
-                                  <strong>EtText</strong>
-                                </th>
-                                <th width="30%">
-                                  <strong>Tag Used</strong>
-                                </th>
-                                <th width="30%">
-                                  <strong>Result</strong>
-                                </th>
-                              </tr>
-                              <tr>
-                                <td width="30%">
-                                  <code>&#42;&#42;text&#42;&#42;</code>
-                                </td>
-                                <td width="30%">
-                                  &lt;strong&gt;
-                                </td>
-                                <td width="30%">
-                                  <strong>text</strong>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td width="30%">
-                                  <code>&#95;&#95;text&#95;&#95;</code>
-                                </td>
-                                <td width="30%">
-                                  &lt;em&gt;
-                                </td>
-                                <td width="30%">
-                                  <em>text</em>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td width="30%">
-                                  <code>&#35;&#35;text&#35;&#35;</code>
-                                </td>
-                                <td width="30%">
-                                  &lt;code&gt;
-                                </td>
-                                <td width="30%">
-                                  <code>text</code>
-                                </td>
-                              </tr>
-                            </table>
-                          </p>
-                        </blockquote>
-                        <p>
-                          <strong>&amp;</strong> signs that have whitespace on either side will be converted
-                          to <strong>&amp;amp;</strong> signs automatically.
-                          
-                        </p>
-                        <p>
-                          Text indented from the left margin will be converted into a <strong>&lt;P&gt;</strong>
-                          paragraph wrapped in a <strong>&lt;blockquote&gt;</strong> -- unless it starts with a
-                          <code>*</code>, <code>-</code>, <code>+</code> or <code>o</code> character
-                          followed by whitespace, in which case it's interpreted as a list item; see
-                          <strong>Lists</strong> below.
-                          
-                        </p>
-                        <p>
-                          Another exception to the above rule is that text indented by only 1 space, or
-                          on lines starting in the first column with two colon characters, will be
-                          surrounded by &lt;pre&gt; tags.
-                          
-                        </p>
-                        <p>
-                          If you find writing HTML tag-pairs manually annoying, EtText includes an idea
-                          from <a href="http://www.latte.org/">Latte</a>; balanced-tag generation. Wrap the text to be tagged with
-                          the name of the tag followed immediately by a { character on the left, and a }
-                          character on the right. In other words,
-                          
-                        </p>
-                        <blockquote>
-                          <p>
-                            <code>strong&#123;text&#125;</code>
-                          </p>
-                        </blockquote>
-                        <p>
-                          will be rendered as
-                          
-                        </p>
-                        <blockquote>
-                          <p>
-                            &lt;strong&gt;text&lt;/strong&gt;
-                            
-                          </p>
-                        </blockquote>
-                        <p>
-                          or, in other words, <strong>text</strong> . This can be nested, so <code>strong&#123;text
-                          with i&#123;italic&#125; bits&#125;</code> will be rendered as <strong>text with <i>italic</i>
-                          bits</strong>.
-                          
-                        </p>
-                        <p>
-                          In addition, the balanced-tag support has a bonus feature, in that it supports
-                          CSS classes; follow the name of the tag with a full stop and the class, and
-                          it will use that class, like so:
-                          
-                        </p>
-                        <blockquote>
-                          <p>
-                            <code>i.green&#123;foo&#125;</code>
-                          </p>
-                        </blockquote>
-                        <p>
-                          will be rendered as
-                          
-                        </p>
-                        <blockquote>
-                          <p>
-                            &lt;i class="green&gt;foo&lt;/i&gt;
-                            
-                          </p>
-                        </blockquote>
-                        <a name="Lists"><h3>Lists</h3></a><p>
-                          A paragraph indented from the left margin (by either spaces or tabs, or both),
-                          and starting with a <code>*</code>, <code>-</code>, <code>+</code> or
-                          <code>o</code> character followed by whitespace, will be converted into a list
-                          item (<strong>&lt;li&gt;</strong> tag).
-                          
-                        </p>
-                        <p>
-                          The same goes for indented paragraphs that start with the string
-                          <code>1.</code>, followed by whitespace. However the default list tag in this
-                          case will be an <strong>&lt;ol&gt;</strong>...<strong>&lt;/ol&gt;</strong> list. Any positive integer
-                          followed immediately by a full stop and a space will do the trick. (BTW: I
-                          used to use <code>#</code> to do this, but I preferred the <a href="http://c2.com/cgi/wiki?WikiWikiWeb">WikiIdea</a>, it
-                          looks better.)
-                          
-                        </p>
-                        <blockquote>
-                          <p>
-                            <em>(Compatibility note: previous versions of EtText required that the
-                             <strong>&lt;ul&gt;</strong> or <strong>&lt;ol&gt;</strong> tags be written manually. This is no
-                             longer the case.)</em>
-                          </p>
-                        </blockquote>
-                        <p>
-                          Some text editors (such as <em>vim</em>) will reformat list items automatically,
-                          assuming that you want the text to line up with the start of the text, instead
-                          of the bullet-point character, on the previous line, like so:
-                          
-                        </p>
-                        <p>
-                          <pre>
-                          
-	- this is a list item. We should make sure that
-	  blah blah etc. etc.
-                        </pre>
-                      </p>
-                      <p>
-                        WebMake supports this.
-                        
-                      </p>
-                      <p>
-                        Indented paragraphs that start with <code><strong>term</strong>:</code><em>tab</em><code><strong>rest of paragraph</strong></code> will be converted
-                        into definition lists (this is another <a href="http://c2.com/cgi/wiki?WikiWikiWeb">StolenFromWikiIdea</a>). They
-                        look like this:
-                        
-                      </p>
-                      <dl>
-                        <dt>
-                          Foo
-                        </dt>
-                        <dd>
-                          <p>
-                            Blah blah blah etc.
-                            
-                          </p>
-                        </dd>
-                      </dl>
-                      <a name="Sidebars_and_Side_Images"><h3>Sidebars and Side Images</h3></a><p>
-                        If you wish to display an image, or small sidebar, beside a paragraph of text,
-                        use the <strong>&lt;etleft&gt;</strong> and <strong>&lt;etright&gt;</strong>
-                        tags. These are rendered as a one-row, two-column
-                        <strong>&lt;table&gt;</strong> wrapping the paragraph and the sidebar, as
-                        follows:
-                        
-                      </p>
-                      <p>
-                        <pre>
-                        
-&lt;etleft&gt;&lt;img src=bubba.png&gt;&lt;/etleft&gt;This is the main
-paragraph body.  Foo bar baz blah blah blah etc.
-                      </pre>
-                    </p>
-                    <p>
-                      Is displayed as:
-                      
-                    </p>
-                    <table>
-                      <tr>
-                        <td valign="top">
-                          <img src="bubba.png"  width="110" height="70" />
-                        </td>
-                        <td width="99%" valign="top">
-                          <p>
-                            This is the main paragraph body.
-                            Foo bar baz blah blah blah etc.
-                          </p>
-                        </td>
-                      </tr>
-                    </table>
-                    <p>
-                      <pre>
-                      
-&lt;etright&gt;&lt;img src=bubba.png&gt;&lt;/etright&gt;This is the
-main paragraph body.  Foo bar baz blah blah blah etc.
-                    </pre>
-                  </p>
-                  <p>
-                    Is displayed as:
-                    
-                  </p>
-                  <table>
-                    <tr>
-                      <td width="99%" valign="top">
-                        <p>
-                          This is the main paragraph body.
-                          Foo bar baz blah blah blah etc.
-                        </p>
-                      </td>
-                      <td valign="top">
-                        <img src="bubba.png"  width="110" height="70" />
                       </td>
                     </tr>
                   </table>
-                  <a name="When_HTML_and_EtText_Collide"><h3>When HTML and EtText Collide</h3></a><p>
-                    HTML tags can be used freely throughout an EtText document. However, in some
-                    situations, you may wish to preserve whitespace, avoid paragraph tags being
-                    added, etc.; to use your own HTML without meddling from EtText, wrap it in an
-                    <strong>&lt;!--etsafe--&gt;</strong>...<strong>&lt;!--/etsafe--&gt;</strong>
-                    tag pair; this will protect it.
-                    
-                  </p>
-                  <p>
-                    Note that text blocks wrapped in <strong>&lt;pre&gt;</strong>,
-                    <strong>&lt;listing&gt;</strong> and <strong>&lt;xmp&gt;</strong> tags are
-                    automatically protected in this way; the <strong>&lt;!--etsafe--&gt;</strong>
-                    tag pair is not required.
-                    
-                  </p>
-                  <p>
-                    EtText adds two entities, &amp;etsqi; and &amp;etsqo;. These represent
-                    [ and ] respectively, and are used to protect a square-bracketed
-                    piece of text from being interpreted as a link URL (see <em>Link Markup</em>
-                    below).
-                    
-                  </p>
-                  <a name="EtText_Links"><h3>EtText Links</h3></a><p>
-                    As well as the standard <strong>&lt;a href=url&gt;...&lt;/a&gt;</strong> link
-                    specification used in HTML, EtText will automatically add href tags for URLs
-                    and email addresses that occur in the text. In addition, EtText supports its
-                    own link format, as follows.
-                    
-                  </p>
-                  <p>
-                    The basic concept is of a word or "quoted set of words" followed by a link
-                    label in [square brackets], like this: <strong>"this is a link"
-                    [label]</strong>.
-                    
-                  </p>
-                  <p>
-                    The href used in the link is then defined at another point in the document, as
-                    an indented line like this:
-                    
-                  </p>
-                  <blockquote>
-                    <p>
-                      [<em>label</em>]: <em><a href="http://url">http://url</a>...</em>
-                    </p>
-                  </blockquote>
-                  <p>
-                    Text and markup can be enclosed in the quotes, everything quoted will become
-                    part of the link text. Single words or HTML tags do not need to be quoted, so
-                    this will work correctly:
-                    
-                  </p>
-                  <p>
-                    <pre>
-                    <!--etsafe-->
-                    
-  &lt;img src="http://jmason.org/license_plate.jpg"
-  	width="10" height="10" /&gt; &#91;homepage&#93;
-<!--/etsafe-->
-                                      </pre>
-                </p>
-                <a name="Glossary_Links"><h3>Glossary Links</h3></a><p>
-                  EtText also supports a concept called <em>glossary links</em>; if you define a
-                  link, the name of that link will automatically become a href if enclosed in
-                  quotes. For example:
-                  
-                </p>
-                <blockquote>
-                  <p>
-                    [Justin Mason]: <a href="http://jmason.org/">http://jmason.org/</a>
-                  </p>
-                </blockquote>
-                <p>
-                  will mean that any occurrence of the name <strong>"Justin Mason"</strong>, in quotes, in
-                  <em>any</em> EtText content chunk or file in the site, becomes a link to that
-                  address. These links are stored in the WebMake <a href="making.html">cache file</a>.
-                  
-                </p>
-                <p>
-                  Quoted bits of text that do not map to an entry in the glossary are not
-                  converted to links (unless they're followed by a square-bracketed link-label
-                  reference).
-                  
-                </p>
-                <p>
-                  URLs, such as <a href="http://webmake.taint.org/">http://webmake.taint.org/</a> , and email addresses, such as
-                  <a href="mailto:jm@nospam-jmason.org">jm@nospam-jmason.org</a>, are automatically converted into links to that same
-                  address.
-                  
-                </p>
-                <a name="Blocking_EtText_Link_Interpretation"><h3>Blocking EtText Link Interpretation</h3></a><p>
-                  To block interpretation as a link, replace square brackets with the HTML
-                  entities <strong>&amp;etsqi;</strong> and <strong>&amp;etsqo;</strong>, which map to [ and ]
-                  respectively; replace quote characters, <strong>"</strong>, with two apostrophes,
-                  <strong>&#39;&#39;</strong>. If that doesn't do the trick, wrap the entire section of text
-                  with the <strong>&lt;!--etsafe--&gt;</strong>...<strong>&lt;!--/etsafe--&gt;</strong> tags.
-                  
-                </p>
-                <a name="Similar_Systems"><h3>Similar Systems</h3></a><p>
-                  EtText-like plain-text-to-markup conversion systems have a long history. The
-                  first time I came across the concept was with <a href="http://www.bsdi.com/setext/">Setext</a>, which was
-                  included with Tony Sanders' <em>Plexus</em> web server, back in September 1993.
-                  Yes, 1993. Setext has been around for a while!
-                  
-                </p>
-                <p>
-                  <a href="http://c2.com/cgi/wiki?WikiWikiWeb">WikiWikiWeb</a> is quite a recent, well-established system which uses
-                  a similar markup style.
-                  
-                </p>
-                <p>
-                  Userland's <a href="http://www.userland.com/">Frontier</a> includes a text-to-markup conversion
-                  system as well.
-                  
-                </p>
-                <p>
-                  Some well-known sites that use their own converters to convert
-                  plain-text to markup include <a href="http://www.blogger.com/">http://www.blogger.com/</a>, <a href="http://slashdot.org/">http://slashdot.org/</a>
-                  (for comments) and <a href="http://www.advogato.org/">http://www.advogato.org/</a>.
-                  
-                </p>
-                <p>
-                  Jorn Barger maintains an impressive summary of etext formats at <a href="http://www.robotwisdom.com/net/etextfaq.html">his Robot
-                  Wisdom site</a>. Skip down to section 3, <em>Internet etext
-                  standards</em>, for the directly-relevant stuff.
-                  
-                </p>
-                <p>
-                  Zope and ZWiki use a format called <a href="http://dev.zope.org/Wikis/DevSite/Proposals/StructuredText">StructuredText</a>, which again comes from
-                  WikiLand. There's some interesting work going on there with the <a href="http://www.zope.org/Members/jim/StructuredTextWiki/STXDocument">STXDocument</a>
-                  object, which is <em>a web-managable object that contains information marked up
-                  in the structured text format</em>.
-                  
-                </p>
-                <p>
-                  
-                </p>
-              </p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</td>
-</tr>
-</table>
-<table width="100%">
-  <tr>
-    <td valign="top">
-      <strong><a href="http://webmake.taint.org/">WebMake</a>
-       Documentation</strong> (version 2.1)
-       
-    </td>
-    <td valign="top">
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <table width="100%">
+        <tr>
+          <td valign="top">
+            <strong><a href="http://webmake.taint.org/">WebMake</a>
+             Documentation</strong> (version 2.2)
+             
+          </td>
+          <td valign="top">
+            <div align="right">
+              
+               [ <a href="index_07-fmt_converters.html">Back</a> | <a href="pod.html">Forward</a> | <a href="index.html">Index</a>
+               | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
+               
+            </div>
+          </td>
+        </tr>
+      </table>
       <div align="right">
-        
-         [ <a href="index_07-fmt_converters.html">Back</a> | <a href="pod.html">Forward</a> | <a href="index.html">Index</a>
-         | <a href="allinone.html">All&nbsp;In&nbsp;One</a> ]
-         
+        <a href="http://webmake.taint.org/"><img src="images/BuiltWithWebMake.png" alt="Built With WebMake" border="0" width="88" height="31" /></a>
       </div>
-    </td>
-  </tr>
-</table>
-<div align="right">
-  <a href="http://webmake.taint.org/"><img src="images/BuiltWithWebMake.png" alt="Built With WebMake" border="0" width="88" height="31" /></a>
-</div>
-</font>
-</body>
+    </font>
+  </body>
 </html>

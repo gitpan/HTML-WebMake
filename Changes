@@ -1,3 +1,204 @@
+2001-10-01 04:32  jmason
+
+	* lib/HTML/WebMake/PerlCode.pm: last change for 2.2
+
+2001-09-30 07:01  jmason
+
+	* t/etglossary.t: added test warning for etglossary test
+
+2001-09-30 06:59  jmason
+
+	* MANIFEST: updated manifest for new tests
+
+2001-09-30 06:58  jmason
+
+	* webmake.raw, doc/concepts.txt, doc/webmake.html,
+	lib/HTML/WebMake.pm, lib/HTML/WebMake/FormatConvert.pm,
+	lib/HTML/WebMake/HTMLCleaner.pm,
+	lib/HTML/WebMake/MetadataContent.pm,
+	lib/HTML/WebMake/NormalContent.pm,
+	lib/HTML/WebMake/PerlCodeLibrary.pm,
+	lib/HTML/WebMake/PerlLib/dump_vars.wmk, t/clean.t,
+	t/htmlcleanerimgs.t, t/implicitmetas.t, t/navlinks_warning.t,
+	t/safetag.t, t/data/implicitmetas.wmk: HTML cleaner was removing
+	spaces before some inline tags: fixed.	safe tag had odd
+	indentation and extra blank lines: fixed.
+
+2001-09-28 08:36  jmason
+
+	* MANIFEST, MANIFEST.SKIP, lib/HTML/WebMake/Main.pm,
+	lib/HTML/WebMake/NormalContent.pm, lib/HTML/WebMake/SiteCache.pm:
+	last checkin broke (TOP/) magic var
+
+2001-09-28 06:57  jmason
+
+	* webmake.vim, doc/content_refs.txt, doc/firsttime.txt,
+	lib/HTML/WebMake/Main.pm, t/paramrefs.t: added parameterised
+	references
+
+2001-09-26 09:34  jmason
+
+	* lib/HTML/WebMake/PerlLib/: ThumbnailTag.pm, thumbnail_tag.wmk:
+	updated thumbnailing code to allow non-JPEG thumbs
+
+2001-09-25 06:52  jmason
+
+	* doc/attrdefault.txt, doc/metadefault.txt,
+	lib/HTML/WebMake/WmkFile.pm: added support for correctly-scoped
+	metadefault, attrdefault, and nested for tags
+
+2001-09-20 08:42  jmason
+
+	* t/: perllib.t, use.t: more fixes
+
+2001-09-20 08:34  jmason
+
+	* MANIFEST, doc/ettext.txt, doc/webmake.html,
+	lib/HTML/WebMake/HTMLCleaner.pm, lib/HTML/WebMake/NormalContent.pm,
+	lib/HTML/WebMake/PerlCodeLibrary.pm, lib/HTML/WebMake/UserTags.pm,
+	lib/HTML/WebMake/PerlLib/safe_tag.wmk, t/etautolinks.t,
+	t/etlists.t, t/etmailto.t, t/etmore.t, t/ettextlinks.t,
+	t/ettextmarkup.t, t/navlinks.t, t/navlinks_warning.t,
+	t/data/etautolinks.wmk, t/data/etlists.wmk, t/data/etmailto.wmk,
+	t/data/etmore.wmk, t/data/ettextlinks.wmk, t/data/ettextmarkup.wmk:
+	fixed new bug, added doco
+
+2001-09-19 12:02  jmason
+
+	* Makefile.PL, webmake.raw, lib/HTML/WebMake/FormatConvert.pm:
+	NetBSD portability fix
+
+2001-09-13 05:13  jmason
+
+	* lib/HTML/WebMake/: Content.pm, DataSource.pm, Main.pm,
+	MediaContent.pm, NormalContent.pm, PerlCodeLibrary.pm,
+	SiteCache.pm, SiteMap.pm: some minor tweaks for speed
+
+2001-09-12 13:56  jmason
+
+	* MANIFEST, webmake.vim, doc/include_datasources.wmk,
+	examples/thumbnails.wmk, lib/HTML/WebMake/MediaContent.pm,
+	lib/HTML/WebMake/DataSources/DirOfFiles.pm,
+	lib/HTML/WebMake/PerlLib/thumbnail_tag.wmk, t/contentsfind3.t,
+	t/data/contentsfind3.wmk: media files now pick up implicit titles
+	from their filenames; 'skip' attribute for datasources added; some
+	fixes for thumbnails
+
+2001-09-12 13:01  jmason
+
+	* webmake.vim, lib/HTML/WebMake/MediaContent.pm,
+	lib/HTML/WebMake/MetaTable.pm, lib/HTML/WebMake/NormalContent.pm,
+	lib/HTML/WebMake/DataSources/DirOfFiles.pm,
+	lib/HTML/WebMake/PerlLib/ThumbnailTag.pm,
+	lib/HTML/WebMake/PerlLib/thumbnail_tag.wmk: some thumbnail bugs
+	fixed
+
+2001-09-12 11:46  jmason
+
+	* MANIFEST, MANIFEST.SKIP: updated manifests
+
+2001-09-12 11:43  jmason
+
+	* doc/contents.txt, doc/datasources.txt, doc/documentation.wmk,
+	doc/media.txt, doc/templates.txt, examples/.cvsignore,
+	examples/thumbnails.wmk,
+	lib/HTML/WebMake/PerlLib/thumbnail_tag.wmk,
+	doc/include_datasources.wmk: some doco changes
+
+2001-09-11 09:41  jmason
+
+	* doc/datasources.txt, doc/documentation.wmk, doc/metatable.txt,
+	doc/perl.txt, lib/HTML/WebMake/Main.pm,
+	lib/HTML/WebMake/MetaTable.pm, lib/HTML/WebMake/NormalContent.pm,
+	lib/HTML/WebMake/PerlCodeLibrary.pm, lib/HTML/WebMake/UserTags.pm,
+	lib/HTML/WebMake/Util.pm,
+	lib/HTML/WebMake/DataSources/DirOfFiles.pm,
+	lib/HTML/WebMake/PerlLib/DownloadTag.pm,
+	lib/HTML/WebMake/PerlLib/ThumbnailTag.pm,
+	lib/HTML/WebMake/PerlLib/download_tag.wmk,
+	lib/HTML/WebMake/PerlLib/thumbnail_tag.wmk,
+	examples/thumbnails.wmk: added metatable attribute to data sources;
+	added thumbnail tag
+
+2001-09-10 08:54  jmason
+
+	* MANIFEST: lost a test from MANIFEST
+
+2001-09-10 08:48  jmason
+
+	* doc/concepts.txt: modified concepts a little
+
+2001-09-10 08:39  jmason
+
+	* MANIFEST, MANIFEST.SKIP, Makefile.PL, wmview_cgi.raw,
+	doc/contributors.txt, doc/documentation.wmk, doc/sitemap.txt,
+	lib/HTML/WebMake/HTMLCleaner.pm, lib/HTML/WebMake/Main.pm,
+	lib/HTML/WebMake/MetadataContent.pm,
+	lib/HTML/WebMake/NormalContent.pm, lib/HTML/WebMake/SiteCache.pm,
+	lib/HTML/WebMake/SiteMap.pm, lib/HTML/WebMake/Util.pm,
+	lib/HTML/WebMake/WmkFile.pm,
+	lib/HTML/WebMake/DataSources/DirOfFiles.pm, t/download_tag.t,
+	.cvsignore: some profiling to improve speed of single-page
+	generation when sitemaps or nav links are used; also added
+	wmview.cgi single-page viewer CGI
+
+2001-09-06 08:24  jmason
+
+	* .cvsignore: added concepts page
+
+2001-09-06 08:19  jmason
+
+	* MANIFEST, doc/blurb.txt, doc/concepts.txt, doc/webmake.html:
+	added 'concepts' page to doco
+
+2001-09-03 07:28  jmason
+
+	* t/: breadcrumbs2.t, htmlcleanerimgs.t, data/breadcrumbs2.wmk:
+	added fixes for Kevin O'Rourke's 'rootname' bug, the HTML-cleaner
+	finding-images bug, and added -o, -s switches
+
+2001-09-03 07:26  jmason
+
+	* webmake.raw, lib/HTML/WebMake/Main.pm,
+	lib/HTML/WebMake/SiteMap.pm,
+	lib/HTML/WebMake/DataSources/DirOfFiles.pm,
+	lib/HTML/WebMake/DataSources/SVFile.pm: -o, -s switches added
+
+2001-08-27 08:44  jmason
+
+	* Changes, MANIFEST, MANIFEST.SKIP, Makefile.PL, fixpath.pl,
+	webmake, webmake.cgi, webmake.raw, webmake_cgi.raw,
+	webmake_cvs_import, lib/HTML/WebMake/Main.pm, t/imgsize.t: fixed to
+	use 'fixpath.pl' to add /usr/bin/perl line
+
+2001-08-20 04:01  jmason
+
+	* Changes, doc/webmake.html, lib/HTML/WebMake/Main.pm: fixed bug
+	with IMGSIZE if the output file's base dir did not exist
+
+2001-08-20 03:30  jmason
+
+	* t/: imgsize.t, data/test.gif: fixed prob with IMGSIZE if the
+	output file's base dir did not exist
+
+2001-06-26 12:43  jmason
+
+	* build/update_devel: more cvshowto changes, fix to update_devel
+	script
+
+2001-06-26 12:41  jmason
+
+	* doc/cvshowto.txt: more cvshowto changes
+
+2001-06-26 12:13  jmason
+
+	* doc/cvshowto.txt: fixed quotes in howto
+
+2001-06-22 00:14  jmason
+
+	* Changes, build/update_devel, build/update_stable,
+	doc/webmake.html, lib/HTML/WebMake.pm: new version
+
 2001-06-21 22:56  jmason
 
 	* lib/HTML/WebMake/CGI/Edit.pm: ui for edit changed slightly

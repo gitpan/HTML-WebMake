@@ -7,7 +7,7 @@
     <title>
       WebMake: Documentation: Metadata
     </title>
-    <meta name="generator" content="WebMake/2.1" />
+    <meta name="generator" content="WebMake/2.2" />
     <style>
       body {
        background-color: #ffffff; 
@@ -52,13 +52,13 @@
   <body bgcolor="#ffffff" text="#000000" link="#3300cc" vlink="#660066">
     <font face="lucida,verdana,sans-serif">
       <div align="center">
-        <img src="images/WebMakeTitle.png" alt="WebMake" width="500" height="122" />
+         <img src="images/WebMakeTitle.png" alt="WebMake" width="500" height="122" />
       </div>
       <table width="100%">
         <tr>
           <td valign="top">
-            <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             <strong><a href="http://webmake.taint.org/">WebMake</a>
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
@@ -82,8 +82,8 @@
                   <table border="0" cellspacing="4" cellpadding="4" width="100%">
                     <tr>
                       <td>
-                        <h1>Metadata</h1><p>
-                          <a name="What_Is_Metadata"><h3>What Is Metadata?</h3></a><p>
+                         <h1>Metadata</h1><p>
+                           <a name="What_Is_Metadata"><h3>What Is Metadata?</h3></a><p>
                             Everyone is familiar with data, but the term <em>meta-data</em> is not so familiar.
                             Here's a brief primer.
                             
@@ -92,11 +92,11 @@
                             To illustrate, I'll use an example familiar to most readers. Most computer
                             operating systems nowadays have the concept of files in a filesystem. If you
                             consider the files as <em>data</em>, then details such as file size, modification
-                            times, username of the owner etc. are <em>metadata</em>, ie. data about the files.
+                            times, username of the owner etc. are <em><a href="metadata.html">metadata</a></em>, ie. data about the files.
                             
                           </p>
                           <p>
-                            In WebMake, metadata is used to refer to properties of textual content items.
+                            In WebMake, <a href="metadata.html">metadata</a> is used to refer to properties of textual content items.
                             For example, a newspaper article may have a <em>title</em>, an <em>abstract</em> (ie. a
                             brief summary), etc.
                             
@@ -104,14 +104,14 @@
                           <p>
                             This kind of data is very useful for building indices and catalogues, in the
                             same way that Windows Explorer or the UNIX ls(1) command uses filesystem
-                            metadata to display file listings. As a result, a good way to think of it is
+                            <a href="metadata.html">metadata</a> to display file listings. As a result, a good way to think of it is
                             as "catalog data", as opposed to "narrative data", which is what a normal
                             content item is. (thanks to Vaibhav Arya, vaibhav /at/ mymcomm.com, for that
                             analogy.)
                             
                           </p>
                           <p>
-                            To extend this metaphor, you should use metadata for anything that would be
+                            To extend this metaphor, you should use <a href="metadata.html">metadata</a> for anything that would be
                             used to describe your pages in a catalog. For example, given the page
                             title, a quick abstract of the page, and a number to indicate its importance
                             relative to other pages, one could easily create a list of pages
@@ -120,18 +120,18 @@
                             implemented.
                             
                           </p>
-                          <a name="How_to_Define_Metadata"><h3>How to Define Metadata</h3></a><p>
-                            WebMake can load metadata from a number of sources:
+                           <a name="How_to_Define_Metadata"><h3>How to Define Metadata</h3></a><p>
+                            WebMake can load <a href="metadata.html">metadata</a> from a number of sources:
                             
                           </p>
                           <ul>
                             <li>
                               <p>
                                 <strong>Inferred from the content text itself</strong>: WebMake supports
-                                 "magic" metadata, which contains some inferred data about the
+                                 "magic" <a href="metadata.html">metadata</a>, which contains some inferred data about the
                                  content, such as its last modification date (which can be inferred
                                  from the filesystem storage of the content file itself). In
-                                 addition, title metadata can be inferred from several sources, such
+                                 addition, title <a href="metadata.html">metadata</a> can be inferred from several sources, such
                                  as the <code>&lt;title&gt;</code> tag in HTML, or <code>=head1</code> tags in POD
                                  text.
                                 
@@ -180,14 +180,14 @@
                             
                           </p>
                           <p>
-                            Any content chunk can access metadata from other content chunks within the
+                            Any content chunk can access <a href="metadata.html">metadata</a> from other content chunks within the
                             same <a href="out.html">&lt;out&gt;</a> tag, using <strong>this</strong> as the <em>content</em> name, i.e.
                             <em>$[this.title]</em> . This is handy, for example, in setting the
                             page title in the main content chunk, and accessing it from the header chunk.
                             
                           </p>
                           <p>
-                            If more than one content item sets the same item of metadata inside the
+                            If more than one content item sets the same item of <a href="metadata.html">metadata</a> inside the
                             <a href="out.html">&lt;out&gt;</a> tag, the first one will take precedence.
                             
                           </p>
@@ -195,12 +195,12 @@
                             The example files "news_site.wmk" and "news_site_with_sections.wmk"
                             demonstrate how meta tags can be used to generate a SlashDot or Wired
                             News-style news site. The index pages in those sites are generated
-                            dynamically, using the metadata to decide which pages to link to, their
+                            dynamically, using the <a href="metadata.html">metadata</a> to decide which pages to link to, their
                             ordering, and the titles and abstracts to use.
                             
                           </p>
-                          <a name="How_Do_I_Use_Metadata_In_WebMake"><h3>How Do I Use Metadata In WebMake?</h3></a><p>
-                            WebMake provides extra support for metadata in an efficient way. A
+                           <a name="How_Do_I_Use_Metadata_In_WebMake"><h3>How Do I Use Metadata In WebMake?</h3></a><p>
+                            WebMake provides extra support for <a href="metadata.html">metadata</a> in an efficient way. A
                             <em>metadatum</em> is like a normal content item, except it is exposed to all other
                             pages in the WebMake file. This data is accessible, both to other pages in
                             the site (as <strong>$[<em>contentname</em>.<em>metaname</em>]</strong>), and to other
@@ -209,20 +209,20 @@
                             
                           </p>
                           <p>
-                            In addition, WebMake caches metadata in the site cache file between runs, so
+                            In addition, WebMake caches <a href="metadata.html">metadata</a> in the site cache file between runs, so
                             that a subsequent partial site build will not require loading all the content
                             text, just to read a page title.
                             
                           </p>
                           <p>
-                            Note that content items representing metadata cannot, themselves, have
-                            metadata.
+                            Note that content items representing <a href="metadata.html">metadata</a> cannot, themselves, have
+                            <a href="metadata.html">metadata</a>.
                             
                           </p>
-                          <a name="What_Metadata_Should_I_Use"><h3>What Metadata Should I Use?</h3></a><p>
+                           <a name="What_Metadata_Should_I_Use"><h3>What Metadata Should I Use?</h3></a><p>
                             The items marked <em>(built-in)</em> are supported directly inside WebMake, and used
                             internally for functionality like building site maps and indices. All the
-                            other suggested metadata names here are just that, suggestions, which support
+                            other suggested <a href="metadata.html">metadata</a> names here are just that, suggestions, which support
                             commonly-required functionality.
                             
                           </p>
@@ -269,7 +269,7 @@
                             </dt>
                             <dd>
                               <p>
-                                used to map the site's content; this metadata indicates the
+                                used to map the site's content; this <a href="metadata.html">metadata</a> indicates the
                                  content item that is the parent of the current content item. This metadatum
                                  is used to generate dynamic sitemaps. (built-in)
                                 
@@ -338,16 +338,16 @@
                             </dd>
                           </dl>
                           <p>
-                            The <a href="http://www.ietf.org/rfc/rfc2413.txt">Dublin Core</a> is a whole load of suggested metadata names and formats,
-                            which can be used either to replace or supplement the optional metadata named
-                            above. Regardless of whether you replace or supplement the metadata above
-                            internally, it is definitely recommended to use the DC names for metadata
+                            The <a href="http://www.ietf.org/rfc/rfc2413.txt">Dublin Core</a> is a whole load of suggested <a href="metadata.html">metadata</a> names and formats,
+                            which can be used either to replace or supplement the optional <a href="metadata.html">metadata</a> named
+                            above. Regardless of whether you replace or supplement the <a href="metadata.html">metadata</a> above
+                            internally, it is definitely recommended to use the DC names for <a href="metadata.html">metadata</a>
                             that's made visible in the output HTML through conventional HTML &lt;meta&gt;
                             tags.
                             
                           </p>
-                          <a name="Built_In_Metadata"><h3>Built-In Metadata</h3></a><p>
-                            These are some built-in "magic" items of metadata that do not need to be
+                           <a name="Built_In_Metadata"><h3>Built-In Metadata</h3></a><p>
+                            These are some built-in "magic" items of <a href="metadata.html">metadata</a> that do not need to be
                             defined manually. Instead, they are automatically inferred by WebMake itself:
                             
                           </p>
@@ -401,13 +401,13 @@
                             </dd>
                           </dl>
                           <a name="Why_Use_Metadata"><h3>Why Use Metadata</h3></a><p>
-                            Support for metadata is an important CMS feature.
+                            Support for <a href="metadata.html">metadata</a> is an important CMS feature.
                             
                           </p>
                           <p>
                             It is used by <a href="http://www.midgard-project.org/manual/contentmgmt.topic-trees.html">Midgard</a> and Microsoft's <a href="http://www.microsoft.com/technet/ecommerce/contmgt.asp">SiteServer</a>, and is available as
                             <a href="http://zelotes.ent.iastate.edu/metadata/">user-contributed code</a> for <a href="http://manila.userland.com/">Manila</a>. It provides copious benefits
-                            for flexible index and sitemap generation, and, with the addition of an
+                            for flexible index and <a href="sitemap.html">sitemap</a> generation, and, with the addition of an
                             <em>Approved</em> tag, adds initial support for workflow.
                             
                           </p>
@@ -434,8 +434,8 @@
       <table width="100%">
         <tr>
           <td valign="top">
-            <strong><a href="http://webmake.taint.org/">WebMake</a>
-             Documentation</strong> (version 2.1)
+             <strong><a href="http://webmake.taint.org/">WebMake</a>
+             Documentation</strong> (version 2.2)
              
           </td>
           <td valign="top">
@@ -449,7 +449,7 @@
         </tr>
       </table>
       <div align="right">
-        <a href="http://webmake.taint.org/"><img src="images/BuiltWithWebMake.png" alt="Built With WebMake" border="0" width="88" height="31" /></a>
+         <a href="http://webmake.taint.org/"> <img src="images/BuiltWithWebMake.png" alt="Built With WebMake" border="0" width="88" height="31" /></a>
       </div>
     </font>
   </body>

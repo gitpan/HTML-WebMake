@@ -18,6 +18,7 @@ q{foo
 
 # ---------------------------------------------------------------------------
 
+warn "should get an 'unbalanced tags' warning here:\n";
 ok (wmrun ("-F -f data/$testname.wmk", \&patterns_run_cb));
 ok_all_patterns();
 

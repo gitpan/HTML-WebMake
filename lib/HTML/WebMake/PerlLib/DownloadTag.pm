@@ -11,9 +11,7 @@ sub handle_download_tag {
   my $file = $attrs->{file};
 
   $text = $attrs->{text};
-  $text ||= '<a href="${download.href}" '.
-      '${download.tag_attrs}>${download.name} '.
-      '(${download.size_in_k}k)</a>';
+  $text ||= '${download.template}';
   
   my $origfile = $self->{main}->fileless_subst ('<download>', $file);
   my ($realfname, $relfname) =

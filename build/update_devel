@@ -27,4 +27,10 @@ echo $vers > $WEBDIR/latest_version
 
 ( cd $WEBDIR/devel ; cvs add *WebMake* )
 
+rm -rf $WEBDIR/dist $WEBDIR/doc
+mkdir $WEBDIR/dist
+tar cf - --exclude=CVS --exclude='.#*' . | ( cd $WEBDIR/dist ; tar xf - )
+tar cf - --exclude=CVS --exclude='.#*' doc | ( cd $WEBDIR ; tar xf - )
+
 ls -l $WEBDIR/devel
+
